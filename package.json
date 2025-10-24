@@ -1,0 +1,8 @@
+{
+  "name": "rr",
+  "workspaces": [
+    "apps/web",
+    "apps/astrobook",
+    "packages/ui"
+  ]
+}

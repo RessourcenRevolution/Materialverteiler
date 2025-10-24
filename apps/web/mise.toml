@@ -1,0 +1,19 @@
+[tasks.build]
+description = "Build web app"
+run = "npm run build"
+
+[tasks.dev]
+description = "Run in dev mode"
+run = "npm run dev"
+
+[tasks.start]
+description = "Start web app"
+run = "npm run start"
+
+[tasks.typecheck]
+description = "Typecheck"
+run = "npm run typecheck"
+
+[env]
+API_URL = "http://localhost:8090"
+PUBLIC_API_URL = "http://localhost:8090"

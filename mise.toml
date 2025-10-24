@@ -1,0 +1,5 @@
+experimental_monorepo_root = true
+
+[tools]
+go = "1.25.3"
+node = "22.21.0"

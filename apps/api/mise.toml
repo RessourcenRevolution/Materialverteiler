@@ -1,0 +1,11 @@
+[tasks.build]
+description = "Build API"
+run = "go build"
+
+[tasks.dev]
+description = "Run in dev mode"
+run = "go run . serve"
+
+[tasks.start]
+description = "Start API"
+run = "./api serve"

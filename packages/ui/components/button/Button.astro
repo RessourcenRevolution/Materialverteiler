@@ -1,0 +1,14 @@
+---
+export interface Props {
+  label: string;
+}
+const { label } = Astro.props;
+---
+
+<button
+  class:list={[
+    "bg-stone-200 text-stone-900 px-3 py-2 rounded-sm cursor-pointer hover:bg-stone-300",
+  ]}
+>
+  {label}
+</button>

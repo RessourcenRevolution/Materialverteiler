@@ -1,0 +1,19 @@
+services:
+  api:
+    build:
+      dockerfile: ./Dockerfile
+      context: ./apps/api
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./apps/api/pb_data:/app/pb_data
+
+  web:
+    build:
+      dockerfile: ./apps/web/Dockerfile
+      context: .
+    ports:
+      - "3000:3000"
+    environment:
+      API_URL: http://api:8080
+      PUBLIC_API_URL: http://localhost:8080
