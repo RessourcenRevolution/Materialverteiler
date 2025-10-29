@@ -1,38 +1,58 @@
 import { defineMiddleware } from "astro/middleware";
+import { sequence } from "astro:middleware";
 import PocketBase from "pocketbase";
 
-export const onRequest = defineMiddleware(
-  async ({ locals, request, redirect }, next) => {
-    const API_URL = import.meta.env.SSR
-      ? process.env.API_URL
-      : process.env.PUBLIC_API_URL;
+// Routes a visitor can visit without being authenticated
+const UNPROTECTED_ROUTES = [
+  /^\/login($|\/.*)/,
+  /^\/signup($|\/.*)/,
+  /^\/logout($|\/.*)/,
+  /^\/($|\/.*)/,
+];
 
-    locals.pb = new PocketBase(API_URL);
+const isSafeRoute = (path: string): boolean => {
+  return UNPROTECTED_ROUTES.some((pattern) => pattern.test(path));
+};
 
-    // Load the store data from the request cookie string
-    locals.pb.authStore.loadFromCookie(request.headers.get("cookie") || "");
+const authMiddleware = defineMiddleware(async ({ locals, request }, next) => {
+  const API_URL = import.meta.env.SSR
+    ? process.env.API_URL
+    : process.env.PUBLIC_API_URL;
 
-    try {
-      locals.pb.authStore.isValid &&
-        (await locals.pb.collection("users").authRefresh());
-    } catch (_) {
-      locals.pb.authStore.clear();
-    }
+  locals.pb = new PocketBase(API_URL);
 
-    // If invalid, redirect to login
-    if (request.method === "GET" && !locals.pb.authStore.isValid) {
-      const url = new URL(request.url);
-      if (url.pathname !== "/login") {
-        return redirect("/login");
-      }
-    }
+  // Load the store data from the request cookie string
+  locals.pb.authStore.loadFromCookie(request.headers.get("cookie") || "");
 
-    const response = await next();
-
-    // Set the auth cookie with the updated auth state
-    const authCookie = locals.pb.authStore.exportToCookie({ sameSite: "lax" });
-    response.headers.append("set-cookie", authCookie);
-
-    return response;
+  try {
+    locals.pb.authStore.isValid &&
+      (await locals.pb.collection("users").authRefresh());
+  } catch (_) {
+    locals.pb.authStore.clear();
   }
-);
+
+  const response = await next();
+
+  // Set the auth cookie with the updated auth state
+  const authCookie = locals.pb.authStore.exportToCookie({
+    sameSite: "lax",
+  });
+  response.headers.append("set-cookie", authCookie);
+
+  return response;
+});
+
+const routeGuard = defineMiddleware(async ({ url, locals, redirect }, next) => {
+  const pathName = new URL(url).pathname;
+  if (isSafeRoute(pathName)) {
+    return next();
+  }
+
+  if (!locals.pb.authStore.isValid) {
+    return redirect("/login");
+  }
+
+  return next();
+});
+
+export const onRequest = sequence(authMiddleware, routeGuard);

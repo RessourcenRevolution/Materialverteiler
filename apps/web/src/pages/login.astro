@@ -30,7 +30,7 @@ if (Astro.request.method === "POST") {
     return new Response(null, {
       status: 302,
       headers: {
-        Location: "/",
+        Location: "/dashboard",
         "Set-Cookie": Astro.locals.pb.authStore.exportToCookie({
           secure: import.meta.env.DEV ? false : true,
         }),

@@ -1,22 +1,9 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import { type Listing, ListingSchema } from "../schemas/listing";
-import { pocketbase } from "../lib/pocketbase";
-import Card from "@rr/ui/components/card/Card.astro";
 
 export const prerender = false;
-
-const items = await pocketbase.collection("listings").getFullList();
-const listings = ListingSchema.array().parse(items) as Listing[];
 ---
 
 <Layout>
-  <h1 class="text-2xl font-bold mb-4">Dashboard</h1>
-  <div class="grid grid-cols-3 gap-4">
-    {
-      listings.map((listing) => (
-        <Card title={listing.title} content={listing.description} border />
-      ))
-    }
-  </div>
+  <h1 class="text-2xl font-bold mb-4">Homepage</h1>
 </Layout>
