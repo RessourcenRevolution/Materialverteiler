@@ -1,4 +1,5 @@
 ---
+import Link from "@rr/ui/components/link/Link.astro";
 const authStore = Astro.locals.pb.authStore;
 ---
 
@@ -14,9 +15,12 @@ const authStore = Astro.locals.pb.authStore;
           </a>
         </>
       ) : (
-        <a href="/login" class="text-blue-500">
+        <Link href="/login">
           Login
-        </a>
+        </Link>
+        <Link href="/signup">
+          Signup
+        </Link>
       )
     }
   </div>
