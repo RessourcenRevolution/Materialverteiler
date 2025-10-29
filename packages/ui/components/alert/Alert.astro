@@ -1,0 +1,19 @@
+---
+export interface Props {
+  variant: "error" | "warning" | "info" | "success";
+  text: string;
+}
+
+const { variant, text } = Astro.props;
+
+const variants = {
+  info: "bg-blue-200 text-blue-950",
+  success: "bg-green-200 text-green-950",
+  warning: "bg-orange-200 text-orange-950",
+  error: "bg-red-200 text-red-950",
+};
+---
+
+<p class:list={["px-5 py-4 rounded-sm", variants[variant]]}>
+  {text}
+</p>

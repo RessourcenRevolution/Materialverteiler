@@ -1,0 +1,67 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Input from "@rr/ui/components/input/Input.astro";
+import Button from "@rr/ui/components/button/Button.astro";
+import Alert from "@rr/ui/components/alert/Alert.astro";
+import { usePocketbase } from "../lib/pocketbase";
+
+export const prerender = false;
+
+const { login } = usePocketbase(Astro.locals.pb);
+
+let error = "";
+let email = "";
+let password = "";
+
+if (Astro.request.method === "POST") {
+  const body = await Astro.request.formData();
+  email = body.get("email") as string;
+  password = body.get("password") as string;
+
+  const {
+    status,
+    success,
+    error: _error,
+  } = await login({
+    email,
+    password,
+  });
+  if (success) {
+    return new Response(null, {
+      status: 302,
+      headers: {
+        Location: "/",
+        "Set-Cookie": Astro.locals.pb.authStore.exportToCookie({
+          secure: import.meta.env.DEV ? false : true,
+        }),
+      },
+    });
+  }
+  error = _error;
+  Astro.response.status = status;
+}
+---
+
+<Layout>
+  <div class="mx-auto max-w-lg">
+    <h1 class="text-2xl font-bold mb-6">Login</h1>
+    <form class="flex flex-col gap-6" method="post">
+      <Input
+        name="email"
+        type="email"
+        label="E-mail Address"
+        value={email}
+        required
+      />
+      <Input
+        name="password"
+        type="password"
+        label="Passwort"
+        value={password}
+        required
+      />
+      {error && <Alert variant="error" text={error} />}
+      <Button label="Login" />
+    </form>
+  </div>
+</Layout>

@@ -1,0 +1,19 @@
+---
+const authStore = Astro.locals.pb.authStore;
+---
+
+<header class="flex justify-between mb-4 bg-stone-200 p-4 rounded-sm">
+  <a href="/" class="font-bold">RR</a>
+  <div class="flex gap-4">
+    {
+      authStore.isValid && (
+        <>
+          <span>{authStore.record?.name}</span>
+          <a href="/logout" class="text-blue-500">
+            Logout
+          </a>
+        </>
+      )
+    }
+  </div>
+</header>

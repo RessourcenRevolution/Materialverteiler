@@ -3,7 +3,6 @@ import Layout from "../layouts/Layout.astro";
 import { type Listing, ListingSchema } from "../schemas/listing";
 import { pocketbase } from "../lib/pocketbase";
 import Card from "@rr/ui/components/card/Card.astro";
-import Button from "@rr/ui/components/button/Button.astro";
 
 export const prerender = false;
 
@@ -12,8 +11,7 @@ const listings = ListingSchema.array().parse(items) as Listing[];
 ---
 
 <Layout>
-  <h1 class="text-2xl font-bold mb-4">Hello world</h1>
-  <Button label="test" />
+  <h1 class="text-2xl font-bold mb-4">Dashboard</h1>
   <div class="grid grid-cols-3 gap-4">
     {
       listings.map((listing) => (
