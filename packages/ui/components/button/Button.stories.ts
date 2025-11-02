@@ -7,7 +7,15 @@ export default {
 
 export const Default = {
   args: {
-    label: "Button 2",
+    label: "Button",
+  } satisfies Props,
+  decorators: [{ component: FlexDecorator }],
+};
+
+export const Link = {
+  args: {
+    label: "Link",
+    href: "#",
   } satisfies Props,
   decorators: [{ component: FlexDecorator }],
 };

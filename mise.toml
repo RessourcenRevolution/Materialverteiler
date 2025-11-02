@@ -3,3 +3,13 @@ experimental_monorepo_root = true
 [tools]
 go = "1.25.3"
 node = "22.21.0"
+
+[tasks.setup]
+description = "Setup"
+env = { INSTALL_PATH = "{{cwd}}/bin" }
+dir = "{{cwd}}"
+file = "https://raw.githubusercontent.com/axllent/mailpit/develop/install.sh"
+
+[tasks.dev]
+description = "Run mailpit"
+run = "./bin/mailpit"

@@ -1,12 +1,11 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import { type Listing, ListingSchema } from "../schemas/listing";
-import { pocketbase } from "../lib/pocketbase";
 import Card from "@rr/ui/components/card/Card.astro";
 
 export const prerender = false;
 
-const items = await pocketbase.collection("listings").getFullList();
+const items = await Astro.locals.pb.collection("listings").getFullList();
 const listings = ListingSchema.array().parse(items) as Listing[];
 ---
 

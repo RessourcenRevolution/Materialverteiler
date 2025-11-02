@@ -1,13 +1,5 @@
 import PocketBase, { ClientResponseError } from "pocketbase";
 
-const API_URL = import.meta.env.SSR
-  ? process.env.API_URL
-  : process.env.PUBLIC_API_URL;
-
-console.log("API_URL", API_URL);
-
-export const pocketbase = new PocketBase(API_URL);
-
 export function usePocketbase(pb: PocketBase) {
   async function signup({
     name,
@@ -28,6 +20,8 @@ export function usePocketbase(pb: PocketBase) {
       await pb
         .collection("users")
         .create({ name, email, password, passwordConfirm: password });
+      // Request verification
+      await pb.collection("users").requestVerification(email);
       // Login
       await pb.collection("users").authWithPassword(email, password);
       return {

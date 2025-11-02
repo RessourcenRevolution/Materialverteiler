@@ -1,0 +1,28 @@
+{
+  "name": "@rr/astro-pocketbase",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "typecheck": "astro check"
+  },
+  "exports": {
+    "./middleware": "./middleware/index.ts",
+    "./components": "./components/index.ts",
+    "./scripts": "./scripts/index.ts",
+    "./client/astro-pocketbase.ts": "./client/astro-pocketbase.ts"
+  },
+  "dependencies": {
+    "@astrojs/node": "^9.4.4",
+    "@semantic-ui/astro-lit": "^5.1.1",
+    "astro": "5.14.1",
+    "pocketbase": "^0.26.2"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  }
+}

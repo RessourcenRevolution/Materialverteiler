@@ -10,6 +10,9 @@ const authStore = Astro.locals.pb.authStore;
       authStore.isValid ? (
         <>
           <span>{authStore.record?.name}</span>
+          <a href="/profile" class="text-blue-500">
+            Profile 
+          </a>
           <a href="/logout" class="text-blue-500">
             Logout
           </a>

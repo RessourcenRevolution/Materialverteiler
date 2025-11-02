@@ -1,0 +1,22 @@
+---
+import Layout from "../../layouts/Layout.astro";
+
+export const prerender = false;
+
+if (!Astro.locals.pb.authStore.record?.id) {
+  Astro.redirect("/logout");
+  return;
+}
+
+const user = await Astro.locals.pb
+  .collection("users")
+  .getOne(Astro.locals.pb.authStore.record?.id);
+---
+
+<Layout>
+  <h1 class="text-2xl font-bold mb-4">Profile</h1>
+  <p>
+    Name: {user.name}<br />
+    E-mail: {user.email}<br />
+  </p>
+</Layout>

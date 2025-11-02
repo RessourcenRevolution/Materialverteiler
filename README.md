@@ -20,6 +20,7 @@ repository task management using Mise. Production ready setup using Docker.
 1. Run `$ mise install`
 1. Run `$ npm i`
 1. Run `$ export MISE_EXPERIMENTAL=true`
+1. Run `$ mise run //:setup`
 1. Run `$ mise run //...:dev`
 
 ## Dev

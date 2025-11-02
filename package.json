@@ -3,6 +3,7 @@
   "workspaces": [
     "apps/web",
     "apps/astrobook",
-    "packages/ui"
+    "packages/ui",
+    "packages/astro-pocketbase"
   ]
 }

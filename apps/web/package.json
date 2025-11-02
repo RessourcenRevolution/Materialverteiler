@@ -12,11 +12,13 @@
   },
   "dependencies": {
     "@astrojs/node": "^9.4.4",
-    "@tailwindcss/vite": "4.1.14",
+    "@rr/astro-pocketbase": "*",
     "@rr/ui": "*",
+    "@semantic-ui/astro-lit": "^5.1.1",
+    "@tailwindcss/vite": "4.1.14",
     "astro": "5.14.1",
-    "tailwindcss": "4.1.14",
-    "pocketbase": "^0.26.2"
+    "pocketbase": "^0.26.2",
+    "tailwindcss": "4.1.14"
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.5",
