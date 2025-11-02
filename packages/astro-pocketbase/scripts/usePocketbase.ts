@@ -31,6 +31,15 @@ export function usePocketbase(pb: PocketBase) {
     } catch (e) {
       if (
         e instanceof ClientResponseError &&
+        e?.response?.data?.email?.code === "validation_not_unique"
+      ) {
+        return {
+          error: "There is already an account with this e-mail address.",
+          success: false,
+          status: e.response.status,
+        };
+      } else if (
+        e instanceof ClientResponseError &&
         e?.response?.data?.password?.code === "validation_min_text_constraint"
       ) {
         return {
