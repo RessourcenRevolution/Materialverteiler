@@ -18,11 +18,16 @@ export default defineConfig({
   env: {
     schema: {
       API_URL: envField.string({
+        context: "server",
+        access: "secret",
+        optional: false,
+      }),
+      PUBLIC_API_URL: envField.string({
         context: "client",
         access: "public",
         optional: false,
       }),
-      PUBLIC_API_URL: envField.string({
+      APP_NAME: envField.string({
         context: "client",
         access: "public",
         optional: false,
