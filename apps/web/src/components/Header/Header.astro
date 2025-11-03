@@ -1,9 +1,16 @@
 ---
 import Link from "@rr/ui/components/link/Link.astro";
+
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+
 const authStore = Astro.locals.pb.authStore;
 ---
 
-<header class="flex justify-between mb-4 bg-stone-200 p-4 rounded-sm">
+<header class:list={["flex justify-between mb-4 bg-stone-200 p-4 rounded-sm", className]}>
   <a href="/" class="font-bold">RR</a>
   <div class="flex gap-4">
     {

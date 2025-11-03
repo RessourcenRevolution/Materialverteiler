@@ -13,8 +13,10 @@ import "~/styles/global.css";
     <title>Astro Basics</title>
   </head>
   <body class="p-4">
-    <Header />
-    <slot />
+    <Header class="max-w-[1600px] mx-auto" />
+    <main class="max-w-[1600px] mx-auto">
+      <slot />
+    </main>
   </body>
 </html>
 
