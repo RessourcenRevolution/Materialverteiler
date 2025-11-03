@@ -32,6 +32,12 @@ export default defineConfig({
         access: "public",
         optional: false,
       }),
+      APP_LANGUAGE: envField.enum({
+        values: ["en", "de"],
+        context: "client",
+        access: "public",
+        optional: false,
+      }),
     },
   },
 

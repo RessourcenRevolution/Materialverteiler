@@ -1,7 +1,10 @@
 ---
+import { useTranslations } from "~/i18n/ui";
 import Layout from "~/layouts/Layout.astro";
 
 export const prerender = false;
+
+const t = useTranslations();
 
 if (!Astro.locals.pb.authStore.record?.id) {
   Astro.redirect("/logout");
@@ -14,9 +17,11 @@ const user = await Astro.locals.pb
 ---
 
 <Layout>
-  <h1 class="text-2xl font-bold mb-4">Profile</h1>
+  <h1 class="text-2xl font-bold mb-4">
+    {t("profile.title")}
+  </h1>
   <p>
-    Name: {user.name}<br />
-    E-mail: {user.email}<br />
+    {t("profile.name")}: {user.name}<br />
+    {t("profile.email")}: {user.email}<br />
   </p>
 </Layout>

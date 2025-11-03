@@ -1,5 +1,6 @@
 ---
 import Link from "@rr/ui/components/link/Link.astro";
+import { useTranslations } from "~/i18n/ui";
 
 interface Props {
   class?: string;
@@ -8,6 +9,8 @@ interface Props {
 const { class: className } = Astro.props;
 
 const authStore = Astro.locals.pb.authStore;
+
+const t = useTranslations()
 ---
 
 <header class:list={["flex justify-between mb-4 bg-stone-200 p-4 rounded-sm", className]}>
@@ -18,10 +21,10 @@ const authStore = Astro.locals.pb.authStore;
         <>
           <span>{authStore.record?.name}</span>
           <a href="/profile" class="text-blue-500">
-            Profile 
+          {t('header.profile')}
           </a>
           <a href="/logout" class="text-blue-500">
-            Logout
+          {t('header.logout')}
           </a>
         </>
       ) : (

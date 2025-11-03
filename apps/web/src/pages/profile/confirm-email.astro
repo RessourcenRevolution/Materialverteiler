@@ -3,33 +3,43 @@ import Layout from "~/layouts/Layout.astro";
 import Alert from "@rr/ui/components/alert/Alert.astro";
 import Button from "@rr/ui/components/button/Button.astro";
 import { EmailVerification } from "@rr/astro-pocketbase/components";
+import { useTranslations } from "~/i18n/ui";
 
 export const prerender = false;
+
+const t = useTranslations();
 ---
 
 <Layout>
   <astro-pocketbase pocketbase-url={process.env.PUBLIC_API_URL}>
     <div class="mx-auto max-w-lg">
-      <h1 class="text-2xl font-bold mb-6">E-mail confirmation</h1>
+      <h1 class="text-2xl font-bold mb-6">
+        {t("email-confirmation.title")}
+      </h1>
       <EmailVerification client:idle class:list={["block mb-6"]}>
         <Alert
           slot="loading"
           variant="info"
-          text="Confirming e-mail address..."
+          text={t("email-confirmation.loading")}
         />
-        <Alert slot="missing-token" variant="error" text="Missing token..." />
+        <Alert
+          slot="missing-token"
+          variant="error"
+          text={t("email-confirmation.missing-token")}
+        />
         <Alert
           slot="error"
           variant="error"
-          text="Error confirming e-mail address, please try agian..."
+          text={t("email-confirmation.error")}
+          text=""
         />
         <Alert
           slot="success"
           variant="success"
-          text="Successfully confirmed e-mail address..."
+          text={t("email-confirmation.success")}
         />
       </EmailVerification>
-      <Button href="/dashboard" label="Go to Dashboard" />
+      <Button href="/dashboard" label={t("email-confirmation.button")} />
     </div>
   </astro-pocketbase>
 </Layout>

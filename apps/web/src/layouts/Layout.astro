@@ -2,10 +2,11 @@
 import Header from "~/components/Header/Header.astro";
 import "~/styles/global.css";
 import { APP_NAME } from "astro:env/client";
+import { defaultLang } from "~/i18n/ui";
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang={defaultLang}>
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />

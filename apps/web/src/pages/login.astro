@@ -4,9 +4,11 @@ import Input from "@rr/ui/components/input/Input.astro";
 import Button from "@rr/ui/components/button/Button.astro";
 import Alert from "@rr/ui/components/alert/Alert.astro";
 import { usePocketbase } from "@rr/astro-pocketbase/scripts";
+import { useTranslations } from "~/i18n/ui";
 
 export const prerender = false;
 
+const t = useTranslations();
 const { login } = usePocketbase(Astro.locals.pb);
 
 let error = "";
@@ -44,24 +46,26 @@ if (Astro.request.method === "POST") {
 
 <Layout>
   <div class="mx-auto max-w-lg">
-    <h1 class="text-2xl font-bold mb-6">Login</h1>
+    <h1 class="text-2xl font-bold mb-6">
+      {t("login.title")}
+    </h1>
     <form class="flex flex-col gap-6" method="post">
       <Input
         name="email"
         type="email"
-        label="E-mail Address"
+        label={t("forms.email")}
         value={email}
         required
       />
       <Input
         name="password"
         type="password"
-        label="Passwort"
+        label={t("forms.password")}
         value={password}
         required
       />
       {error && <Alert variant="error" text={error} />}
-      <Button label="Login" />
+      <Button label={t("login.button")} />
     </form>
   </div>
 </Layout>
