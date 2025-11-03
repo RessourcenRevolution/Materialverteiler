@@ -5,5 +5,10 @@
     "**/*",
     "../../packages/astro-pocketbase/scripts/usePocketbase.ts"
   ],
-  "exclude": ["dist"]
+  "exclude": ["dist"],
+  "compilerOptions": {
+    "paths": {
+      "~/*": ["./src/*"]
+    }
+  }
 }
