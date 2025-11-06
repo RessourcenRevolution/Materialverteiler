@@ -10,30 +10,40 @@ const { class: className } = Astro.props;
 
 const authStore = Astro.locals.pb.authStore;
 
-const t = useTranslations()
+const t = useTranslations();
 ---
 
-<header class:list={["flex justify-between mb-4 bg-stone-200 p-4 rounded-sm", className]}>
-  <a href="/" class="font-bold">RR</a>
+<header
+  class:list={[
+    "flex justify-between mb-4 bg-stone-200 p-4 rounded-sm",
+    className,
+  ]}
+>
+  <nav class="flex gap-4">
+    <a href="/" class="font-bold">RR</a>
+    {
+      authStore.isValid && (
+        <Link href="/dashboard">{t("header.dashboard")}</Link>
+      )
+    }
+  </nav>
   <div class="flex gap-4">
     {
       authStore.isValid ? (
         <>
           <span>{authStore.record?.name}</span>
           <a href="/profile" class="text-blue-500">
-          {t('header.profile')}
+            {t("header.profile")}
           </a>
           <a href="/logout" class="text-blue-500">
-          {t('header.logout')}
+            {t("header.logout")}
           </a>
         </>
       ) : (
-        <Link href="/login">
-          Login
-        </Link>
-        <Link href="/signup">
-          Signup
-        </Link>
+        <>
+          <Link href="/login">{t("header.login")}</Link>
+          <Link href="/signup">{t("header.signup")}</Link>
+        </>
       )
     }
   </div>

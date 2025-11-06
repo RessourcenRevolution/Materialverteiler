@@ -9,7 +9,11 @@ export const defaultLang = APP_LANGUAGE;
 
 export const ui = {
   en: {
+    // Header
+    "header.dashboard": "Dashboard",
     "header.profile": "Profile",
+    "header.login": "Login",
+    "header.signup": "Signup",
     "header.logout": "Logout",
     // Forms
     "forms.email": "E-Mail",
@@ -32,9 +36,21 @@ export const ui = {
       "Error confirming e-mail address, please try agian...",
     "email-confirmation.success": "E-Mail confirmed!",
     "email-confirmation.button": "Go to dashboard",
+    // Dashboard pge
+    "confirm-email.warning.text":
+      "Your email address is not yet confirmed. Check your inbox for the confirmation link.",
+    "confirm-email.warning.button": "Resend verification e-mail",
+    "confirm-email.resend.error":
+      "An error occured resending the confirmation email. Please try again.",
+    "confirm-email.resend.success":
+      "An e-mail verification email has been sent.",
   },
   de: {
+    // Header
+    "header.dashboard": "Dashboard",
     "header.profile": "Profiel",
+    "header.login": "Einloggen",
+    "header.signup": "Registrieren",
     "header.logout": "Ausloggen",
     // Forms
     "forms.email": "E-Mail Addresse",
@@ -57,6 +73,13 @@ export const ui = {
       "Fehler bei der Bestätigung der E-Mail-Adresse, bitte versuche es erneut...",
     "email-confirmation.success": "E-Mail Addresse ist bestätigt!",
     "email-confirmation.button": "Zum Dashboard",
+    // Dashboard pge
+    "confirm-email.warning.text":
+      "Deine E-Mail-Adresse wurde noch nicht bestätigt. Überprüfe deinen Posteingang nach dem Bestätigungslink.",
+    "confirm-email.warning.button": "Bestätigungs-E-Mail erneut senden",
+    "confirm-email.resend.error":
+      "Beim erneuten Senden der Bestätigungs-E-Mail ist ein Fehler aufgetreten. Bitte versuche es erneut.",
+    "confirm-email.resend.success": "Eine Bestätigungs-E-Mail wurde gesendet.",
   },
 } as const;
 

@@ -1,0 +1,13 @@
+import { z } from "zod";
+
+export const UserSchema = z.object({
+  id: z.string(),
+  created: z.coerce.date(),
+  updated: z.coerce.date(),
+  email: z.string().email(),
+  emailVisibility: z.boolean(),
+  name: z.string(),
+  verified: z.boolean(),
+  // avatar: '',
+});
+export type User = z.infer<typeof UserSchema>;

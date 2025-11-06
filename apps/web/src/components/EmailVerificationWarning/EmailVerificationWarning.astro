@@ -1,0 +1,41 @@
+---
+import { actions } from "astro:actions";
+import { type User } from "~/schemas/user";
+import Alert from "@rr/ui/components/alert/Alert.astro";
+import { useTranslations } from "~/i18n/ui";
+import Button from "@rr/ui/components/button/Button.astro";
+
+const t = useTranslations();
+
+const user = Astro.locals.pb.authStore.record as unknown as User;
+
+const result = Astro.getActionResult(actions.sendEmailVerification);
+---
+
+{
+  result?.error ? (
+    <Alert
+      variant="error"
+      text={t("confirm-email.resend.error")}
+      class="mb-4"
+    />
+  ) : result?.data ? (
+    <Alert
+      variant="success"
+      text={t("confirm-email.resend.success")}
+      class="mb-4"
+    />
+  ) : (
+    !user.verified && (
+      <Alert
+        variant="warning"
+        text={t("confirm-email.warning.text")}
+        class="mb-4"
+      >
+        <form method="POST" action={actions.sendEmailVerification}>
+          <Button label={t("confirm-email.warning.button")} outline />
+        </form>
+      </Alert>
+    )
+  )
+}
