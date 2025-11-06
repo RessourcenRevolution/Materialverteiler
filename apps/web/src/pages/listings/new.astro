@@ -1,0 +1,59 @@
+---
+import Layout from "~/layouts/Layout.astro";
+import { Input, Button, Alert, Textarea } from "@rr/ui/components";
+import { usePocketbase } from "@rr/astro-pocketbase/scripts";
+import { useTranslations } from "~/i18n/ui";
+import { actions } from "astro:actions";
+
+export const prerender = false;
+
+const t = useTranslations();
+
+let error;
+let title;
+let description;
+
+const result = Astro.getActionResult(actions.createListing);
+---
+
+<Layout>
+  <div class="mx-auto max-w-lg">
+    <h1 class="text-2xl font-bold mb-6">
+      {t("new-listing.title")}
+    </h1>
+
+    {
+      result?.data ? (
+        <Alert
+          variant="success"
+          text="Listing created successfully!"
+          class="mb-4"
+        />
+      ) : (
+        <form
+          class="flex flex-col gap-6"
+          method="post"
+          action={actions.createListing}
+        >
+          <Input
+            name="title"
+            type="text"
+            label={t("new-listing.fields.title")}
+            value={title}
+            required
+          />
+          <Textarea
+            name="description"
+            label={t("new-listing.fields.description")}
+            value={description}
+            required
+          />
+          {result?.error && (
+            <Alert variant="error" text={result.error.message} />
+          )}
+          <Button label={t("new-listing.button")} />
+        </form>
+      )
+    }
+  </div>
+</Layout>

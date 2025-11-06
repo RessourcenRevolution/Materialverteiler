@@ -44,6 +44,15 @@ export const ui = {
       "An error occured resending the confirmation email. Please try again.",
     "confirm-email.resend.success":
       "An e-mail verification email has been sent.",
+    // New listing page
+    "new-listing.title": "New listing",
+    "new-listing.fields.title": "Title",
+    "new-listing.fields.description": "Description",
+    "new-listing.button": "Submit",
+    "new-listing.errors.forbidden":
+      "You are not allowed to create new listings",
+    "new-listing.errors.unknown":
+      "An unknown error occurred while creating the listing.",
   },
   de: {
     // Header
@@ -80,6 +89,15 @@ export const ui = {
     "confirm-email.resend.error":
       "Beim erneuten Senden der Bestätigungs-E-Mail ist ein Fehler aufgetreten. Bitte versuche es erneut.",
     "confirm-email.resend.success": "Eine Bestätigungs-E-Mail wurde gesendet.",
+    // New listing page
+    "new-listing.title": "Neues Angebot",
+    "new-listing.fields.title": "Titel",
+    "new-listing.fields.description": "Beschreibung",
+    "new-listing.button": "Anlegen",
+    "new-listing.errors.forbidden":
+      "Du bist nicht berechtigt, neue Angebote zu erstellen",
+    "new-listing.errors.unknown":
+      "Ein unbekannter Fehler ist beim Erstellen des Angebots aufgetreten.",
   },
 } as const;
 
