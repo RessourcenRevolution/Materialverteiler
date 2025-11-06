@@ -1,10 +1,13 @@
 ---
-export interface Props {
-  label: string;
-  href?: string;
-  outline?: boolean;
-}
-const { label, href, outline } = Astro.props;
+import type { HTMLAttributes } from "astro/types";
+
+export type Props = HTMLAttributes<"a"> &
+  HTMLAttributes<"button"> & {
+    label: string;
+    outline?: boolean;
+  };
+
+const { label, href, outline, class: className, ...props } = Astro.props;
 const Element = href ? "a" : "button";
 ---
 
@@ -16,8 +19,10 @@ const Element = href ? "a" : "button";
     " text-stone-900 rounded-sm",
     outline ? "ring hover:ring-2" : "bg-stone-200 hover:bg-stone-300",
     "cursor-pointer",
-    " active:translate-y-px",
+    "active:translate-y-px",
+    className,
   ]}
+  {...props}
 >
   {label}
 </Element>
