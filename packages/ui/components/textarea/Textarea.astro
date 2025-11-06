@@ -1,0 +1,28 @@
+---
+export interface Props {
+  name: string;
+  label?: string;
+  value?: string;
+  placeholder?: string;
+  required?: boolean;
+  rows?: number;
+}
+const { label, value, name, placeholder, required, rows = "3" } = Astro.props;
+---
+
+<div>
+  {
+    label && (
+      <label for={name} class="block w-full mb-2 font-bold">
+        {label}
+      </label>
+    )
+  }
+  <textarea
+    name={name}
+    placeholder={placeholder}
+    required={required}
+    class="w-full border-1 border-stone-500 rounded-sm px-3 py-2"
+    rows={rows}>{value}</textarea
+  >
+</div>
