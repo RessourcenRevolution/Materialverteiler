@@ -1,6 +1,6 @@
 ---
 import Layout from "~/layouts/Layout.astro";
-import { Alert, Button } from "@rr/ui/components";
+import { Alert, Button, Container } from "@rr/ui/components";
 import { EmailVerification } from "@rr/astro-pocketbase/components";
 import { useTranslations } from "~/i18n/ui";
 
@@ -10,8 +10,8 @@ const t = useTranslations();
 ---
 
 <Layout>
-  <astro-pocketbase pocketbase-url={process.env.PUBLIC_API_URL}>
-    <div class="mx-auto max-w-lg">
+  <Container size="xl">
+    <astro-pocketbase pocketbase-url={process.env.PUBLIC_API_URL}>
       <h1 class="text-2xl font-bold mb-6">
         {t("email-confirmation.title")}
       </h1>
@@ -39,8 +39,8 @@ const t = useTranslations();
         />
       </EmailVerification>
       <Button href="/dashboard" label={t("email-confirmation.button")} />
-    </div>
-  </astro-pocketbase>
+    </astro-pocketbase>
+  </Container>
 </Layout>
 
 <script src="@rr/astro-pocketbase/client/astro-pocketbase.ts"></script>
