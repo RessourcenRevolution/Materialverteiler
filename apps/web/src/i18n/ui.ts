@@ -36,7 +36,10 @@ export const ui = {
       "Error confirming e-mail address, please try agian...",
     "email-confirmation.success": "E-Mail confirmed!",
     "email-confirmation.button": "Go to dashboard",
-    // Dashboard pge
+    // Dashboard page
+    "dashboard.user-approval.title": "Welcome",
+    "dashboard.user-approval.text":
+      "Your account is currently under review and will be approved soon. We’ll notify you by email once it’s ready.",
     "confirm-email.warning.text":
       "Your email address is not yet confirmed. Check your inbox for the confirmation link.",
     "confirm-email.warning.button": "Resend verification e-mail",
@@ -82,7 +85,10 @@ export const ui = {
       "Fehler bei der Bestätigung der E-Mail-Adresse, bitte versuche es erneut...",
     "email-confirmation.success": "E-Mail Addresse ist bestätigt!",
     "email-confirmation.button": "Zum Dashboard",
-    // Dashboard pge
+    // Dashboard page
+    "dashboard.user-approval.title": "Wilkommen",
+    "dashboard.user-approval.text":
+      "Dein Konto wird derzeit geprüft und bald freigeschaltet. Sobald es aktiviert ist, erhältst du eine E-Mail von uns.",
     "confirm-email.warning.text":
       "Deine E-Mail-Adresse wurde noch nicht bestätigt. Überprüfe deinen Posteingang nach dem Bestätigungslink.",
     "confirm-email.warning.button": "Bestätigungs-E-Mail erneut senden",
@@ -99,7 +105,7 @@ export const ui = {
     "new-listing.errors.unknown":
       "Ein unbekannter Fehler ist beim Erstellen des Angebots aufgetreten.",
   },
-} as const;
+};
 
 export function useTranslations(lang: keyof typeof ui = defaultLang) {
   return function t(key: keyof (typeof ui)[typeof defaultLang]) {

@@ -1,7 +1,6 @@
 ---
 import Layout from "~/layouts/Layout.astro";
 import { Input, Button, Alert, Textarea } from "@rr/ui/components";
-import { usePocketbase } from "@rr/astro-pocketbase/scripts";
 import { useTranslations } from "~/i18n/ui";
 import { actions } from "astro:actions";
 
@@ -9,7 +8,6 @@ export const prerender = false;
 
 const t = useTranslations();
 
-let error;
 let title;
 let description;
 
