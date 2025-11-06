@@ -36,3 +36,16 @@ export const Error = {
   } satisfies Props,
   decorators: [{ component: FlexDecorator }],
 };
+
+export const Button = {
+  args: {
+    variant: "info",
+    text: "This is an alert with a button.",
+    button: {
+      label: "Button",
+      href: "#",
+      outline: true,
+    },
+  } satisfies Props,
+  decorators: [{ component: FlexDecorator }],
+};

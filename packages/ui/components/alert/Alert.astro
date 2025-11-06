@@ -1,11 +1,15 @@
 ---
-export interface Props {
+import type { HTMLAttributes } from "astro/types";
+import type { Props as ButtonProps } from "../button/Button.astro";
+import Button from "../button/Button.astro";
+
+export interface Props extends HTMLAttributes<"div"> {
   variant: "error" | "warning" | "info" | "success";
   text: string;
-  slot?: string;
+  button?: ButtonProps;
 }
 
-const { variant, text, slot } = Astro.props;
+const { variant, text, class: className, button, ...props } = Astro.props;
 
 const variants = {
   info: "bg-blue-200 text-blue-950",
@@ -15,6 +19,16 @@ const variants = {
 };
 ---
 
-<p slot={slot} class:list={["px-5 py-4 rounded-sm", variants[variant]]}>
-  {text}
-</p>
+<div
+  class:list={[
+    "flex justify-between items-center gap-4 px-5 py-4 rounded-sm",
+    variants[variant],
+    className,
+  ]}
+  {...props}
+>
+  <p>{text}</p>
+  <slot>
+    {button && <Button {...button} />}
+  </slot>
+</div>
