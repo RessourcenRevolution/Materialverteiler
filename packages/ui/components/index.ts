@@ -8,6 +8,10 @@ export {
 } from "./button/Button.astro";
 export { default as Card, type Props as CardProps } from "./card/Card.astro";
 export {
+  default as Container,
+  type Props as ContainerProps,
+} from "./container/Container.astro";
+export {
   default as Input,
   type Props as InputProps,
 } from "./input/Input.astro";
