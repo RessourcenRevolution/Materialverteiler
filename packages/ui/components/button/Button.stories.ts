@@ -19,3 +19,11 @@ export const Link = {
   } satisfies Props,
   decorators: [{ component: FlexDecorator }],
 };
+
+export const Outline = {
+  args: {
+    label: "Button",
+    outline: true,
+  } satisfies Props,
+  decorators: [{ component: FlexDecorator }],
+};

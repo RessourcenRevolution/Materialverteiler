@@ -2,9 +2,10 @@
 export interface Props {
   label: string;
   href?: string;
+  outline?: boolean;
 }
-const { label, href } = Astro.props;
-const Element =  href ? 'a' : 'button'
+const { label, href, outline } = Astro.props;
+const Element = href ? "a" : "button";
 ---
 
 <Element
@@ -12,9 +13,10 @@ const Element =  href ? 'a' : 'button'
   class:list={[
     "inline-block",
     "px-3 py-2",
-    "bg-stone-200 text-stone-900 rounded-sm",
+    " text-stone-900 rounded-sm",
+    outline ? "ring hover:ring-2" : "bg-stone-200 hover:bg-stone-300",
     "cursor-pointer",
-    "hover:bg-stone-300 active:translate-y-px",
+    " active:translate-y-px",
   ]}
 >
   {label}
