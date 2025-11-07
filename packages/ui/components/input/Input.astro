@@ -6,8 +6,9 @@ export interface Props {
   placeholder?: string;
   type?: astroHTML.JSX.HTMLInputTypeAttribute;
   required?: boolean;
+  error?: string;
 }
-const { label, value, name, placeholder, type, required } = Astro.props;
+const { label, value, name, placeholder, type, required, error } = Astro.props;
 ---
 
 <div>
@@ -24,6 +25,10 @@ const { label, value, name, placeholder, type, required } = Astro.props;
     value={value}
     placeholder={placeholder}
     required={required}
-    class="w-full border border-stone-500 rounded-sm px-3 py-2"
+    class:list={[
+      "w-full border border-stone-500 rounded-sm px-3 py-2",
+      error && "border-red-800!",
+    ]}
   />
+  {error && <p class="text-red-800 text-sm">{error}</p>}
 </div>

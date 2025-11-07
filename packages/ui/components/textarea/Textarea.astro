@@ -6,8 +6,17 @@ export interface Props {
   placeholder?: string;
   required?: boolean;
   rows?: number;
+  error?: string;
 }
-const { label, value, name, placeholder, required, rows = "3" } = Astro.props;
+const {
+  label,
+  value,
+  name,
+  placeholder,
+  required,
+  rows = "3",
+  error,
+} = Astro.props;
 ---
 
 <div>
@@ -22,7 +31,11 @@ const { label, value, name, placeholder, required, rows = "3" } = Astro.props;
     name={name}
     placeholder={placeholder}
     required={required}
-    class="w-full border border-stone-500 rounded-sm px-3 py-2"
+    class:list={[
+      "w-full border border-stone-500 rounded-sm px-3 py-2",
+      error && "border-red-800!",
+    ]}
     rows={rows}>{value}</textarea
   >
+  {error && <p class="text-red-800 text-sm">{error}</p>}
 </div>

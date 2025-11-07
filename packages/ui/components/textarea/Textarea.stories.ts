@@ -13,3 +13,13 @@ export const Default = {
   } satisfies Props,
   decorators: [{ component: FlexDecorator }],
 };
+
+export const Error = {
+  args: {
+    name: "textarea",
+    label: "Label",
+    placeholder: "Placeholder...",
+    error: "This field is required.",
+  } satisfies Props,
+  decorators: [{ component: FlexDecorator }],
+};
