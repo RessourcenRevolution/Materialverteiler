@@ -18,6 +18,7 @@ export const ui = {
     // Forms
     "forms.email": "E-Mail",
     "forms.password": "Password",
+    "forms.errors.required": "This field is required",
     // Signup page
     "signup.title": "Signup",
     "signup.button": "Signup",
@@ -48,14 +49,31 @@ export const ui = {
     "confirm-email.resend.success":
       "An e-mail verification email has been sent.",
     // New listing page
-    "new-listing.title": "New listing",
-    "new-listing.fields.title": "Title",
-    "new-listing.fields.description": "Description",
-    "new-listing.button": "Submit",
-    "new-listing.errors.forbidden":
+    "create-listing.create-team.title": "Create team",
+    "create-listing.create-team.text":
+      "Please provide information about your institute, organization, or association.",
+    "create-listing.title": "New listing",
+    "create-listing.text": "Please provide information about your resource.",
+    "create-listing.button": "Submit",
+    "create-listing.errors.forbidden":
       "You are not allowed to create new listings",
-    "new-listing.errors.unknown":
+    "create-listing.errors.unknown":
       "An unknown error occurred while creating the listing.",
+    // Team form
+    "team-form.name.label": "Name",
+    "team-form.name.placeholder": "e.g., Oper Köln",
+    "team-form.address.label": "Address",
+    "team-form.postalcode.label": "ZIP Code",
+    "team-form.city.label": "City",
+    "team-form.city.required": "Please provide a city.",
+    "team-form.errors.already-in-team": "You are already a member of a team.",
+    "team-form.submit": "Create team",
+    "team-form.success": "Successfully created your team",
+    // Listing form
+    "listing-form.title.label": "Title",
+    "listing-form.description.label": "Description",
+    "listing-form.submit": "Create listing",
+    "listing-form.success": "Listing created successfully!",
   },
   de: {
     // Header
@@ -67,6 +85,7 @@ export const ui = {
     // Forms
     "forms.email": "E-Mail Addresse",
     "forms.password": "Passwort",
+    "forms.errors.required": "Dieses Feld ist erforderlich",
     // Signup page
     "signup.title": "Registrieren",
     "signup.button": "Registrieren",
@@ -96,14 +115,33 @@ export const ui = {
       "Beim erneuten Senden der Bestätigungs-E-Mail ist ein Fehler aufgetreten. Bitte versuche es erneut.",
     "confirm-email.resend.success": "Eine Bestätigungs-E-Mail wurde gesendet.",
     // New listing page
-    "new-listing.title": "Neues Angebot",
-    "new-listing.fields.title": "Titel",
-    "new-listing.fields.description": "Beschreibung",
-    "new-listing.button": "Anlegen",
-    "new-listing.errors.forbidden":
+    "create-listing.create-team.title": "Erstelle ein Team",
+    "create-listing.create-team.text":
+      "Bitte gib Informationen zu deinem Institut, deiner Organisation oder deinem Verein an.",
+    "create-listing.title": "Neues Angebot",
+    "create-listing.text":
+      "Gib einige Details zu dem Material an, das du anbietest.",
+    "create-listing.button": "Anlegen",
+    "create-listing.errors.forbidden":
       "Du bist nicht berechtigt, neue Angebote zu erstellen",
-    "new-listing.errors.unknown":
+    "create-listing.errors.unknown":
       "Ein unbekannter Fehler ist beim Erstellen des Angebots aufgetreten.",
+    // Team form
+    "team-form.name.label": "Name",
+    "team-form.name.placeholder": "z.B. Oper Köln",
+    "team-form.address.label": "Addresse",
+    "team-form.postalcode.label": "PLZ",
+    "team-form.city.label": "Stadt",
+    "team-form.city.required": "Bitte gib eine Stadt ein.",
+    "team-form.errors.already-in-team":
+      "Du bist bereits Mitglied in einem Team.",
+    "team-form.submit": "Team erstellen",
+    "team-form.success": "Team erfolgreich erstellt.",
+    // Listing form
+    "listing-form.title.label": "Titel",
+    "listing-form.description.label": "Beschreibung",
+    "listing-form.submit": "Angebot anlegen",
+    "listing-form.success": "Angebot erfolgreich angelegt!",
   },
 };
 

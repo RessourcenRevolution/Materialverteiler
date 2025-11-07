@@ -1,0 +1,60 @@
+---
+import { Alert, Button, Input } from "@rr/ui/components";
+import { isInputError } from "astro:actions";
+import { actions } from "astro:actions";
+import { useTranslations } from "~/i18n/ui";
+import { fieldError } from "~/forms";
+
+export const prerender = false;
+
+const t = useTranslations();
+
+const result = Astro.getActionResult(actions.createTeam);
+
+const data =
+  Astro.request.method === "POST" ? await Astro.request.formData() : null;
+---
+
+<form method="post" action={actions.createTeam} class="flex flex-col gap-6">
+  <Input
+    type="text"
+    name="name"
+    label={t("team-form.name.label")}
+    placeholder={t("team-form.name.placeholder")}
+    value={data?.get("name") as string}
+    error={fieldError("name", result?.error)}
+    required
+  />
+  <Input
+    type="text"
+    name="address"
+    label={t("team-form.address.label")}
+    value={data?.get("address") as string}
+    error={fieldError("address", result?.error)}
+    required
+  />
+  <div class="grid grid-cols-2 gap-4">
+    <Input
+      type="text"
+      name="postalcode"
+      label={t("team-form.postalcode.label")}
+      value={data?.get("postalcode") as string}
+      error={fieldError("postalcode", result?.error)}
+      required
+    />
+    <Input
+      type="text"
+      name="city"
+      label={t("team-form.city.label")}
+      value={data?.get("city") as string}
+      error={fieldError("city", result?.error)}
+      required
+    />
+  </div>
+  {
+    result?.error && !isInputError(result.error) && (
+      <Alert variant="error" text={result.error.message} />
+    )
+  }
+  <Button type="submit" label={t("team-form.submit")} />
+</form>

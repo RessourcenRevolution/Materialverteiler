@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { TeamSchema } from "./team";
 
 export const UserSchema = z.object({
   id: z.string(),
@@ -8,6 +9,8 @@ export const UserSchema = z.object({
   emailVisibility: z.boolean(),
   name: z.string(),
   verified: z.boolean(),
+  team: z.string(),
+  expand: z.object({ team: TeamSchema.optional() }).optional(),
   // avatar: '',
 });
 export type User = z.infer<typeof UserSchema>;

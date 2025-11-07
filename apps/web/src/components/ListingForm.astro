@@ -1,0 +1,53 @@
+---
+import { actions } from "astro:actions";
+import { Input, Button, Alert, Textarea } from "@rr/ui/components";
+import { useTranslations } from "~/i18n/ui";
+import { fieldError } from "~/forms";
+import { isInputError } from "astro:actions";
+
+const t = useTranslations();
+
+const teamCreationResult = Astro.getActionResult(actions.createTeam);
+
+const result = Astro.getActionResult(actions.createListing);
+
+const data =
+  Astro.request.method === "POST" ? await Astro.request.formData() : null;
+---
+
+{
+  teamCreationResult?.data && (
+    <Alert variant="info" text={t("team-form.success")} class="mb-4" />
+  )
+}
+{
+  result?.data ? (
+    <Alert variant="success" text={t("listing-form.success")} class="mb-4" />
+  ) : (
+    <form
+      class="flex flex-col gap-6"
+      method="post"
+      action={actions.createListing}
+    >
+      <Input
+        name="title"
+        type="text"
+        label={t("listing-form.title.label")}
+        value={data?.get("title") as string}
+        error={fieldError("title", result?.error)}
+        required
+      />
+      <Textarea
+        name="description"
+        label={t("listing-form.description.label")}
+        value={data?.get("description") as string}
+        error={fieldError("description", result?.error)}
+        required
+      />
+      {result?.error && !isInputError(result.error) && (
+        <Alert variant="error" text={result.error.message} />
+      )}
+      <Button label={t("listing-form.submit")} />
+    </form>
+  )
+}
