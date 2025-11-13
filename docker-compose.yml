@@ -12,6 +12,9 @@ services:
     build:
       dockerfile: ./apps/web/Dockerfile
       context: .
+      args:
+        APP_NAME: ${APP_NAME:-App Name}
+        APP_LANGUAGE: ${APP_LANGUAGE:-en}
     ports:
       - "3000:3000"
     environment:
