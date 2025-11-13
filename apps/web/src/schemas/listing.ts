@@ -8,6 +8,7 @@ export const ListingSchema = z.object({
   title: z.string(),
   description: z.string(),
   user: z.string(),
+  images: z.array(z.string()),
   expand: z
     .object({
       user: UserSchema.optional(),
