@@ -4,6 +4,7 @@
     "apps/web",
     "apps/astrobook",
     "packages/ui",
+    "packages/image-uploader",
     "packages/astro-pocketbase"
   ]
 }
