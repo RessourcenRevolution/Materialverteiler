@@ -1,6 +1,6 @@
 ---
 import { actions } from "astro:actions";
-import { Input, Button, Alert, Textarea } from "@rr/ui/components";
+import { Input, Button, Alert, Textarea, ImageInput } from "@rr/ui/components";
 import { useTranslations } from "~/i18n/ui";
 import { fieldError } from "~/forms";
 import { isInputError } from "astro:actions";
@@ -28,6 +28,7 @@ const data =
       class="flex flex-col gap-6"
       method="post"
       action={actions.createListing}
+      enctype="multipart/form-data"
     >
       <Input
         name="title"
@@ -43,6 +44,11 @@ const data =
         value={data?.get("description") as string}
         error={fieldError("description", result?.error)}
         required
+      />
+      <ImageInput
+        name="images"
+        label={t("listing-form.images.label")}
+        error={fieldError("images", result?.error)}
       />
       {result?.error && !isInputError(result.error) && (
         <Alert variant="error" text={result.error.message} />

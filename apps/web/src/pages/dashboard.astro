@@ -42,6 +42,12 @@ const isNewUser = !Astro.locals.pb.authStore.record!.roles.includes("user");
             {listings.map((listing) => (
               <Card title={listing.title} border>
                 <div class="flex flex-col gap-2 mt-2">
+                  {listing.images && listing.images.length > 0 && (
+                    <img
+                      src={`${process.env.PUBLIC_API_URL}/api/files/listings/${listing.id}/${listing.images[0]}`}
+                      class="w-full aspect-square object-cover rounded-md"
+                    />
+                  )}
                   <p class="text-stone-500">
                     @{listing.expand?.user?.expand?.team?.name} -{" "}
                     {new Date(listing.created).toLocaleDateString(defaultLang)}

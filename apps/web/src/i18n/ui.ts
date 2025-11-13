@@ -70,6 +70,8 @@ export const ui = {
     "create-listing.button": "Submit",
     "create-listing.errors.forbidden":
       "You are not allowed to create new listings",
+    "create-listing.errors.image-file-size-limit":
+      "One of the selected images exceeds the maximum allowed file size of 5MB.",
     "create-listing.errors.unknown":
       "An unknown error occurred while creating the listing.",
     // Team form
@@ -85,6 +87,7 @@ export const ui = {
     // Listing form
     "listing-form.title.label": "Title",
     "listing-form.description.label": "Description",
+    "listing-form.images.label": "Images",
     "listing-form.submit": "Create listing",
     "listing-form.success": "Listing created successfully!",
   },
@@ -148,6 +151,8 @@ export const ui = {
     "create-listing.button": "Anlegen",
     "create-listing.errors.forbidden":
       "Du bist nicht berechtigt, neue Angebote zu erstellen",
+    "create-listing.errors.image-file-size-limit":
+      "Eine der ausgewählten Bilder überschreitet die maximal zulässige Dateigröße von 5 MB.",
     "create-listing.errors.unknown":
       "Ein unbekannter Fehler ist beim Erstellen des Angebots aufgetreten.",
     // Team form
@@ -164,6 +169,7 @@ export const ui = {
     // Listing form
     "listing-form.title.label": "Titel",
     "listing-form.description.label": "Beschreibung",
+    "listing-form.images.label": "Bilder",
     "listing-form.submit": "Angebot anlegen",
     "listing-form.success": "Angebot erfolgreich angelegt!",
   },

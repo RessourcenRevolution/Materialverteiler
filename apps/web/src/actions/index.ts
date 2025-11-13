@@ -105,6 +105,7 @@ export const server = {
     input: z.object({
       title: z.string(required),
       description: z.string(required),
+      images: z.array(z.instanceof(File))
     }),
     handler: async (input, { locals }) => {
       const t = useTranslations();
@@ -118,6 +119,11 @@ export const server = {
           throw new ActionError({
             code: "FORBIDDEN",
             message: t("create-listing.errors.forbidden"),
+          });
+        } else if (error instanceof ClientResponseError && error?.response?.data?.images?.code === "validation_file_size_limit") {
+          throw new ActionError({
+            code: "FORBIDDEN",
+            message: t("create-listing.errors.image-file-size-limit"),
           });
         } else {
           throw new ActionError({

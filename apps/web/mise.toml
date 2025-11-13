@@ -5,6 +5,7 @@ run = "npm run build"
 [tasks.dev]
 description = "Run in dev mode"
 run = "npm run dev"
+depends = ["//packages/image-uploader:build"]
 
 [tasks.start]
 description = "Start web app"
