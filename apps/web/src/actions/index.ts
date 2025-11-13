@@ -2,7 +2,7 @@ import { ActionError, defineAction } from "astro:actions";
 import { z } from "astro:schema";
 import { ClientResponseError } from "pocketbase";
 import { defaultLang, ui, useTranslations } from "~/i18n/ui";
-import { login, signup } from "@rr/astro-pocketbase/actions";
+import { login } from "@rr/astro-pocketbase/actions";
 
 const required = {
   required_error:
@@ -14,8 +14,74 @@ const required = {
 export const server = {
   // Pocketbase
   login,
-  signup,
-  // Custom
+
+  /**
+   * Create user and team
+   */
+  signup: defineAction({
+    accept: "form",
+    input: z.object({
+      firstname: z.string(required),
+      lastname: z.string(required),
+      team: z.string(required),
+      email: z.string(required),
+      password: z.string(required).min(8, "password_too_short"),
+    }),
+    handler: async (input, { locals }) => {
+      try {
+        // Create user
+        const user = await locals.pb.collection("users").create({
+          firstname: input.firstname,
+          lastname: input.lastname,
+          email: input.email,
+          password: input.password,
+          passwordConfirm: input.password,
+        });
+        // Login
+        await locals.pb
+          .collection("users")
+          .authWithPassword(input.email, input.password);
+        // Create team
+        const team = await locals.pb.collection("teams").create({ name: input.team });
+        // Update user
+        await locals.pb.collection("users").update(user.id, { team: team.id });
+        // Request verification
+        await locals.pb.collection("users").requestVerification(input.email);
+        return {
+          cookie: locals.pb.authStore.exportToCookie({
+            secure: import.meta.env.DEV ? false : true,
+          }),
+        };
+      } catch (e) {
+        if (
+          e instanceof ClientResponseError &&
+          e?.response?.data?.email?.code === "validation_not_unique"
+        ) {
+          throw new ActionError({
+            code: "NOT_ACCEPTABLE",
+            message: "email_in_use",
+          });
+        } else if (
+          e instanceof ClientResponseError &&
+          e?.response?.data?.password?.code === "validation_min_text_constraint"
+        ) {
+          throw new ActionError({
+            code: "BAD_REQUEST",
+            message: "password_invalid",
+          });
+        } else {
+          throw new ActionError({
+            code: "INTERNAL_SERVER_ERROR",
+            message: "unknown_error",
+          });
+        }
+      }
+    },
+  }),
+
+  /**
+   * Send an email verification email to the user.
+   */
   sendEmailVerification: defineAction({
     accept: "form",
     handler: async (_input, { locals }) => {
@@ -30,6 +96,10 @@ export const server = {
         .requestVerification(locals.pb.authStore.record.email);
     },
   }),
+
+  /**
+   * Create a new listing
+   */
   createListing: defineAction({
     accept: "form",
     input: z.object({

@@ -35,11 +35,27 @@ const data =
     </h1>
     <form class="flex flex-col gap-6" method="post" action={actions.signup}>
       <Input
-        name="name"
+        name="firstname"
         type="text"
-        label="Name"
-        value={data?.get("name") as string}
-        error={fieldError("name", result?.error, "signup.errors.")}
+        label={t("forms.firstname")}
+        value={data?.get("firstname") as string}
+        error={fieldError("firstname", result?.error, "signup.errors.")}
+        required
+      />
+      <Input
+        name="lastname"
+        type="text"
+        label={t("forms.lastname")}
+        value={data?.get("lastname") as string}
+        error={fieldError("lastname", result?.error, "signup.errors.")}
+        required
+      />
+      <Input
+        name="team"
+        type="text"
+        label={t("forms.team")}
+        value={data?.get("team") as string}
+        error={fieldError("team", result?.error, "signup.errors.")}
         required
       />
       <Input

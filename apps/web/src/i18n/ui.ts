@@ -18,16 +18,22 @@ export const ui = {
     "header.signup": "Signup",
     "header.logout": "Logout",
     // Forms
+    "forms.firstname": "Firstname",
+    "forms.lastname": "Lastname",
+    "forms.team": "Institution",
     "forms.email": "E-Mail",
     "forms.password": "Password",
     "forms.errors.required": "This field is required",
     // Signup page
     "signup.title": "Signup",
     "signup.button": "Signup",
-    "signup.errors.email_in_use": "There is already an account with this e-mail address.",
-    "signup.errors.password_too_short": "Password should be at least 8 characters long.",
+    "signup.errors.email_in_use":
+      "There is already an account with this e-mail address.",
+    "signup.errors.password_too_short":
+      "Password should be at least 8 characters long.",
     "signup.errors.required": "This field is required.",
-    "signup.errors.unknown": "An unknown error occurred while creating your account, please try again.",
+    "signup.errors.unknown":
+      "An unknown error occurred while creating your account, please try again.",
     // Login page
     "login.title": "Login",
     "login.button": "Login",
@@ -35,6 +41,7 @@ export const ui = {
     "profile.title": "Profile",
     "profile.name": "Name",
     "profile.email": "E-mail",
+    "profile.team": "Institution",
     // E-mail confirmation page
     "email-confirmation.title": "E-mail confirmation",
     "email-confirmation.loading": "Confirming e-mail address...",
@@ -89,16 +96,22 @@ export const ui = {
     "header.signup": "Registrieren",
     "header.logout": "Ausloggen",
     // Forms
+    "forms.firstname": "Vorname",
+    "forms.lastname": "Nachname",
+    "forms.team": "Institution",
     "forms.email": "E-Mail Addresse",
     "forms.password": "Passwort",
     "forms.errors.required": "Dieses Feld ist erforderlich",
     // Signup page
     "signup.title": "Registrieren",
     "signup.button": "Registrieren",
-    "signup.errors.email_in_use": "Es gibt bereits ein Konto mit dieser E-Mail-Adresse.", 
-    "signup.errors.password_too_short": "Das Passwort muss mindestens 8 Zeichen lang sein.",
+    "signup.errors.email_in_use":
+      "Es gibt bereits ein Konto mit dieser E-Mail-Adresse.",
+    "signup.errors.password_too_short":
+      "Das Passwort muss mindestens 8 Zeichen lang sein.",
     "signup.errors.required": "Dieses Feld ist erforderlich.",
-    "signup.errors.unknown": "Ein unbekannter Fehler ist aufgetreten, bitte versuche es erneut.",
+    "signup.errors.unknown":
+      "Ein unbekannter Fehler ist aufgetreten, bitte versuche es erneut.",
     // Login page
     "login.title": "Einloggen",
     "login.button": "Einloggen",
@@ -106,6 +119,7 @@ export const ui = {
     "profile.title": "Profiel",
     "profile.name": "Name",
     "profile.email": "E-Mail",
+    "profile.team": "Institution",
     // E-mail confirmation page
     "email-confirmation.title": "E-Mail-Bestätigung",
     "email-confirmation.loading": "E-Mail-Adresse wird bestätigt...",

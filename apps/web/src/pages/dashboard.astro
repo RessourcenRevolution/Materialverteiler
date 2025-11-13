@@ -11,7 +11,7 @@ const t = useTranslations();
 
 const items = await Astro.locals.pb
   .collection("listings")
-  .getFullList({ expand: "user" });
+  .getFullList({ expand: "user,user.team" });
 const listings = ListingSchema.array().parse(items) as Listing[];
 
 const isNewUser = !Astro.locals.pb.authStore.record!.roles.includes("user");
@@ -43,7 +43,7 @@ const isNewUser = !Astro.locals.pb.authStore.record!.roles.includes("user");
               <Card title={listing.title} border>
                 <div class="flex flex-col gap-2 mt-2">
                   <p class="text-stone-500">
-                    @{listing.expand?.user?.name} -{" "}
+                    @{listing.expand?.user?.expand?.team?.name} -{" "}
                     {new Date(listing.created).toLocaleDateString(defaultLang)}
                   </p>
                   <p class="text-stone-700">{listing.description}</p>

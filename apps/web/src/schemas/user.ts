@@ -7,9 +7,11 @@ export const UserSchema = z.object({
   updated: z.coerce.date(),
   email: z.string().email(),
   emailVisibility: z.boolean(),
-  name: z.string(),
+  firstname: z.string(),
+  lastname: z.string(),
   verified: z.boolean(),
   team: z.string(),
+  // TODO: roles
   expand: z.object({ team: TeamSchema.optional() }).optional(),
   // avatar: '',
 });
