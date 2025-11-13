@@ -4,7 +4,7 @@ services:
       dockerfile: ./Dockerfile
       context: ./apps/api
     volumes:
-      - ./apps/api/pb_data:/app/pb_data
+      - ../files/pb_data:/app/pb_data
 
   web:
     build:
