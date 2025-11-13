@@ -1,5 +1,5 @@
 import { ActionError, isInputError } from "astro:actions";
-import { useTranslations, type defaultLang, type ui } from "~/i18n/ui";
+import { useTranslations, type TranslationKey } from "~/i18n/ui";
 
 /**
  * Retrieves a translated error message for a specific form field.
@@ -10,13 +10,19 @@ import { useTranslations, type defaultLang, type ui } from "~/i18n/ui";
  *
  * @param fieldName - The name of the form field to check for an error.
  * @param error - The `ActionError` object from Astro Actions, which may contain validation errors.
+ * @param prefix - An optional prefix to prepend to the translations key.
  * @returns The translated error message string if an error for the specified field exists; otherwise, `undefined`.
  */
-export function fieldError(fieldName: string, error?: ActionError) {
+export function fieldError(
+  fieldName: string,
+  error?: ActionError,
+  prefix: string = ""
+) {
   const t = useTranslations();
   if (error && isInputError(error) && error.fields[fieldName]) {
     return t(
-      error.fields[fieldName][0] as keyof (typeof ui)[typeof defaultLang]
+      (prefix +
+        error.fields[fieldName][0]) as TranslationKey 
     );
   }
   return;

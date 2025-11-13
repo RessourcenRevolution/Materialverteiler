@@ -11,9 +11,9 @@
     "typecheck": "astro check"
   },
   "exports": {
+    "./actions": "./actions/index.ts",
     "./middleware": "./middleware/index.ts",
     "./components": "./components/index.ts",
-    "./scripts": "./scripts/index.ts",
     "./client/astro-pocketbase.ts": "./client/astro-pocketbase.ts"
   },
   "dependencies": {

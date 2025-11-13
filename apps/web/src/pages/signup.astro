@@ -1,48 +1,31 @@
 ---
 import Layout from "~/layouts/Layout.astro";
 import { Input, Button, Alert } from "@rr/ui/components";
-import { usePocketbase } from "@rr/astro-pocketbase/scripts";
 import { useTranslations } from "~/i18n/ui";
+import { actions } from "astro:actions";
+import { ActionError } from "astro:actions";
+import { fieldError } from "~/forms";
+import { isInputError } from "astro:actions";
+import type { TranslationKey } from "~/i18n/ui";
 
 export const prerender = false;
 
 const t = useTranslations();
-const { signup } = usePocketbase(Astro.locals.pb);
 
-let error = "";
-let name = "";
-let email = "";
-let password = "";
-
-if (Astro.request.method === "POST") {
-  const body = await Astro.request.formData();
-  name = body.get("name") as string;
-  email = body.get("email") as string;
-  password = body.get("password") as string;
-
-  const {
-    status,
-    success,
-    error: _error,
-  } = await signup({
-    name,
-    email,
-    password,
+const result = Astro.getActionResult(actions.signup);
+if (!(result?.data instanceof ActionError) && result?.data) {
+  const { cookie } = result?.data;
+  return new Response(null, {
+    status: 302,
+    headers: {
+      Location: "/dashboard",
+      "Set-Cookie": cookie,
+    },
   });
-  if (success) {
-    return new Response(null, {
-      status: 302,
-      headers: {
-        Location: "/dashboard",
-        "Set-Cookie": Astro.locals.pb.authStore.exportToCookie({
-          secure: import.meta.env.DEV ? false : true,
-        }),
-      },
-    });
-  }
-  error = _error;
-  Astro.response.status = status;
 }
+
+const data =
+  Astro.request.method === "POST" ? await Astro.request.formData() : null;
 ---
 
 <Layout>
@@ -50,23 +33,40 @@ if (Astro.request.method === "POST") {
     <h1 class="text-2xl font-bold mb-6">
       {t("signup.title")}
     </h1>
-    <form class="flex flex-col gap-6" method="post">
-      <Input name="name" type="text" label="Name" value={name} required />
+    <form class="flex flex-col gap-6" method="post" action={actions.signup}>
+      <Input
+        name="name"
+        type="text"
+        label="Name"
+        value={data?.get("name") as string}
+        error={fieldError("name", result?.error, "signup.errors.")}
+        required
+      />
       <Input
         name="email"
         type="email"
         label={t("forms.email")}
-        value={email}
-        required
+        value={data?.get("email") as string}
+        error={fieldError("email", result?.error, "signup.errors.")}
       />
       <Input
         name="password"
         type="password"
         label={t("forms.password")}
-        value={password}
+        value={data?.get("password") as string}
+        error={fieldError("password", result?.error, "signup.errors.")}
         required
       />
-      {error && <Alert variant="error" text={error} />}
+      {
+        result?.error && !isInputError(result.error) && (
+          <Alert
+            variant="error"
+            text={t(
+              ("signup.errors." + result.error.message) as TranslationKey
+            )}
+          />
+        )
+      }
       <Button label={t("signup.button")} />
     </form>
   </div>

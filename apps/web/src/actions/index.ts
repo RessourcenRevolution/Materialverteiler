@@ -2,6 +2,7 @@ import { ActionError, defineAction } from "astro:actions";
 import { z } from "astro:schema";
 import { ClientResponseError } from "pocketbase";
 import { defaultLang, ui, useTranslations } from "~/i18n/ui";
+import { login, signup } from "@rr/astro-pocketbase/actions";
 
 const required = {
   required_error:
@@ -11,6 +12,10 @@ const required = {
 };
 
 export const server = {
+  // Pocketbase
+  login,
+  signup,
+  // Custom
   sendEmailVerification: defineAction({
     accept: "form",
     handler: async (_input, { locals }) => {
@@ -71,7 +76,7 @@ export const server = {
       }
       try {
         const team = await locals.pb.collection("teams").create({ ...input });
-        const user = await locals.pb
+        await locals.pb
           .collection("users")
           .update(locals.pb.authStore.record!.id, { team: team.id });
         return team;

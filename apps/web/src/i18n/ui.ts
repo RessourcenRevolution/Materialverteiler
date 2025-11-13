@@ -1,5 +1,7 @@
 import { APP_LANGUAGE } from "astro:env/client";
 
+export type TranslationKey = keyof (typeof ui)[typeof defaultLang];
+
 export const languages = {
   en: "English",
   de: "Deutsch",
@@ -22,6 +24,10 @@ export const ui = {
     // Signup page
     "signup.title": "Signup",
     "signup.button": "Signup",
+    "signup.errors.email_in_use": "There is already an account with this e-mail address.",
+    "signup.errors.password_too_short": "Password should be at least 8 characters long.",
+    "signup.errors.required": "This field is required.",
+    "signup.errors.unknown": "An unknown error occurred while creating your account, please try again.",
     // Login page
     "login.title": "Login",
     "login.button": "Login",
@@ -89,6 +95,10 @@ export const ui = {
     // Signup page
     "signup.title": "Registrieren",
     "signup.button": "Registrieren",
+    "signup.errors.email_in_use": "Es gibt bereits ein Konto mit dieser E-Mail-Adresse.", 
+    "signup.errors.password_too_short": "Das Passwort muss mindestens 8 Zeichen lang sein.",
+    "signup.errors.required": "Dieses Feld ist erforderlich.",
+    "signup.errors.unknown": "Ein unbekannter Fehler ist aufgetreten, bitte versuche es erneut.",
     // Login page
     "login.title": "Einloggen",
     "login.button": "Einloggen",

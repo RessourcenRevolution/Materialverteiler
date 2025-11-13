@@ -1,45 +1,30 @@
 ---
 import Layout from "~/layouts/Layout.astro";
 import { Input, Button, Alert } from "@rr/ui/components";
-import { usePocketbase } from "@rr/astro-pocketbase/scripts";
 import { useTranslations } from "~/i18n/ui";
+import { actions } from "astro:actions";
+import { isInputError } from "astro:actions";
+import { fieldError } from "~/forms";
+import { ActionError } from "astro:actions";
 
 export const prerender = false;
 
 const t = useTranslations();
-const { login } = usePocketbase(Astro.locals.pb);
 
-let error = "";
-let email = "";
-let password = "";
-
-if (Astro.request.method === "POST") {
-  const body = await Astro.request.formData();
-  email = body.get("email") as string;
-  password = body.get("password") as string;
-
-  const {
-    status,
-    success,
-    error: _error,
-  } = await login({
-    email,
-    password,
+const result = Astro.getActionResult(actions.login);
+if (!(result?.data instanceof ActionError) && result?.data) {
+  const { cookie } = result?.data;
+  return new Response(null, {
+    status: 302,
+    headers: {
+      Location: "/dashboard",
+      "Set-Cookie": cookie,
+    },
   });
-  if (success) {
-    return new Response(null, {
-      status: 302,
-      headers: {
-        Location: "/dashboard",
-        "Set-Cookie": Astro.locals.pb.authStore.exportToCookie({
-          secure: import.meta.env.DEV ? false : true,
-        }),
-      },
-    });
-  }
-  error = _error;
-  Astro.response.status = status;
 }
+
+const data =
+  Astro.request.method === "POST" ? await Astro.request.formData() : null;
 ---
 
 <Layout>
@@ -47,22 +32,29 @@ if (Astro.request.method === "POST") {
     <h1 class="text-2xl font-bold mb-6">
       {t("login.title")}
     </h1>
-    <form class="flex flex-col gap-6" method="post">
+    <form class="flex flex-col gap-6" method="post" action={actions.login}>
+      <input type="hidden" name="redirect" value="/dashboard" />
       <Input
         name="email"
         type="email"
         label={t("forms.email")}
-        value={email}
+        value={data?.get("email") as string}
+        error={fieldError("email", result?.error, "forms.errors.")}
         required
       />
       <Input
         name="password"
         type="password"
         label={t("forms.password")}
-        value={password}
+        value={data?.get("password") as string}
+        error={fieldError("password", result?.error, "forms.errors.")}
         required
       />
-      {error && <Alert variant="error" text={error} />}
+      {
+        result?.error && !isInputError(result.error) && (
+          <Alert variant="error" text={result.error.message} />
+        )
+      }
       <Button label={t("login.button")} />
     </form>
   </div>
