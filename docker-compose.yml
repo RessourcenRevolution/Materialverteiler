@@ -3,8 +3,6 @@ services:
     build:
       dockerfile: ./Dockerfile
       context: ./apps/api
-    ports:
-      - "8080:8080"
     volumes:
       - ./apps/api/pb_data:/app/pb_data
 
@@ -15,8 +13,7 @@ services:
       args:
         APP_NAME: ${APP_NAME:-App Name}
         APP_LANGUAGE: ${APP_LANGUAGE:-en}
-    ports:
-      - "3000:3000"
+        APP_PORT: ${APP_PORT:-3000}
     environment:
       API_URL: ${API_URL:-http://api:8080}
       PUBLIC_API_URL: ${PUBLIC_API_URL:-http://localhost:8080}

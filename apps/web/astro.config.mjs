@@ -8,7 +8,7 @@ import lit from "@semantic-ui/astro-lit";
 // https://astro.build/config
 export default defineConfig({
   server: {
-    port: Number(process.env.PORT) || 3000,
+    port: Number(process.env.APP_PORT) || 3000,
   },
 
   adapter: node({
