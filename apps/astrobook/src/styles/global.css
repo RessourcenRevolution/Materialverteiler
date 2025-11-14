@@ -1,2 +1,6 @@
 @import "@rr/ui/tailwind.css";
 @source "../../../../packages/ui";
+
+html {
+    line-height: 1.5;
+}
