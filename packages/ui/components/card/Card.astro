@@ -1,7 +1,7 @@
 ---
 export interface Props {
   border?: boolean;
-  title: string;
+  title?: string;
   content?: string;
 }
 
@@ -9,7 +9,11 @@ const { title, content, border = true } = Astro.props;
 ---
 
 <div class:list={["p-4", border && "border rounded-md"]}>
-  <h2 class:list={["text-xl font-bold", content && "mb-2"]}>{title}</h2>
+  {
+    title && (
+      <h2 class:list={["text-xl font-bold", content && "mb-2"]}>{title}</h2>
+    )
+  }
   <slot>
     {content && <Fragment set:html={content} />}
   </slot>
