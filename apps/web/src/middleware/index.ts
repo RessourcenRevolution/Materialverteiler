@@ -10,6 +10,7 @@ const UNAUTHENTICATED_ROUTES = [
   /^\/login($|\/.*)/,
   /^\/signup($|\/.*)/,
   /^\/logout($|\/.*)/,
+  /^\/ueber-uns($|\/.*)/,
   /^\/($|\/.*)/,
 ];
 
