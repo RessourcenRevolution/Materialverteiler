@@ -2,6 +2,7 @@
 import { Container } from "@rr/ui/components";
 import { DocumentRenderer } from "astro-document-renderer";
 import Layout from "~/layouts/Layout.astro";
+import Image from "~/components/keystone/Image.astro";
 
 export const prerender = false;
 
@@ -16,7 +17,7 @@ const response = await fetch("http://localhost:3002/api/graphql", {
         page(where: $where) {
           title
           content {
-            document
+            document(hydrateRelationships: true)
           }
         }
       }
@@ -36,6 +37,9 @@ if (!query.data.page) {
 
 <Layout>
   <Container size="lg" class="prose">
-    <DocumentRenderer document={query.data.page.content.document} />
+    <DocumentRenderer
+      document={query.data.page.content.document}
+      componentBlocks={{ image: Image }}
+    />
   </Container>
 </Layout>

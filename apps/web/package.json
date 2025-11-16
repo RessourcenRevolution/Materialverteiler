@@ -18,7 +18,7 @@
     "@semantic-ui/astro-lit": "^5.1.1",
     "@tailwindcss/vite": "4.1.14",
     "astro": "5.14.1",
-    "astro-document-renderer": "^1.0.0",
+    "astro-document-renderer": "^1.0.1",
     "pocketbase": "^0.26.2",
     "tailwindcss": "4.1.14"
   },

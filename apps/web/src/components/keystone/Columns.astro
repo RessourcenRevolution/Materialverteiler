@@ -1,0 +1,33 @@
+---
+import { DocumentRenderer } from "astro-document-renderer";
+
+type Props = {
+  layout: [number, ...number[]];
+  children: any[];
+  documentRendererProps: any;
+};
+
+const { layout, children, documentRendererProps } = Astro.props;
+
+const layouts = {
+  "1": "grid-cols-1",
+  "11": "md:grid-cols-2",
+};
+
+// Store the current number of layout columns, to be consumed by child components
+Astro.locals.columns = layout.length;
+---
+
+<div
+  class={`grid gap-12 items-center ${
+    layouts[layout.join("")] || "grid-cols-1"
+  }`}
+>
+  {
+    children.map((node, i) => (
+      <div>
+        <DocumentRenderer document={node.children} {...documentRendererProps} />
+      </div>
+    ))
+  }
+</div>
