@@ -19,6 +19,17 @@ model User {
   createdAt DateTime? @default(now())
 }
 
+model Image {
+  id              String  @id @default(cuid())
+  name            String  @default("")
+  altText         String  @default("")
+  image_id        String?
+  image_filesize  Int?
+  image_width     Int?
+  image_height    Int?
+  image_extension String?
+}
+
 model Page {
   id               String  @id @default(cuid())
   title            String  @default("")

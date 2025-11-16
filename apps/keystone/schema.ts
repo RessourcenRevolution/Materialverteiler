@@ -7,6 +7,7 @@
 
 import { list } from "@keystone-6/core";
 import { allowAll } from "@keystone-6/core/access";
+import { componentBlocks } from "./component-blocks";
 
 // see https://keystonejs.com/docs/fields/overview for the full list of fields
 //   this is a few common fields for an example
@@ -15,7 +16,7 @@ import {
   relationship,
   password,
   timestamp,
-  select,
+  image,
 } from "@keystone-6/core/fields";
 
 // the document field is a more complicated field, so it has it's own package
@@ -67,6 +68,19 @@ export const lists = {
     },
   }),
 
+  Image: list({
+    access: queryOnly,
+    fields: {
+      name: text({
+        validation: {
+          isRequired: true,
+        },
+      }),
+      altText: text(),
+      image: image({ storage: "images" }),
+    },
+  }),
+
   Page: list({
     access: queryOnly,
     ui: {
@@ -107,6 +121,10 @@ export const lists = {
         links: true,
         dividers: true,
         layouts: [[1], [1, 1]],
+        ui: {
+          views: "./component-blocks",
+        },
+        componentBlocks,
       }),
     },
     hooks: {
