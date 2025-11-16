@@ -1,6 +1,7 @@
 {
   "name": "rr",
   "workspaces": [
+    "apps/keystone",
     "apps/web",
     "apps/astrobook",
     "packages/ui",
