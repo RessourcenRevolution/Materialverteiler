@@ -66,4 +66,78 @@ export const lists = {
       }),
     },
   }),
+
+  Page: list({
+    access: queryOnly,
+    ui: {
+      labelField: "title",
+    },
+    fields: {
+      title: text({
+        validation: { isRequired: true },
+      }),
+
+      slug: text({
+        ui: {
+          itemView: { fieldPosition: "sidebar" },
+        },
+      }),
+
+      parent: relationship({
+        ref: "Page",
+        ui: {
+          itemView: { fieldPosition: "sidebar" },
+        },
+      }),
+
+      path: text({
+        isIndexed: "unique",
+        ui: {
+          itemView: {
+            fieldMode: "read",
+            fieldPosition: "sidebar",
+          },
+        },
+      }),
+
+      // the document field can be used for making rich editable content
+      //   you can find out more at https://keystonejs.com/docs/guides/document-fields
+      content: document({
+        formatting: true,
+        links: true,
+        dividers: true,
+        layouts: [[1], [1, 1]],
+      }),
+    },
+    hooks: {
+      resolveInput: async ({ context, item, inputData, resolvedData }) => {
+        const slug = inputData?.slug || item?.slug || "";
+        const parentId =
+          inputData?.parent?.connect?.id || item?.parentId || undefined;
+
+        // No parent, return just the slug
+        if (!parentId) {
+          return {
+            ...resolvedData,
+            path: "/" + slug,
+          };
+        }
+
+        // There is a parent, combine the parent path with the page slug
+        const page = await context.prisma.page.findFirst({
+          where: { id: parentId },
+        });
+        if (!page) {
+          throw Error("Parent page not found");
+        }
+        if (page.path === "/") {
+          throw Error("Page can't have the homepage as parent page");
+        }
+        return {
+          ...resolvedData,
+          path: page.path + "/" + slug,
+        };
+      },
+    },
+  }),
 } satisfies Lists;

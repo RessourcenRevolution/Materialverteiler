@@ -1,9 +1,36 @@
 ---
+import { Container } from "@rr/ui/components";
+import { DocumentRenderer } from "astro-document-renderer";
 import Layout from "~/layouts/Layout.astro";
 
 export const prerender = false;
+
+const response = await fetch("http://localhost:3002/api/graphql", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+    query: `
+      query Page($where: PageWhereUniqueInput!) {
+        page(where: $where) {
+          title
+          content {
+            document
+          }
+        }
+      }
+      `,
+    variables: {
+      where: {
+        path: "/",
+      },
+    },
+  }),
+});
+const query = await response.json();
 ---
 
 <Layout>
-  <h1 class="text-2xl font-bold mb-4">Homepage</h1>
+  <Container size="lg" class="prose">
+    <DocumentRenderer document={query.data.page.content.document} />
+  </Container>
 </Layout>

@@ -18,3 +18,16 @@ model User {
   password  String
   createdAt DateTime? @default(now())
 }
+
+model Page {
+  id               String  @id @default(cuid())
+  title            String  @default("")
+  slug             String  @default("")
+  parent           Page?   @relation("Page_parent", fields: [parentId], references: [id])
+  parentId         String? @map("parent")
+  path             String  @unique @default("")
+  content          String  @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
+  from_Page_parent Page[]  @relation("Page_parent")
+
+  @@index([parentId])
+}
