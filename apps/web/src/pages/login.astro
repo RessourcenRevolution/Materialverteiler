@@ -55,7 +55,14 @@ const data =
           <Alert variant="error" text={result.error.message} />
         )
       }
-      <Button label={t("login.button")} />
+      <div class="flex gap-4">
+        <Button
+          label={t("login.button")}
+          variant="primary"
+          class="self-start"
+        />
+        <Button label={t("login.signup")} href="/signup" class="self-start" />
+      </div>
     </form>
   </div>
 </Layout>

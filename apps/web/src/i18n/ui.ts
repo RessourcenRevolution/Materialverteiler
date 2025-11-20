@@ -37,6 +37,7 @@ export const ui = {
     // Login page
     "login.title": "Login",
     "login.button": "Login",
+    "login.signup": "Create account",
     // Profile page
     "profile.title": "Profile",
     "profile.name": "Name",
@@ -118,6 +119,7 @@ export const ui = {
     // Login page
     "login.title": "Einloggen",
     "login.button": "Einloggen",
+    "login.signup": "Konto anlegen",
     // Profile page
     "profile.title": "Profiel",
     "profile.name": "Name",

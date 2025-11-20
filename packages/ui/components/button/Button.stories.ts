@@ -12,6 +12,14 @@ export const Default = {
   decorators: [{ component: FlexDecorator }],
 };
 
+export const Primary = {
+  args: {
+    label: "Button",
+    variant: "primary"
+  } satisfies Props,
+  decorators: [{ component: FlexDecorator }],
+};
+
 export const Link = {
   args: {
     label: "Link",

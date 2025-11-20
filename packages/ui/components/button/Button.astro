@@ -4,10 +4,16 @@ import type { HTMLAttributes } from "astro/types";
 export type Props = HTMLAttributes<"a"> &
   HTMLAttributes<"button"> & {
     label: string;
-    outline?: boolean;
+    variant?: "primary" | "secondary";
   };
 
-const { label, href, outline, class: className, ...props } = Astro.props;
+const {
+  label,
+  variant = "secondary",
+  href,
+  class: className,
+  ...props
+} = Astro.props;
 const Element = href ? "a" : "button";
 ---
 
@@ -15,9 +21,11 @@ const Element = href ? "a" : "button";
   href={href}
   class:list={[
     "inline-block",
-    "px-3 py-2",
-    " text-body text-base rounded-sm",
-    outline ? "ring hover:ring-2" : "bg-stone-200 hover:bg-stone-300",
+    "px-3 py-2.5",
+    " text-body text-base font-bold",
+    "border-body border-(length:--border)",
+    variant === "primary" && "bg-primary hover:bg-body hover:text-primary",
+    variant === "secondary" && "text-body hover:text-white hover:bg-body",
     "cursor-pointer",
     "active:translate-y-px",
     className,

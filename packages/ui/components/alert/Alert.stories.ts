@@ -44,7 +44,6 @@ export const Button = {
     button: {
       label: "Button",
       href: "#",
-      outline: true,
     },
   } satisfies Props,
   decorators: [{ component: FlexDecorator }],
