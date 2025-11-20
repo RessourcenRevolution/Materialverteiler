@@ -1,2 +1,17 @@
 @import "@rr/ui/tailwind.css";
 @source "../../../../packages/ui";
+
+@theme {
+    --animate-slide-from-left: slide-from-left 200ms var(--ease-out) forwards;
+
+    @keyframes slide-from-left {
+
+        0% {
+            transform: translateX(100%);
+        }
+
+        100% {
+            transform: translateX(0%);
+        }
+    }
+}

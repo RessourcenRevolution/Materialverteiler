@@ -2,6 +2,8 @@
 import { NavigationItem } from "@rr/ui/components";
 import { useTranslations } from "~/i18n/ui";
 import logo from "../../assets/logo.png";
+import MenuIcon from "iconoir/icons/menu.svg";
+import CloseIcon from "iconoir/icons/xmark.svg";
 
 interface Props {
   class?: string;
@@ -12,6 +14,26 @@ const { class: className } = Astro.props;
 const authStore = Astro.locals.pb.authStore;
 
 const t = useTranslations();
+
+const items: Record<string, { href: string; label: string }[]> = {
+  main: [
+    ...(authStore.isValid
+      ? [{ href: "/dashboard", label: t("header.dashboard") }]
+      : []),
+    { href: "/ueber-uns", label: t("header.about") },
+  ],
+  meta: [
+    ...(authStore.isValid
+      ? [
+          { href: "/profile", label: t("header.profile") },
+          { href: "/logout", label: t("header.logout") },
+        ]
+      : [
+          { href: "/login", label: t("header.login") },
+          { href: "/signup", label: t("header.signup") },
+        ]),
+  ],
+};
 ---
 
 <header
@@ -24,34 +46,77 @@ const t = useTranslations();
   <nav class="w-full flex justify-between items-center [.is-sticky_&]:pt-1">
     <div class="flex items-center gap-6">
       <a href="/" class="font-bold mr-8">
-        <img src={logo.src} alt="Logo" class="w-55" />
+        <img src={logo.src} alt="Logo" class="w-55 max-w-[50vw]" />
       </a>
-      <NavigationItem href="/ueber-uns">Über uns</NavigationItem>
       {
-        authStore.isValid && (
-          <NavigationItem href="/dashboard">
-            {t("header.dashboard")}
+        items.main.map((item) => (
+          <NavigationItem href={item.href} class="hidden lg:block">
+            {item.label}
           </NavigationItem>
-        )
+        ))
       }
     </div>
-    <div class="flex gap-6 pr-4">
+    <div class="hidden lg:flex gap-6 pr-4">
       {
-        authStore.isValid ? (
-          <>
-            <span>{authStore.record?.name}</span>
-            <NavigationItem href="/profile">
-              {t("header.profile")}
-            </NavigationItem>
-            <NavigationItem href="/logout">{t("header.logout")}</NavigationItem>
-          </>
-        ) : (
-          <>
-            <NavigationItem href="/login">{t("header.login")}</NavigationItem>
-            <NavigationItem href="/signup">{t("header.signup")}</NavigationItem>
-          </>
-        )
+        items.meta.map((item) => (
+          <NavigationItem href={item.href}>{item.label}</NavigationItem>
+        ))
       }
     </div>
+    <drawer-menu-trigger target="main-navigation" class="block lg:hidden">
+      <NavigationItem class="p-3">
+        <MenuIcon width="30" height="30" />
+      </NavigationItem>
+    </drawer-menu-trigger>
   </nav>
+
+  <drawer-menu class="group block lg:hidden">
+    <dialog
+      id="main-navigation"
+      class:list={[
+        "fixed inset-0 left-1/10! z-9999 max-w-full max-h-full w-9/10 h-full",
+        "[&[open]]:block [&[open]]:animate-slide-from-left",
+        "transition-transform delay-1000",
+      ]}
+    >
+      <div
+        class="flex bg-background flex-col justify-stretch max-w-screen max-h-full w-full h-full overflow-hidden"
+      >
+        <drawer-menu-page open class="relative p-8">
+          <form method="dialog">
+            <button type="submit" class="absolute top-8 right-8">
+              <CloseIcon width="30" height="30" />
+            </button>
+          </form>
+          <ul class="flex flex-col gap-4">
+            <li>
+              <NavigationItem href="/" class="text-lg">
+                {t("header.home")}
+              </NavigationItem>
+            </li>
+            {
+              items.main.map((item) => (
+                <li>
+                  <NavigationItem href={item.href} class="text-lg">
+                    {item.label}
+                  </NavigationItem>
+                </li>
+              ))
+            }
+            {
+              items.meta.map((item) => (
+                <li>
+                  <NavigationItem href={item.href} class="text-lg">
+                    {item.label}
+                  </NavigationItem>
+                </li>
+              ))
+            }
+          </ul>
+        </drawer-menu-page>
+      </div>
+    </dialog>
+  </drawer-menu>
 </header>
+
+<script src="@rr/drawer-menu"></script>

@@ -12,11 +12,13 @@ export const defaultLang = APP_LANGUAGE;
 export const ui = {
   en: {
     // Header
+    "header.home": "Home",
     "header.dashboard": "Dashboard",
     "header.profile": "Profile",
     "header.login": "Login",
     "header.signup": "Signup",
     "header.logout": "Logout",
+    "header.about": "About us",
     // Forms
     "forms.firstname": "Firstname",
     "forms.lastname": "Lastname",
@@ -94,10 +96,12 @@ export const ui = {
   },
   de: {
     // Header
+    "header.home": "Startseite",
     "header.dashboard": "Dashboard",
     "header.profile": "Profiel",
     "header.login": "Einloggen",
     "header.signup": "Registrieren",
+    "header.about": "Über uns",
     "header.logout": "Ausloggen",
     // Forms
     "forms.firstname": "Vorname",
