@@ -3,6 +3,7 @@ import Header from "~/components/Header/Header.astro";
 import "~/styles/global.css";
 import { APP_NAME } from "astro:env/client";
 import { defaultLang } from "~/i18n/ui";
+import Footer from "~/components/Footer.astro";
 ---
 
 <!doctype html>
@@ -14,11 +15,12 @@ import { defaultLang } from "~/i18n/ui";
     <meta name="generator" content={Astro.generator} />
     <title>{APP_NAME}</title>
   </head>
-  <body>
+  <body class="h-auto! min-h-full grid grid-rows-[auto_1fr_auto]">
     <Header class="max-w-[1600px] mx-auto" />
-    <main class="max-w-[1600px] mx-auto px-4">
+    <main class="w-full max-w-[1600px] mx-auto px-4">
       <slot />
     </main>
+    <Footer class="max-w-6xl mx-auto" />
   </body>
 </html>
 
