@@ -22,7 +22,7 @@ const {
 <div>
   {
     label && (
-      <label for={name} class="block w-full mb-2 font-bold">
+      <label for={name} class="block w-full mb-2 font-bold text-body text-base">
         {label}
       </label>
     )
@@ -32,7 +32,7 @@ const {
     placeholder={placeholder}
     required={required}
     class:list={[
-      "w-full border border-stone-500 rounded-sm px-3 py-2",
+      "w-full text-body text-base border border-stone-500 rounded-sm px-3 py-2",
       error && "border-red-800!",
     ]}
     rows={rows}>{value}</textarea

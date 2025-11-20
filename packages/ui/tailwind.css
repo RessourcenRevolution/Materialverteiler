@@ -2,5 +2,7 @@
 @plugin "@tailwindcss/typography";
 
 @theme {
-  /* Your default styles here */
+  --color-body: var(--color-stone-900);
+  --text-base: clamp(0.875rem, 0.85rem + 0.125vw, 1rem);
+  --text-sm: clamp(0.75rem, 0.725rem + 0.125vw, 0.875rem);
 }
