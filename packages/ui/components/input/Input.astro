@@ -3,18 +3,26 @@ export interface Props {
   name: string;
   label?: string;
   value?: string;
-  placeholder?: string;
   type?: astroHTML.JSX.HTMLInputTypeAttribute;
   required?: boolean;
   error?: string;
 }
-const { label, value, name, placeholder, type, required, error } = Astro.props;
+const { label, value, name, type, required, error } = Astro.props;
 ---
 
-<div>
+<div class="relative">
   {
     label && (
-      <label for={name} class="block w-full mb-2 font-bold">
+      <label
+        for={name}
+        class:list={[
+          "absolute font-bold text-body text-base leading-none start-[0.9em]",
+          "transform scale-75 top-[0.85em] -translate-y-[0.5em] z-10 origin-left duration-200",
+          "has-[+input:focus]:scale-75! has-[+input:focus]:top-[0.85em]!",
+          "has-[+input:placeholder-shown]:scale-100 has-[+input:placeholder-shown]:top-[1.65em]",
+          "has-[+input:placeholder-shown]:pointer-events-none",
+        ]}
+      >
         {label}
       </label>
     )
@@ -23,10 +31,10 @@ const { label, value, name, placeholder, type, required, error } = Astro.props;
     name={name}
     type={type}
     value={value}
-    placeholder={placeholder}
+    placeholder={" "}
     required={required}
     class:list={[
-      "w-full border border-stone-500 rounded-sm px-3 py-2",
+      "peer w-full text-body border-3 text-base border-body px-[0.75em] pb-[0.5em] pt-[1em]",
       error && "border-red-800!",
     ]}
   />
