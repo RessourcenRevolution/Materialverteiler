@@ -21,6 +21,7 @@ const t = useTranslations();
 >
   <nav class="flex gap-4">
     <a href="/" class="font-bold">RR</a>
+    <Link href="/ueber-uns">Über uns</Link>
     {
       authStore.isValid && (
         <Link href="/dashboard">{t("header.dashboard")}</Link>

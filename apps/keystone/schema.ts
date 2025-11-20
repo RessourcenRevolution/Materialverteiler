@@ -1,0 +1,161 @@
+// Welcome to your schema
+//   Schema driven development is Keystone's modus operandi
+//
+// This file is where we define the lists, fields and hooks for our data.
+// If you want to learn more about how lists are configured, please read
+// - https://keystonejs.com/docs/config/lists
+
+import { list } from "@keystone-6/core";
+import { allowAll } from "@keystone-6/core/access";
+import { componentBlocks } from "./component-blocks";
+
+// see https://keystonejs.com/docs/fields/overview for the full list of fields
+//   this is a few common fields for an example
+import {
+  text,
+  relationship,
+  password,
+  timestamp,
+  image,
+} from "@keystone-6/core/fields";
+
+// the document field is a more complicated field, so it has it's own package
+import { document } from "@keystone-6/fields-document";
+// if you want to make your own fields, see https://keystonejs.com/docs/guides/custom-fields
+
+// when using Typescript, you can refine your types to a stricter subset by importing
+// the generated types from '.keystone/types'
+import { type Lists } from ".keystone/types";
+
+const isAuthenticated = ({ session }: { session?: any }) => !!session?.data?.id;
+
+const queryOnly = {
+  operation: {
+    query: allowAll,
+    create: isAuthenticated,
+    update: isAuthenticated,
+    delete: isAuthenticated,
+  },
+};
+
+export const lists = {
+  User: list({
+    // WARNING
+    //   for this starter project, anyone can create, query, update and delete anything
+    //   if you want to prevent random people on the internet from accessing your data,
+    //   you can find out more at https://keystonejs.com/docs/guides/auth-and-access-control
+    access: allowAll,
+
+    // this is the fields for our User list
+    fields: {
+      // by adding isRequired, we enforce that every User should have a name
+      //   if no name is provided, an error will be displayed
+      name: text({ validation: { isRequired: true } }),
+
+      email: text({
+        validation: { isRequired: true },
+        // by adding isIndexed: 'unique', we're saying that no user can have the same
+        // email as another user - this may or may not be a good idea for your project
+        isIndexed: "unique",
+      }),
+
+      password: password({ validation: { isRequired: true } }),
+
+      createdAt: timestamp({
+        // this sets the timestamp to Date.now() when the user is first created
+        defaultValue: { kind: "now" },
+      }),
+    },
+  }),
+
+  Image: list({
+    access: queryOnly,
+    fields: {
+      name: text({
+        validation: {
+          isRequired: true,
+        },
+      }),
+      altText: text(),
+      image: image({ storage: "images" }),
+    },
+  }),
+
+  Page: list({
+    access: queryOnly,
+    ui: {
+      labelField: "title",
+    },
+    fields: {
+      title: text({
+        validation: { isRequired: true },
+      }),
+
+      slug: text({
+        ui: {
+          itemView: { fieldPosition: "sidebar" },
+        },
+      }),
+
+      parent: relationship({
+        ref: "Page",
+        ui: {
+          itemView: { fieldPosition: "sidebar" },
+        },
+      }),
+
+      path: text({
+        isIndexed: "unique",
+        ui: {
+          itemView: {
+            fieldMode: "read",
+            fieldPosition: "sidebar",
+          },
+        },
+      }),
+
+      // the document field can be used for making rich editable content
+      //   you can find out more at https://keystonejs.com/docs/guides/document-fields
+      content: document({
+        formatting: true,
+        links: true,
+        dividers: true,
+        layouts: [[1], [1, 1]],
+        ui: {
+          views: "./component-blocks",
+        },
+        componentBlocks,
+      }),
+    },
+    hooks: {
+      resolveInput: async ({ context, item, inputData, resolvedData }) => {
+        const slug = inputData?.slug || item?.slug || "";
+        const parentId =
+          inputData?.parent?.connect?.id || item?.parentId || undefined;
+
+        // No parent, return just the slug
+        if (!parentId) {
+          return {
+            ...resolvedData,
+            path: "/" + slug,
+          };
+        }
+
+        // There is a parent, combine the parent path with the page slug
+        const page = await context.prisma.page.findFirst({
+          where: { id: parentId },
+        });
+        if (!page) {
+          throw Error("Parent page not found");
+        }
+        if (page.path === "/") {
+          throw Error("Page can't have the homepage as parent page");
+        }
+        return {
+          ...resolvedData,
+          path: page.path + "/" + slug,
+        };
+      },
+    },
+  }),
+} satisfies Lists;

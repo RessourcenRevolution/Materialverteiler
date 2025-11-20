@@ -1,0 +1,17 @@
+---
+import { Picture } from "astro:assets";
+
+const { image } = Astro.props;
+const columns = Astro.locals.columns || 1;
+---
+
+<Picture
+  src={image?.data?.image?.url}
+  width={image?.data?.image?.width}
+  height={image?.data?.image?.height}
+  layout="constrained"
+  formats={["avif", "webp"]}
+  sizes={`${Math.ceil(100 / columns)}vw`}
+  alt={image?.data?.altText || ""}
+  class="w-full rounded-xl"
+/>
