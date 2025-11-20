@@ -1,7 +1,8 @@
 ---
-export interface Props {
-  href: string;
-}
+import type { HTMLAttributes } from "astro/types";
+
+export type Props = HTMLAttributes<"a">;
+
 const { href } = Astro.props;
 ---
 

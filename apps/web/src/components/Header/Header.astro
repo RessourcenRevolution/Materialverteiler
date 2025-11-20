@@ -1,6 +1,7 @@
 ---
-import { Link } from "@rr/ui/components";
+import { NavigationItem } from "@rr/ui/components";
 import { useTranslations } from "~/i18n/ui";
+import logo from "../../assets/logo.png";
 
 interface Props {
   class?: string;
@@ -14,38 +15,40 @@ const t = useTranslations();
 ---
 
 <header
-  class:list={[
-    "flex justify-between mb-4 bg-stone-200 p-4 rounded-sm",
-    className,
-  ]}
+  data-is-sticky
+  class:list={["flex mb-12 px-3 py-3 bg-white sticky top-0", className]}
 >
-  <nav class="flex gap-4">
-    <a href="/" class="font-bold">RR</a>
-    <Link href="/ueber-uns">Über uns</Link>
-    {
-      authStore.isValid && (
-        <Link href="/dashboard">{t("header.dashboard")}</Link>
-      )
-    }
+  <nav class="w-full flex justify-between items-center [.is-sticky_&]:pt-1">
+    <div class="flex items-center gap-6">
+      <a href="/" class="font-bold mr-8">
+        <img src={logo.src} alt="Logo" class="w-55" />
+      </a>
+      <NavigationItem href="/ueber-uns">Über uns</NavigationItem>
+      {
+        authStore.isValid && (
+          <NavigationItem href="/dashboard">
+            {t("header.dashboard")}
+          </NavigationItem>
+        )
+      }
+    </div>
+    <div class="flex gap-6 pr-4">
+      {
+        authStore.isValid ? (
+          <>
+            <span>{authStore.record?.name}</span>
+            <NavigationItem href="/profile">
+              {t("header.profile")}
+            </NavigationItem>
+            <NavigationItem href="/logout">{t("header.logout")}</NavigationItem>
+          </>
+        ) : (
+          <>
+            <NavigationItem href="/login">{t("header.login")}</NavigationItem>
+            <NavigationItem href="/signup">{t("header.signup")}</NavigationItem>
+          </>
+        )
+      }
+    </div>
   </nav>
-  <div class="flex gap-4">
-    {
-      authStore.isValid ? (
-        <>
-          <span>{authStore.record?.name}</span>
-          <a href="/profile" class="text-blue-500">
-            {t("header.profile")}
-          </a>
-          <a href="/logout" class="text-blue-500">
-            {t("header.logout")}
-          </a>
-        </>
-      ) : (
-        <>
-          <Link href="/login">{t("header.login")}</Link>
-          <Link href="/signup">{t("header.signup")}</Link>
-        </>
-      )
-    }
-  </div>
 </header>
