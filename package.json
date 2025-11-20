@@ -6,6 +6,7 @@
     "apps/astrobook",
     "packages/ui",
     "packages/image-uploader",
-    "packages/astro-pocketbase"
+    "packages/astro-pocketbase",
+    "packages/drawer-menu"
   ]
 }
