@@ -1,11 +1,19 @@
 ---
 import type { HTMLAttributes } from "astro/types";
 
-export type Props = HTMLAttributes<"a">;
+export type Props = HTMLAttributes<"a"> & {
+  class?: string;
+};
 
-const { href } = Astro.props;
+const { href, class: className } = Astro.props;
 ---
 
-<a href={href} class:list={["text-blue-500 hover:underline"]}>
+<a
+  href={href}
+  class:list={[
+    "text-body text-base font-bold underline decoration-2 underline-offset-4 hover:no-underline",
+    className,
+  ]}
+>
   <slot />
 </a>
