@@ -3,7 +3,12 @@
 
 @theme {
   --color-body: var(--color-stone-900);
+
+  /* #FFFF82 */
   --color-primary: oklch(97.53% 0.147 108.85);
+
+  /* #F8FCF8 */
+  --color-background: oklch(98.69% 0.007 145.52);
 
   --text-base: clamp(0.875rem, 0.85rem + 0.125vw, 1rem);
   --text-sm: clamp(0.75rem, 0.725rem + 0.125vw, 0.875rem);
