@@ -7,7 +7,11 @@ import Columns from "~/components/keystone/Columns.astro";
 
 export const prerender = false;
 
-const response = await fetch("http://localhost:3002/api/graphql", {
+if (!process.env.KEYSTONE_GRAPHQL_ENDPOINT) {
+  throw new Error("KEYSTONE_GRAPHQL_ENDPOINT environment variable is not set");
+}
+
+const response = await fetch(process.env.KEYSTONE_GRAPHQL_ENDPOINT, {
   method: "POST",
   headers: { "Content-Type": "application/json" },
   body: JSON.stringify({

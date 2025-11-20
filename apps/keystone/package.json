@@ -4,8 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "keystone dev",
-    "start": "keystone start",
-    "build": "keystone build"
+    "start": "keystone start --with-migrations",
+    "build": "keystone build",
+    "migrate": "keystone prisma migrate deploy",
+    "migrate:dev": "keystone prisma migrate dev"
   },
   "dependencies": {
     "@keystone-6/auth": "^8.0.0",

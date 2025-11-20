@@ -1,15 +1,15 @@
 services:
   api:
     build:
-      dockerfile: ./Dockerfile
       context: ./apps/api
+      dockerfile: ./Dockerfile
     volumes:
       - ../files/pb_data:/app/pb_data
 
   web:
     build:
-      dockerfile: ./apps/web/Dockerfile
       context: .
+      dockerfile: ./apps/web/Dockerfile
       args:
         APP_NAME: ${APP_NAME:-App Name}
         APP_LANGUAGE: ${APP_LANGUAGE:-en}
@@ -17,3 +17,14 @@ services:
     environment:
       API_URL: ${API_URL:-http://api:8080}
       PUBLIC_API_URL: ${PUBLIC_API_URL:-http://localhost:8080}
+      KEYSTONE_GRAPHQL_ENDPOINT: ${PUBLIC_API_URL:-http://localhost:3002/api/graphql}
+
+  keystone:
+    build:
+      context: .
+      dockerfile: ./apps/keystone/Dockerfile
+    ports:
+      - "3002:3002"
+    volumes:
+      - ../files/keystone-data:/app/apps/keystone/data
+      - ../files/keystone-assets:/app/apps/keystone/assets
