@@ -17,7 +17,7 @@ services:
     environment:
       API_URL: ${API_URL:-http://api:8080}
       PUBLIC_API_URL: ${PUBLIC_API_URL:-http://localhost:8080}
-      KEYSTONE_GRAPHQL_ENDPOINT: ${PUBLIC_API_URL:-http://localhost:3002/api/graphql}
+      KEYSTONE_GRAPHQL_ENDPOINT: ${KEYSTONE_GRAPHQL_ENDPOINT:-http://localhost:3002/api/graphql}
 
   keystone:
     build:

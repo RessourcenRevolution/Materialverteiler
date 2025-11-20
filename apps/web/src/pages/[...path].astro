@@ -33,8 +33,10 @@ const response = await fetch(process.env.KEYSTONE_GRAPHQL_ENDPOINT, {
     },
   }),
 });
-const query = await response.json();
-if (!query.data.page) {
+const result = await response.json();
+const page = result?.data?.page;
+
+if (!page) {
   return new Response(null, { status: 404 });
 }
 ---
@@ -42,7 +44,7 @@ if (!query.data.page) {
 <Layout>
   <Container size="lg" class="prose">
     <DocumentRenderer
-      document={query.data.page.content.document}
+      document={page.content.document}
       componentBlocks={{ image: Image }}
     />
   </Container>
