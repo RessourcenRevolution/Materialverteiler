@@ -10,3 +10,16 @@
 
   --border: 3px;
 }
+
+@utility prose {
+  --tw-prose-body: var(--color-body);
+  --tw-prose-headings: var(--color-body);
+  --tw-prose-bold: var(--color-body);
+  --tw-prose-links: var(--color-body);
+  line-height: 1.66;
+
+  :where(p):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
+    margin-top: 1em;
+    margin-bottom: 1em;
+  }
+}
