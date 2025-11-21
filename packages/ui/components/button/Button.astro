@@ -1,17 +1,22 @@
 ---
+import type { AstroComponentFactory } from "astro/runtime/server/index.js";
 import type { HTMLAttributes } from "astro/types";
 
 export type Props = HTMLAttributes<"a"> &
   HTMLAttributes<"button"> & {
     label: string;
     variant?: "primary" | "secondary";
+    size?: "sm" | "md";
+    icon?: AstroComponentFactory;
   };
 
 const {
   label,
   variant = "secondary",
+  size = "md",
   href,
   class: className,
+  icon: Icon,
   ...props
 } = Astro.props;
 const Element = href ? "a" : "button";
@@ -20,10 +25,11 @@ const Element = href ? "a" : "button";
 <Element
   href={href}
   class:list={[
-    "inline-block",
-    "px-3 py-2.5",
+    "inline-flex items-center",
     " text-body text-base font-bold",
     "border-body border-(length:--border) rounded-xs",
+    size === "sm" && "px-2 py-0.5 gap-1",
+    size === "md" && "px-3 py-2.5 gap-2",
     variant === "primary" && "bg-primary hover:bg-body hover:text-primary",
     variant === "secondary" && "text-body hover:text-white hover:bg-body",
     "cursor-pointer",
@@ -32,5 +38,6 @@ const Element = href ? "a" : "button";
   ]}
   {...props}
 >
+  {Icon && <Icon width="16" height="16" stroke-width="2.25" />}
   {label}
 </Element>

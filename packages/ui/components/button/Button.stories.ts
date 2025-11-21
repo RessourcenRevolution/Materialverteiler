@@ -1,5 +1,6 @@
 import Button, { type Props } from "./Button.astro";
 import FlexDecorator from "../../.astrobook/decorators/FlexDecorator.astro";
+import icon from "./icon.svg";
 
 export default {
   component: Button,
@@ -20,6 +21,31 @@ export const Primary = {
   decorators: [{ component: FlexDecorator }],
 };
 
+export const Small = {
+  args: {
+    label: "Button",
+    size: 'sm'
+  } satisfies Props,
+  decorators: [{ component: FlexDecorator }],
+};
+
+export const Icon = {
+  args: {
+    label: "Button",
+    icon: icon
+  } satisfies Props,
+  decorators: [{ component: FlexDecorator }],
+};
+
+export const IconSmall = {
+  args: {
+    label: "Button",
+    icon: icon,
+    size: 'sm'
+  } satisfies Props,
+  decorators: [{ component: FlexDecorator }],
+};
+
 export const Link = {
   args: {
     label: "Link",
@@ -31,7 +57,6 @@ export const Link = {
 export const Outline = {
   args: {
     label: "Button",
-    outline: true,
   } satisfies Props,
   decorators: [{ component: FlexDecorator }],
 };
