@@ -2,7 +2,11 @@
 @plugin "@tailwindcss/typography";
 
 @theme {
-  --color-body: var(--color-stone-900);
+  /* #303633 */
+  --color-body: oklch(32.61% 0.010 164.34);
+
+  /* #201b1e */
+  --color-heading: oklch(22.92% 0.010 341.15);
 
   /* #FFFF82 */
   --color-primary: oklch(97.53% 0.147 108.85);
