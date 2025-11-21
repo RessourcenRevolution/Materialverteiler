@@ -34,7 +34,7 @@ const { label, value, name, type, required, error } = Astro.props;
     placeholder={" "}
     required={required}
     class:list={[
-      "peer w-full text-body border-(length:--border) text-base border-body px-[0.75em] pb-[0.5em] pt-[1em]",
+      "peer w-full text-body border-(length:--border) text-base border-body rounded-xs px-[0.75em] pb-[0.5em] pt-[1em]",
       error && "border-red-800!",
     ]}
   />
