@@ -15,7 +15,7 @@ const { label, name, error } = Astro.props;
       </label>
     )
   }
-  <image-uploader name="images"></image-uploader>
+  <image-uploader name={name}></image-uploader>
   {error && <p class="text-red-800 text-sm">{error}</p>}
 </div>
 

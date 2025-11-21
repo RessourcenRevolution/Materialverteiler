@@ -42,7 +42,9 @@ export const server = {
           .collection("users")
           .authWithPassword(input.email, input.password);
         // Create team
-        const team = await locals.pb.collection("teams").create({ name: input.team });
+        const team = await locals.pb
+          .collection("teams")
+          .create({ name: input.team });
         // Update user
         await locals.pb.collection("users").update(user.id, { team: team.id });
         // Request verification
@@ -102,17 +104,41 @@ export const server = {
    */
   createListing: defineAction({
     accept: "form",
-    input: z.object({
-      title: z.string(required),
-      description: z.string(required),
-      images: z.array(z.instanceof(File))
-    }),
+    input: z.discriminatedUnion("type", [
+      z.object({
+        type: z.literal("create"),
+        title: z.string(required),
+        description: z.string(required),
+        "images+": z.array(z.instanceof(File)),
+      }),
+      z.object({
+        type: z.literal("update"),
+        id: z.string(required),
+        title: z.string(required),
+        description: z.string(required),
+        "images+": z.array(z.instanceof(File)),
+      }),
+    ]),
     handler: async (input, { locals }) => {
       const t = useTranslations();
       try {
-        const listing = await locals.pb
-          .collection("listings")
-          .create({ ...input, user: locals.pb.authStore!.record!.id });
+        let listing;
+
+        if (input.type === "create") {
+          listing = await locals.pb.collection("listings").create({
+            title: input.title,
+            description: input.description,
+            "images+": input["images+"],
+            user: locals.pb.authStore!.record!.id,
+          });
+        } else {
+          listing = await locals.pb.collection("listings").update(input.id, {
+            title: input.title,
+            description: input.description,
+            "images+": input["images+"],
+            user: locals.pb.authStore!.record!.id,
+          });
+        }
         return listing;
       } catch (error) {
         if (error instanceof ClientResponseError && error?.status === 403) {
@@ -120,7 +146,10 @@ export const server = {
             code: "FORBIDDEN",
             message: t("create-listing.errors.forbidden"),
           });
-        } else if (error instanceof ClientResponseError && error?.response?.data?.images?.code === "validation_file_size_limit") {
+        } else if (
+          error instanceof ClientResponseError &&
+          error?.response?.data?.images?.code === "validation_file_size_limit"
+        ) {
           throw new ActionError({
             code: "FORBIDDEN",
             message: t("create-listing.errors.image-file-size-limit"),

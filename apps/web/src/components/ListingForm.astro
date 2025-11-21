@@ -4,15 +4,31 @@ import { Input, Button, Alert, Textarea, ImageInput } from "@rr/ui/components";
 import { useTranslations } from "~/i18n/ui";
 import { fieldError } from "~/forms";
 import { isInputError } from "astro:actions";
+import type { Listing } from "~/schemas/listing";
+
+interface Props {
+  update?: boolean;
+  listing?: Listing;
+}
 
 const t = useTranslations();
+
+const { update = false, listing } = Astro.props;
 
 const teamCreationResult = Astro.getActionResult(actions.createTeam);
 
 const result = Astro.getActionResult(actions.createListing);
 
-const data =
+const formData =
   Astro.request.method === "POST" ? await Astro.request.formData() : null;
+const postedListing = formData
+  ? ({
+      title: formData.get("title") as string,
+      description: formData.get("description") as string,
+    } as Partial<Listing>)
+  : null;
+
+const data = postedListing ? postedListing : listing;
 ---
 
 {
@@ -21,8 +37,17 @@ const data =
   )
 }
 {
+  // Success message
   result?.data ? (
-    <Alert variant="success" text={t("listing-form.success")} class="mb-4" />
+    <Alert
+      variant="success"
+      text={
+        update
+          ? t("listing-form.update.success")
+          : t("listing-form.create.success")
+      }
+      class="mb-4"
+    />
   ) : (
     <form
       class="flex flex-col gap-6"
@@ -30,30 +55,44 @@ const data =
       action={actions.createListing}
       enctype="multipart/form-data"
     >
+      <input type="hidden" name="type" value={update ? "update" : "create"} />
+      <input type="hidden" name="id" value={data?.id} />
       <Input
         name="title"
         type="text"
         label={t("listing-form.title.label")}
-        value={data?.get("title") as string}
+        value={data?.title}
         error={fieldError("title", result?.error)}
         required
       />
       <Textarea
         name="description"
         label={t("listing-form.description.label")}
-        value={data?.get("description") as string}
+        value={data?.description}
         error={fieldError("description", result?.error)}
         required
       />
       <ImageInput
-        name="images"
-        label={t("listing-form.images.label")}
+        name="images+"
+        label={
+          update
+            ? t("listing-form.update.images.label")
+            : t("listing-form.create.images.label")
+        }
         error={fieldError("images", result?.error)}
       />
       {result?.error && !isInputError(result.error) && (
         <Alert variant="error" text={result.error.message} />
       )}
-      <Button label={t("listing-form.submit")} />
+      <Button
+        variant="primary"
+        label={
+          update
+            ? t("listing-form.update.submit")
+            : t("listing-form.create.submit")
+        }
+        class="self-start"
+      />
     </form>
   )
 }

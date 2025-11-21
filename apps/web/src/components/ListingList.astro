@@ -37,6 +37,7 @@ const { listings, edit = false } = Astro.props;
         <div class="text-base text-body" set:html={listing.description} />
         <div class="flex gap-2 flex-wrap mt-1">
           <Button
+            href={`/listings/${listing.id}`}
             variant="primary"
             size="sm"
             label={t("listing-card.open")}
@@ -44,6 +45,7 @@ const { listings, edit = false } = Astro.props;
           />
           {edit && (
             <Button
+              href={`/listings/${listing.id}/edit`}
               variant="secondary"
               size="sm"
               label={t("listing-card.edit")}

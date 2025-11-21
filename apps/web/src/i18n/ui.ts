@@ -80,6 +80,9 @@ export const ui = {
       "One of the selected images exceeds the maximum allowed file size of 5MB.",
     "create-listing.errors.unknown":
       "An unknown error occurred while creating the listing.",
+    // Update listing
+    "update-listing.title": "Update listing",
+    "update-listing.text": "Edit the detail of your listing.",
     // Team form
     "team-form.name.label": "Name",
     "team-form.name.placeholder": "e.g., Oper Köln",
@@ -93,9 +96,12 @@ export const ui = {
     // Listing form
     "listing-form.title.label": "Title",
     "listing-form.description.label": "Description",
-    "listing-form.images.label": "Images",
-    "listing-form.submit": "Create listing",
-    "listing-form.success": "Listing created successfully!",
+    "listing-form.create.images.label": "Images",
+    "listing-form.update.images.label": "Add images",
+    "listing-form.create.submit": "Create listing",
+    "listing-form.update.submit": "Save listing",
+    "listing-form.create.success": "Listing created successfully!",
+    "listing-form.update.success": "Listing updated successfully!",
     // Listing card
     "listing-card.open": "View",
     "listing-card.edit": "Edit",
@@ -171,6 +177,10 @@ export const ui = {
       "Eine der ausgewählten Bilder überschreitet die maximal zulässige Dateigröße von 5 MB.",
     "create-listing.errors.unknown":
       "Ein unbekannter Fehler ist beim Erstellen des Angebots aufgetreten.",
+    // Update listing
+    "update-listing.title": "Angebot aktualisieren",
+    "update-listing.text":
+      "Bearbeite die folgenden Felder, um dein Angebot zu aktualisieren.",
     // Team form
     "team-form.name.label": "Name",
     "team-form.name.placeholder": "z.B. Oper Köln",
@@ -185,9 +195,12 @@ export const ui = {
     // Listing form
     "listing-form.title.label": "Titel",
     "listing-form.description.label": "Beschreibung",
-    "listing-form.images.label": "Bilder",
-    "listing-form.submit": "Angebot anlegen",
-    "listing-form.success": "Angebot erfolgreich angelegt!",
+    "listing-form.create.images.label": "Bilder",
+    "listing-form.update.images.label": "Bilder hinzufügen",
+    "listing-form.create.submit": "Angebot anlegen",
+    "listing-form.update.submit": "Angebot speichern",
+    "listing-form.create.success": "Angebot erfolgreich angelegt!",
+    "listing-form.update.success": "Angebot erfolgreich aktualisiert!",
     // Listing card
     "listing-card.open": "Zum Angebot",
     "listing-card.edit": "Bearbeiten",
