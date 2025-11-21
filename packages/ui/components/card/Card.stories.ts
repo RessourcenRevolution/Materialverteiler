@@ -7,16 +7,8 @@ export default {
 
 export const Default = {
   args: {
-    title: "Title",
-    content: "<p>Lorem ipsum dolor sit amet.</p>",
-  } satisfies Props,
-  decorators: [{ component: FlexDecorator }],
-};
-export const NoBorder = {
-  args: {
-    title: "Title",
-    content: "<p>Lorem ipsum dolor sit amet.</p>",
-    border: false,
+    image: "https://placehold.co/600x400",
+    content: "<h2 class=\"text-2xl font-bold text-heading\">Title</h2><p class=\"text-body text-base\">Lorem ipsum dolor sit amet.</p>",
   } satisfies Props,
   decorators: [{ component: FlexDecorator }],
 };

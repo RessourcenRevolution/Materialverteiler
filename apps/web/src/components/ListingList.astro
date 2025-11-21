@@ -1,0 +1,66 @@
+---
+import { Button, Card } from "@rr/ui/components";
+import { defaultLang, useTranslations } from "~/i18n/ui";
+import type { Listing } from "~/schemas/listing";
+import EditIcon from "iconoir/icons/edit-pencil.svg";
+
+interface Props {
+  listings: Listing[];
+  edit?: boolean;
+}
+
+const t = useTranslations();
+
+const { listings, edit = false } = Astro.props;
+---
+
+<div
+  class="grid grid-cols-1 md:grid-cols-1 gap-12 md:gap-6 -mx-(--body-inline-padding) md:mx-0"
+>
+  {
+    listings.map((listing) => (
+      <Card
+        image={
+          listing.images && listing.images.length > 0
+            ? `${process.env.PUBLIC_API_URL}/api/files/listings/${listing.id}/${listing.images[0]}`
+            : undefined
+        }
+        class="md:flex-row md:gap-4"
+        imageClass="rounded-none! md:rounded-xs! md:max-w-[250px]"
+        contentClass="md:px-0"
+      >
+        <h2 class:list={["text-xl text-heading font-bold"]}>{listing.title}</h2>
+        <p class="text-base text-body">
+          @{listing.expand?.user?.expand?.team?.name} -{" "}
+          {new Date(listing.created).toLocaleDateString(defaultLang)}
+        </p>
+        <div class="text-base text-body" set:html={listing.description} />
+        <div class="flex gap-2 flex-wrap mt-1">
+          <Button
+            variant="primary"
+            size="sm"
+            label={t("listing-card.open")}
+            class="self-start"
+          />
+          {edit && (
+            <Button
+              variant="secondary"
+              size="sm"
+              label={t("listing-card.edit")}
+              icon={EditIcon}
+              class="self-start"
+            />
+          )}
+          {edit && (
+            <Button
+              variant="secondary"
+              size="sm"
+              label={t("listing-card.remove")}
+              class="self-start"
+            />
+          )}
+        </div>
+      </Card>
+    ))
+  }
+</div>

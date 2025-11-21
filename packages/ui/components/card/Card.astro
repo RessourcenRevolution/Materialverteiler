@@ -1,22 +1,33 @@
 ---
 export interface Props {
-  border?: boolean;
-  title?: string;
   content?: string;
+  image?: string;
+  class?: string;
+  imageClass?: string;
+  contentClass?: string;
 }
 
-const { title, content, border = true } = Astro.props;
+const {
+  content,
+  image,
+  class: className,
+  imageClass,
+  contentClass,
+} = Astro.props;
 ---
 
-<div class:list={["p-4", border && "border rounded-md"]}>
+<article class:list={["flex flex-col gap-4", className]}>
   {
-    title && (
-      <h2 class:list={["text-xl font-bold text-body", content && "mb-2"]}>
-        {title}
-      </h2>
+    image && (
+      <img
+        src={image}
+        class:list={["w-full aspect-4/3 object-cover rounded-xs", imageClass]}
+      />
     )
   }
-  <slot>
-    {content && <Fragment set:html={content} />}
-  </slot>
-</div>
+  <div class:list={["flex flex-col gap-2 px-6", contentClass]}>
+    <slot>
+      {content && <Fragment set:html={content} />}
+    </slot>
+  </div>
+</article>

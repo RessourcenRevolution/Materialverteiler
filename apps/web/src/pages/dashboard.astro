@@ -1,9 +1,10 @@
 ---
 import Layout from "~/layouts/Layout.astro";
 import { type Listing, ListingSchema } from "~/schemas/listing";
-import { Card, Button, Container } from "@rr/ui/components";
+import { Button, Container } from "@rr/ui/components";
 import EmailVerificationWarning from "~/components/EmailVerificationWarning/EmailVerificationWarning.astro";
-import { defaultLang, useTranslations } from "~/i18n/ui";
+import { useTranslations } from "~/i18n/ui";
+import ListingList from "~/components/ListingList.astro";
 
 export const prerender = false;
 
@@ -20,13 +21,11 @@ const isNewUser = !Astro.locals.pb.authStore.record!.roles.includes("user");
 <Layout>
   <Container size="xl">
     <EmailVerificationWarning />
-    <div class="flex justify-between items-center mb-4">
-      <h1 class="text-2xl font-bold">Dashboard</h1>
-      {
-        !isNewUser && (
-          <Button label="New listing" href="/listings/new" class="mb-4" />
-        )
-      }
+    <div class="flex justify-between items-center flex-wrap gap-4 mb-4">
+      <h1 class="text-3xl font-bold text-heading">
+        {t("dashboard.title")}
+      </h1>
+      {!isNewUser && <Button label="New listing" href="/listings/new" />}
     </div>
     {
       isNewUser ? (
@@ -37,28 +36,7 @@ const isNewUser = !Astro.locals.pb.authStore.record!.roles.includes("user");
           <p>{t("dashboard.user-approval.text")}</p>
         </>
       ) : (
-        <>
-          <div class="grid grid-cols-3 gap-4">
-            {listings.map((listing) => (
-              <Card border>
-                <div class="flex flex-col gap-2 mt-2">
-                  {listing.images && listing.images.length > 0 && (
-                    <img
-                      src={`${process.env.PUBLIC_API_URL}/api/files/listings/${listing.id}/${listing.images[0]}`}
-                      class="w-full aspect-4/3 object-cover rounded-md"
-                    />
-                  )}
-                  <h2 class:list={["text-xl font-bold"]}>{listing.title}</h2>
-                  <p class="text-stone-500">
-                    @{listing.expand?.user?.expand?.team?.name} -{" "}
-                    {new Date(listing.created).toLocaleDateString(defaultLang)}
-                  </p>
-                  <div class="text-stone-700" set:html={listing.description} />
-                </div>
-              </Card>
-            ))}
-          </div>
-        </>
+        <ListingList listings={listings} />
       )
     }
   </Container>

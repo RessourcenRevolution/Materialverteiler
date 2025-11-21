@@ -41,10 +41,12 @@ export const ui = {
     "login.button": "Login",
     "login.signup": "Create account",
     // Profile page
-    "profile.title": "Profile",
+    "profile.title": "Your profile",
     "profile.name": "Name",
     "profile.email": "E-mail",
     "profile.team": "Institution",
+    "profile.active-listings": "Active offers",
+    "profile.past-listings": "Past offers",
     // E-mail confirmation page
     "email-confirmation.title": "E-mail confirmation",
     "email-confirmation.loading": "Confirming e-mail address...",
@@ -54,6 +56,7 @@ export const ui = {
     "email-confirmation.success": "E-Mail confirmed!",
     "email-confirmation.button": "Go to dashboard",
     // Dashboard page
+    "dashboard.title": "Offers",
     "dashboard.user-approval.title": "Welcome",
     "dashboard.user-approval.text":
       "Your account is currently under review and will be approved soon. We’ll notify you by email once it’s ready.",
@@ -93,12 +96,16 @@ export const ui = {
     "listing-form.images.label": "Images",
     "listing-form.submit": "Create listing",
     "listing-form.success": "Listing created successfully!",
+    // Listing card
+    "listing-card.open": "View",
+    "listing-card.edit": "Edit",
+    "listing-card.remove": "Remove",
   },
   de: {
     // Header
     "header.home": "Startseite",
     "header.dashboard": "Dashboard",
-    "header.profile": "Profiel",
+    "header.profile": "Profil",
     "header.login": "Einloggen",
     "header.signup": "Registrieren",
     "header.about": "Über uns",
@@ -125,10 +132,12 @@ export const ui = {
     "login.button": "Einloggen",
     "login.signup": "Konto anlegen",
     // Profile page
-    "profile.title": "Profiel",
+    "profile.title": "Dein Profil",
     "profile.name": "Name",
     "profile.email": "E-Mail",
     "profile.team": "Institution",
+    "profile.active-listings": "Aktive Angebote",
+    "profile.past-listings": "Vergangene Angebote",
     // E-mail confirmation page
     "email-confirmation.title": "E-Mail-Bestätigung",
     "email-confirmation.loading": "E-Mail-Adresse wird bestätigt...",
@@ -138,6 +147,7 @@ export const ui = {
     "email-confirmation.success": "E-Mail Addresse ist bestätigt!",
     "email-confirmation.button": "Zum Dashboard",
     // Dashboard page
+    "dashboard.title": "Materialangebote",
     "dashboard.user-approval.title": "Wilkommen",
     "dashboard.user-approval.text":
       "Dein Konto wird derzeit geprüft und bald freigeschaltet. Sobald es aktiviert ist, erhältst du eine E-Mail von uns.",
@@ -178,6 +188,10 @@ export const ui = {
     "listing-form.images.label": "Bilder",
     "listing-form.submit": "Angebot anlegen",
     "listing-form.success": "Angebot erfolgreich angelegt!",
+    // Listing card
+    "listing-card.open": "Zum Angebot",
+    "listing-card.edit": "Bearbeiten",
+    "listing-card.remove": "Löschen",
   },
 };
 

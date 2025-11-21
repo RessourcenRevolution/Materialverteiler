@@ -2,6 +2,8 @@
 @source "../../../../packages/ui";
 
 @theme {
+    --body-inline-padding: calc(var(--spacing) * 4);
+
     --animate-slide-from-left: slide-from-left 200ms var(--ease-out) forwards;
 
     @keyframes slide-from-left {
