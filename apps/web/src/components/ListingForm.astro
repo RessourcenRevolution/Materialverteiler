@@ -155,7 +155,6 @@ const data = postedListing ? postedListing : listing;
         label={t('listing-form.end_date.label')}
         value={data?.end_date ? asIsoDate(data?.end_date) : ''}
         error={fieldError('end_date', result?.error)}
-        required
       />
       {result?.error && !isInputError(result.error) && (
         <Alert variant="error" text={result.error.message} />
