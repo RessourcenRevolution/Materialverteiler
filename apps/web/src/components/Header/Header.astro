@@ -4,7 +4,7 @@ import { useTranslations } from "~/i18n/ui";
 import logo from "~/assets/logo.png";
 import MenuIcon from "iconoir/icons/menu.svg";
 import CloseIcon from "iconoir/icons/xmark.svg";
-// import { Picture } from "astro:assets";
+import { Image } from "astro:assets";
 
 interface Props {
   class?: string;
@@ -47,8 +47,7 @@ const items: Record<string, { href: string; label: string }[]> = {
   <nav class="w-full flex justify-between items-center [.is-sticky_&]:pt-1">
     <div class="flex items-center gap-6">
       <a href="/" class="font-bold mr-8">
-        <!-- <Picture src={logo} alt="Logo" class="w-55 max-w-[50vw]" /> -->
-        <img src={logo.src} alt="Logo" class="w-55 max-w-[50vw]" />
+        <Image src={logo} alt="Logo" class="w-55 max-w-[50vw]" />
       </a>
       {
         items.main.map((item) => (
