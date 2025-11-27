@@ -12,6 +12,10 @@ export {
   type Props as ContainerProps,
 } from "./container/Container.astro";
 export {
+  default as Heading,
+  type Props as HeadingProps,
+} from "./heading/Heading.astro";
+export {
   default as ImageInput,
   type Props as ImageInputProps,
 } from "./image-input/ImageInput.astro";
