@@ -1,0 +1,7 @@
+[tasks.build]
+description = "Build image-gallery"
+run = "npm run build"
+sources = ['package.json', 'src/**/*.ts']
+
+[tasks.dev]
+run = "mise watch build"
