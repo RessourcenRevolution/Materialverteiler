@@ -1,9 +1,9 @@
 // @ts-check
-import { defineConfig, envField } from "astro/config";
-import node from "@astrojs/node";
-import tailwindcss from "@tailwindcss/vite";
+import { defineConfig, envField } from 'astro/config'
+import node from '@astrojs/node'
+import tailwindcss from '@tailwindcss/vite'
 // @ts-ignore
-import lit from "@semantic-ui/astro-lit";
+import lit from '@semantic-ui/astro-lit'
 
 // https://astro.build/config
 export default defineConfig({
@@ -12,20 +12,20 @@ export default defineConfig({
   },
 
   adapter: node({
-    mode: "standalone",
+    mode: 'standalone',
   }),
 
   env: {
     schema: {
       APP_NAME: envField.string({
-        context: "client",
-        access: "public",
+        context: 'client',
+        access: 'public',
         optional: false,
       }),
       APP_LANGUAGE: envField.enum({
-        values: ["en", "de"],
-        context: "client",
-        access: "public",
+        values: ['en', 'de'],
+        context: 'client',
+        access: 'public',
         optional: false,
       }),
     },
@@ -36,4 +36,4 @@ export default defineConfig({
   },
 
   integrations: [lit()],
-});
+})

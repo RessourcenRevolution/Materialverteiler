@@ -17,9 +17,9 @@
     "./client/astro-pocketbase.ts": "./client/astro-pocketbase.ts"
   },
   "dependencies": {
-    "@astrojs/node": "^9.4.4",
+    "@astrojs/node": "^9.5.1",
     "@semantic-ui/astro-lit": "^5.1.1",
-    "astro": "5.14.1",
+    "astro": "^5.16.1",
     "pocketbase": "^0.26.2"
   },
   "devDependencies": {

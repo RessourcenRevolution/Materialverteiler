@@ -1,15 +1,15 @@
 ---
-import { Button, Card } from "@rr/ui/components";
-import { defaultLang, useTranslations } from "~/i18n/ui";
-import type { Listing } from "~/schemas/listing";
-import EditIcon from "iconoir/icons/edit-pencil.svg";
+import { Button, Card } from '@rr/ui/components'
+import { defaultLang, useTranslations } from '~/i18n/ui'
+import type { Listing } from '~/schemas/listing'
+import EditIcon from 'iconoir/icons/edit-pencil.svg'
 
 interface Props {
-  listings: Listing[];
-  edit?: boolean;
+  listings: Listing[]
+  edit?: boolean
 }
 
-const t = useTranslations();
+const t = useTranslations()
 
 const { listings, edit = false } = Astro.props;
 ---
@@ -18,7 +18,7 @@ const { listings, edit = false } = Astro.props;
   class="grid grid-cols-1 md:grid-cols-1 gap-12 md:gap-6 -mx-(--body-inline-padding) md:mx-0"
 >
   {
-    listings.map((listing) => (
+    listings.map(listing => (
       <Card
         image={
           listing.images && listing.images.length > 0
@@ -29,9 +29,9 @@ const { listings, edit = false } = Astro.props;
         imageClass="rounded-none! md:rounded-xs! md:max-w-[250px]"
         contentClass="md:px-0"
       >
-        <h2 class:list={["text-xl text-heading font-bold"]}>{listing.title}</h2>
+        <h2 class:list={['text-xl text-heading font-bold']}>{listing.title}</h2>
         <p class="text-base text-body">
-          @{listing.expand?.team?.name} -{" "}
+          @{listing.expand?.team?.name} -{' '}
           {new Date(listing.start_date).toLocaleDateString(defaultLang)}
         </p>
         <div class="text-base text-body" set:html={listing.description} />
@@ -40,7 +40,7 @@ const { listings, edit = false } = Astro.props;
             href={`/listings/${listing.id}`}
             variant="primary"
             size="sm"
-            label={t("listing-card.open")}
+            label={t('listing-card.open')}
             class="self-start"
           />
           {edit && (
@@ -48,7 +48,7 @@ const { listings, edit = false } = Astro.props;
               href={`/listings/${listing.id}/edit`}
               variant="secondary"
               size="sm"
-              label={t("listing-card.edit")}
+              label={t('listing-card.edit')}
               icon={EditIcon}
               class="self-start"
             />
@@ -57,7 +57,7 @@ const { listings, edit = false } = Astro.props;
             <Button
               variant="secondary"
               size="sm"
-              label={t("listing-card.remove")}
+              label={t('listing-card.remove')}
               class="self-start"
             />
           )}

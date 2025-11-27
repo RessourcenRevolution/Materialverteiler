@@ -1,13 +1,13 @@
 ---
-import PinIcon from "iconoir/icons/map-pin.svg";
+import PinIcon from 'iconoir/icons/map-pin.svg'
 interface Props {
-  text?: string;
-  class?: string;
+  text?: string
+  class?: string
 }
 const { text, class: className } = Astro.props;
 ---
 
-<p class:list={["flex items-center gap-2 text-body", className]}>
+<p class:list={['flex items-center gap-2 text-body', className]}>
   <PinIcon width="1em" class="inline" />
   {text}
 </p>

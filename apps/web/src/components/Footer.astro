@@ -1,19 +1,19 @@
 ---
-import { Container } from "@rr/ui/components";
+import { Container } from '@rr/ui/components'
 
 interface Props {
-  class?: string;
+  class?: string
 }
 const { class: className } = Astro.props;
 ---
 
-<footer class:list={["w-full px-(--body-inline-padding)", className]}>
+<footer class:list={['w-full px-(--body-inline-padding)', className]}>
   <Container
     size="xl"
     class:list={[
-      "w-full flex flex-col justify-between gap-6 mt-24 pb-8",
-      "md:flex-row md:gap-0",
-      "lg:px-0",
+      'w-full flex flex-col justify-between gap-6 mt-24 pb-8',
+      'md:flex-row md:gap-0',
+      'lg:px-0',
     ]}
   >
     <div>
@@ -39,8 +39,8 @@ const { class: className } = Astro.props;
     </div>
     <ul
       class:list={[
-        "flex flex-col gap-3 text-body text-base",
-        "md:items-end md:min-w-1/3",
+        'flex flex-col gap-3 text-body text-base',
+        'md:items-end md:min-w-1/3',
       ]}
     >
       <li>Log In</li>

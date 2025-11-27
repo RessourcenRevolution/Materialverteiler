@@ -1,47 +1,47 @@
 ---
-import { Container, Heading } from "@rr/ui/components";
-import ListingList from "~/components/ListingList.astro";
-import { useTranslations } from "~/i18n/ui";
-import Layout from "~/layouts/Layout.astro";
-import { ListingSchema, type Listing } from "~/schemas/listing";
-import { UserSchema, type User } from "~/schemas/user";
+import { Container, Heading } from '@rr/ui/components'
+import ListingList from '~/components/ListingList.astro'
+import { useTranslations } from '~/i18n/ui'
+import Layout from '~/layouts/Layout.astro'
+import { ListingSchema, type Listing } from '~/schemas/listing'
+import { UserSchema, type User } from '~/schemas/user'
 
-export const prerender = false;
+export const prerender = false
 
-const t = useTranslations();
+const t = useTranslations()
 
 if (!Astro.locals.pb.authStore.record?.id) {
-  Astro.redirect("/logout");
-  return;
+  Astro.redirect('/logout')
+  return
 }
 
 const record = await Astro.locals.pb
-  .collection("users")
-  .getOne(Astro.locals.pb.authStore.record?.id, { expand: "team" });
-const user = UserSchema.parse(record) as User;
+  .collection('users')
+  .getOne(Astro.locals.pb.authStore.record?.id, { expand: 'team' })
+const user = UserSchema.parse(record) as User
 
-const items = await Astro.locals.pb.collection("listings").getFullList({
-  filter: Astro.locals.pb.filter("user = {:user}", { user: user.id }),
-  expand: "user,user.team",
-});
+const items = await Astro.locals.pb.collection('listings').getFullList({
+  filter: Astro.locals.pb.filter('user = {:user}', { user: user.id }),
+  expand: 'user,user.team',
+})
 const listings = ListingSchema.array().parse(items) as Listing[];
 ---
 
 <Layout>
   <Container size="xl">
     <Heading tag="h1" size="xl" class="mb-4">
-      {t("profile.title")}
+      {t('profile.title')}
     </Heading>
     <p class="mb-12">
-      {t("profile.name")}:
+      {t('profile.name')}:
       {user.firstname}
       {user.lastname}<br />
-      {t("profile.email")}: {user.email}<br />
-      {t("profile.team")}: {user.expand?.team?.name}<br />
+      {t('profile.email')}: {user.email}<br />
+      {t('profile.team')}: {user.expand?.team?.name}<br />
     </p>
 
     <Heading tag="h2" size="lg" class="mb-4">
-      {t("profile.active-listings")}
+      {t('profile.active-listings')}
     </Heading>
     <ListingList listings={listings} edit={true} />
   </Container>

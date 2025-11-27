@@ -1,8 +1,8 @@
-import type { APIRoute } from "astro";
+import type { APIRoute } from 'astro'
 
-export const prerender = false;
+export const prerender = false
 
 export const GET: APIRoute = async ({ locals, redirect }) => {
-  locals.pb.authStore.clear();
-  return redirect("/login");
-};
+  locals.pb.authStore.clear()
+  return redirect('/login')
+}

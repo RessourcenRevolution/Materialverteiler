@@ -1,14 +1,14 @@
 ---
-import Layout from "~/layouts/Layout.astro";
-import { useTranslations } from "~/i18n/ui";
-import type { User } from "~/schemas/user";
-import TeamForm from "~/components/TeamForm.astro";
-import ListingForm from "~/components/ListingForm.astro";
-import { Heading } from "@rr/ui/components";
+import Layout from '~/layouts/Layout.astro'
+import { useTranslations } from '~/i18n/ui'
+import type { User } from '~/schemas/user'
+import TeamForm from '~/components/TeamForm.astro'
+import ListingForm from '~/components/ListingForm.astro'
+import { Heading } from '@rr/ui/components'
 
-export const prerender = false;
+export const prerender = false
 
-const t = useTranslations();
+const t = useTranslations()
 
 const user = Astro.locals.pb.authStore.record as unknown as User;
 ---
@@ -16,26 +16,28 @@ const user = Astro.locals.pb.authStore.record as unknown as User;
 <Layout>
   <div class="mx-auto max-w-lg">
     {
-      !user.team ? (
-        <>
-          <h1 class="text-2xl font-bold mb-6">
-            {t("create-listing.create-team.title")}
-          </h1>
-          <p class="mb-4">{t("create-listing.create-team.text")}</p>
-          <TeamForm />
-        </>
-      ) : (
-        <>
-          <Heading tag="h1" size="xl" class="mb-6">
-            {t("create-listing.title")}
-          </Heading>
-          <div
-            class="prose prose-p:font-bold prose-p:text-base mb-6"
-            set:html={t("create-listing.text")}
-          />
-          <ListingForm />
-        </>
-      )
+      !user.team
+        ? (
+            <>
+              <h1 class="text-2xl font-bold mb-6">
+                {t('create-listing.create-team.title')}
+              </h1>
+              <p class="mb-4">{t('create-listing.create-team.text')}</p>
+              <TeamForm />
+            </>
+          )
+        : (
+            <>
+              <Heading tag="h1" size="xl" class="mb-6">
+                {t('create-listing.title')}
+              </Heading>
+              <div
+                class="prose prose-p:font-bold prose-p:text-base mb-6"
+                set:html={t('create-listing.text')}
+              />
+              <ListingForm />
+            </>
+          )
     }
   </div>
 </Layout>

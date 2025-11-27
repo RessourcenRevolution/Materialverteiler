@@ -1,9 +1,9 @@
-import PocketBase from "pocketbase";
+import PocketBase from 'pocketbase'
 
 declare global {
   declare namespace App {
     interface Locals {
-      pb: PocketBase;
+      pb: PocketBase
       columns?: number
     }
   }

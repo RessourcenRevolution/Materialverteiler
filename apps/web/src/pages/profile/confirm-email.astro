@@ -1,10 +1,10 @@
 ---
-import Layout from "~/layouts/Layout.astro";
-import { Alert, Button, Container } from "@rr/ui/components";
-import { EmailVerification } from "@rr/astro-pocketbase/components";
-import { useTranslations } from "~/i18n/ui";
+import Layout from '~/layouts/Layout.astro'
+import { Alert, Button, Container } from '@rr/ui/components'
+import { EmailVerification } from '@rr/astro-pocketbase/components'
+import { useTranslations } from '~/i18n/ui'
 
-export const prerender = false;
+export const prerender = false
 
 const t = useTranslations();
 ---
@@ -13,32 +13,32 @@ const t = useTranslations();
   <Container size="xl">
     <astro-pocketbase pocketbase-url={process.env.PUBLIC_API_URL}>
       <h1 class="text-2xl font-bold mb-6">
-        {t("email-confirmation.title")}
+        {t('email-confirmation.title')}
       </h1>
-      <EmailVerification client:idle class:list={["block mb-6"]}>
+      <EmailVerification client:idle class:list={['block mb-6']}>
         <Alert
           slot="loading"
           variant="info"
-          text={t("email-confirmation.loading")}
+          text={t('email-confirmation.loading')}
         />
         <Alert
           slot="missing-token"
           variant="error"
-          text={t("email-confirmation.missing-token")}
+          text={t('email-confirmation.missing-token')}
         />
         <Alert
           slot="error"
           variant="error"
-          text={t("email-confirmation.error")}
+          text={t('email-confirmation.error')}
           text=""
         />
         <Alert
           slot="success"
           variant="success"
-          text={t("email-confirmation.success")}
+          text={t('email-confirmation.success')}
         />
       </EmailVerification>
-      <Button href="/dashboard" label={t("email-confirmation.button")} />
+      <Button href="/dashboard" label={t('email-confirmation.button')} />
     </astro-pocketbase>
   </Container>
 </Layout>

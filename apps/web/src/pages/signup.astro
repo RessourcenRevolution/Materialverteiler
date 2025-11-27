@@ -1,76 +1,76 @@
 ---
-import Layout from "~/layouts/Layout.astro";
-import { Input, Button, Alert, Heading } from "@rr/ui/components";
-import { useTranslations } from "~/i18n/ui";
-import { actions } from "astro:actions";
-import { ActionError } from "astro:actions";
-import { fieldError } from "~/forms";
-import { isInputError } from "astro:actions";
-import type { TranslationKey } from "~/i18n/ui";
+import Layout from '~/layouts/Layout.astro'
+import { Input, Button, Alert, Heading } from '@rr/ui/components'
+import { useTranslations } from '~/i18n/ui'
+import { actions } from 'astro:actions'
+import { ActionError } from 'astro:actions'
+import { fieldError } from '~/forms'
+import { isInputError } from 'astro:actions'
+import type { TranslationKey } from '~/i18n/ui'
 
-export const prerender = false;
+export const prerender = false
 
-const t = useTranslations();
+const t = useTranslations()
 
-const result = Astro.getActionResult(actions.signup);
+const result = Astro.getActionResult(actions.signup)
 if (!(result?.data instanceof ActionError) && result?.data) {
-  const { cookie } = result?.data;
+  const { cookie } = result?.data
   return new Response(null, {
     status: 302,
     headers: {
-      Location: "/dashboard",
-      "Set-Cookie": cookie,
+      'Location': '/dashboard',
+      'Set-Cookie': cookie,
     },
-  });
+  })
 }
 
-const data =
-  Astro.request.method === "POST" ? await Astro.request.formData() : null;
+const data
+  = Astro.request.method === 'POST' ? await Astro.request.formData() : null;
 ---
 
 <Layout>
   <div class="mx-auto max-w-lg">
     <Heading tag="h1" size="xl" class="mb-6">
-      {t("signup.title")}
+      {t('signup.title')}
     </Heading>
     <form class="flex flex-col gap-6" method="post" action={actions.signup}>
       <Input
         name="firstname"
         type="text"
-        label={t("forms.firstname")}
-        value={data?.get("firstname") as string}
-        error={fieldError("firstname", result?.error, "signup.errors.")}
+        label={t('forms.firstname')}
+        value={data?.get('firstname') as string}
+        error={fieldError('firstname', result?.error, 'signup.errors.')}
         required
       />
       <Input
         name="lastname"
         type="text"
-        label={t("forms.lastname")}
-        value={data?.get("lastname") as string}
-        error={fieldError("lastname", result?.error, "signup.errors.")}
+        label={t('forms.lastname')}
+        value={data?.get('lastname') as string}
+        error={fieldError('lastname', result?.error, 'signup.errors.')}
         required
       />
       <Input
         name="team"
         type="text"
-        label={t("forms.team")}
-        value={data?.get("team") as string}
-        error={fieldError("team", result?.error, "signup.errors.")}
+        label={t('forms.team')}
+        value={data?.get('team') as string}
+        error={fieldError('team', result?.error, 'signup.errors.')}
         required
       />
       <Input
         name="email"
         type="email"
-        label={t("forms.email")}
-        value={data?.get("email") as string}
-        error={fieldError("email", result?.error, "signup.errors.")}
+        label={t('forms.email')}
+        value={data?.get('email') as string}
+        error={fieldError('email', result?.error, 'signup.errors.')}
       />
       <Input
         name="password"
         type="password"
-        label={t("forms.password")}
-        value={data?.get("password") as string}
-        error={fieldError("password", result?.error, "signup.errors.")}
+        label={t('forms.password')}
+        value={data?.get('password') as string}
+        error={fieldError('password', result?.error, 'signup.errors.')}
         required
       />
       {
@@ -78,12 +78,12 @@ const data =
           <Alert
             variant="error"
             text={t(
-              ("signup.errors." + result.error.message) as TranslationKey
+              ('signup.errors.' + result.error.message) as TranslationKey,
             )}
           />
         )
       }
-      <Button label={t("signup.button")} variant="primary" class="self-start" />
+      <Button label={t('signup.button')} variant="primary" class="self-start" />
     </form>
   </div>
 </Layout>

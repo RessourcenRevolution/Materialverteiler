@@ -1,37 +1,37 @@
 ---
-import { NavigationItem } from "@rr/ui/components";
-import { useTranslations } from "~/i18n/ui";
-import logo from "~/assets/logo.png";
-import MenuIcon from "iconoir/icons/menu.svg";
-import CloseIcon from "iconoir/icons/xmark.svg";
-import { Image } from "astro:assets";
+import { NavigationItem } from '@rr/ui/components'
+import { useTranslations } from '~/i18n/ui'
+import logo from '~/assets/logo.png'
+import MenuIcon from 'iconoir/icons/menu.svg'
+import CloseIcon from 'iconoir/icons/xmark.svg'
+import { Image } from 'astro:assets'
 
 interface Props {
-  class?: string;
+  class?: string
 }
 
-const { class: className } = Astro.props;
+const { class: className } = Astro.props
 
-const authStore = Astro.locals.pb.authStore;
+const authStore = Astro.locals.pb.authStore
 
-const t = useTranslations();
+const t = useTranslations()
 
-const items: Record<string, { href: string; label: string }[]> = {
+const items: Record<string, { href: string, label: string }[]> = {
   main: [
     ...(authStore.isValid
-      ? [{ href: "/dashboard", label: t("header.dashboard") }]
+      ? [{ href: '/dashboard', label: t('header.dashboard') }]
       : []),
-    { href: "/ueber-uns", label: t("header.about") },
+    { href: '/ueber-uns', label: t('header.about') },
   ],
   meta: [
     ...(authStore.isValid
       ? [
-          { href: "/profile", label: t("header.profile") },
-          { href: "/logout", label: t("header.logout") },
+          { href: '/profile', label: t('header.profile') },
+          { href: '/logout', label: t('header.logout') },
         ]
       : [
-          { href: "/login", label: t("header.login") },
-          { href: "/signup", label: t("header.signup") },
+          { href: '/login', label: t('header.login') },
+          { href: '/signup', label: t('header.signup') },
         ]),
   ],
 };
@@ -40,7 +40,7 @@ const items: Record<string, { href: string; label: string }[]> = {
 <header
   data-is-sticky
   class:list={[
-    "w-full flex mb-12 px-3 py-3 bg-background sticky top-0 z-50",
+    'w-full flex mb-12 px-3 py-3 bg-background sticky top-0 z-50',
     className,
   ]}
 >
@@ -50,7 +50,7 @@ const items: Record<string, { href: string; label: string }[]> = {
         <Image src={logo} alt="Logo" class="w-55 max-w-[50vw]" />
       </a>
       {
-        items.main.map((item) => (
+        items.main.map(item => (
           <NavigationItem href={item.href} class="hidden lg:block">
             {item.label}
           </NavigationItem>
@@ -59,7 +59,7 @@ const items: Record<string, { href: string; label: string }[]> = {
     </div>
     <div class="hidden lg:flex gap-6 pr-4">
       {
-        items.meta.map((item) => (
+        items.meta.map(item => (
           <NavigationItem href={item.href}>{item.label}</NavigationItem>
         ))
       }
@@ -75,9 +75,9 @@ const items: Record<string, { href: string; label: string }[]> = {
     <dialog
       id="main-navigation"
       class:list={[
-        "fixed inset-0 left-1/10! z-9999 max-w-full max-h-full w-9/10 h-full",
-        "[&[open]]:block [&[open]]:animate-slide-from-left",
-        "transition-transform delay-1000",
+        'fixed inset-0 left-1/10! z-9999 max-w-full max-h-full w-9/10 h-full',
+        '[&[open]]:block [&[open]]:animate-slide-from-left',
+        'transition-transform delay-1000',
       ]}
     >
       <div
@@ -92,11 +92,11 @@ const items: Record<string, { href: string; label: string }[]> = {
           <ul class="flex flex-col gap-4">
             <li>
               <NavigationItem href="/" class="text-lg">
-                {t("header.home")}
+                {t('header.home')}
               </NavigationItem>
             </li>
             {
-              items.main.map((item) => (
+              items.main.map(item => (
                 <li>
                   <NavigationItem href={item.href} class="text-lg">
                     {item.label}
@@ -105,7 +105,7 @@ const items: Record<string, { href: string; label: string }[]> = {
               ))
             }
             {
-              items.meta.map((item) => (
+              items.meta.map(item => (
                 <li>
                   <NavigationItem href={item.href} class="text-lg">
                     {item.label}

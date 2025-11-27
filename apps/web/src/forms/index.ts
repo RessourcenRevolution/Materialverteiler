@@ -1,5 +1,5 @@
-import { ActionError, isInputError } from "astro:actions";
-import { useTranslations, type TranslationKey } from "~/i18n/ui";
+import { ActionError, isInputError } from 'astro:actions'
+import { useTranslations, type TranslationKey } from '~/i18n/ui'
 
 /**
  * Retrieves a translated error message for a specific form field.
@@ -16,14 +16,14 @@ import { useTranslations, type TranslationKey } from "~/i18n/ui";
 export function fieldError(
   fieldName: string,
   error?: ActionError,
-  prefix: string = ""
+  prefix: string = '',
 ) {
-  const t = useTranslations();
+  const t = useTranslations()
   if (error && isInputError(error) && error.fields[fieldName]) {
     return t(
-      (prefix +
-        error.fields[fieldName][0]) as TranslationKey 
-    );
+      (prefix
+        + error.fields[fieldName][0]) as TranslationKey,
+    )
   }
-  return;
+  return
 }

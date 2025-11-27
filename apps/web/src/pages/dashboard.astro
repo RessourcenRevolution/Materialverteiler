@@ -1,21 +1,21 @@
 ---
-import Layout from "~/layouts/Layout.astro";
-import { type Listing, ListingSchema } from "~/schemas/listing";
-import { Button, Container, Heading } from "@rr/ui/components";
-import EmailVerificationWarning from "~/components/EmailVerificationWarning/EmailVerificationWarning.astro";
-import { useTranslations } from "~/i18n/ui";
-import ListingList from "~/components/ListingList.astro";
+import Layout from '~/layouts/Layout.astro'
+import { type Listing, ListingSchema } from '~/schemas/listing'
+import { Button, Container, Heading } from '@rr/ui/components'
+import EmailVerificationWarning from '~/components/EmailVerificationWarning/EmailVerificationWarning.astro'
+import { useTranslations } from '~/i18n/ui'
+import ListingList from '~/components/ListingList.astro'
 
-export const prerender = false;
+export const prerender = false
 
-const t = useTranslations();
+const t = useTranslations()
 
 const items = await Astro.locals.pb
-  .collection("listings")
-  .getFullList({ expand: "user,team" });
-const listings = ListingSchema.array().parse(items) as Listing[];
+  .collection('listings')
+  .getFullList({ expand: 'user,team' })
+const listings = ListingSchema.array().parse(items) as Listing[]
 
-const isNewUser = !Astro.locals.pb.authStore.record!.roles.includes("user");
+const isNewUser = !Astro.locals.pb.authStore.record!.roles.includes('user');
 ---
 
 <Layout>
@@ -23,21 +23,23 @@ const isNewUser = !Astro.locals.pb.authStore.record!.roles.includes("user");
     <EmailVerificationWarning />
     <div class="flex justify-between items-center flex-wrap gap-4 mb-4">
       <Heading tag="h1" size="xl">
-        {t("dashboard.title")}
+        {t('dashboard.title')}
       </Heading>
       {!isNewUser && <Button label="New listing" href="/listings/new" />}
     </div>
     {
-      isNewUser ? (
-        <>
-          <h2 class="text-xl font-bold mb-3">
-            {t("dashboard.user-approval.title")}
-          </h2>
-          <p>{t("dashboard.user-approval.text")}</p>
-        </>
-      ) : (
-        <ListingList listings={listings} />
-      )
+      isNewUser
+        ? (
+            <>
+              <h2 class="text-xl font-bold mb-3">
+                {t('dashboard.user-approval.title')}
+              </h2>
+              <p>{t('dashboard.user-approval.text')}</p>
+            </>
+          )
+        : (
+            <ListingList listings={listings} />
+          )
     }
   </Container>
 </Layout>

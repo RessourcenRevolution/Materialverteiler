@@ -1,20 +1,20 @@
 ---
-import { Container } from "@rr/ui/components";
-import { DocumentRenderer } from "astro-document-renderer";
-import Layout from "~/layouts/Layout.astro";
-import Image from "~/components/keystone/Image.astro";
+import { Container } from '@rr/ui/components'
+import { DocumentRenderer } from 'astro-document-renderer'
+import Layout from '~/layouts/Layout.astro'
+import Image from '~/components/keystone/Image.astro'
 
-export const prerender = false;
+export const prerender = false
 
-const { path } = Astro.params;
+const { path } = Astro.params
 
 if (!process.env.KEYSTONE_GRAPHQL_ENDPOINT) {
-  throw new Error("KEYSTONE_GRAPHQL_ENDPOINT environment variable is not set");
+  throw new Error('KEYSTONE_GRAPHQL_ENDPOINT environment variable is not set')
 }
 
 const response = await fetch(process.env.KEYSTONE_GRAPHQL_ENDPOINT, {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify({
     query: `
       query Page($where: PageWhereUniqueInput!) {
@@ -28,16 +28,16 @@ const response = await fetch(process.env.KEYSTONE_GRAPHQL_ENDPOINT, {
       `,
     variables: {
       where: {
-        path: `/${path || ""}`,
+        path: `/${path || ''}`,
       },
     },
   }),
-});
-const result = await response.json();
-const page = result?.data?.page;
+})
+const result = await response.json()
+const page = result?.data?.page
 
 if (!page) {
-  return new Response(null, { status: 404 });
+  return new Response(null, { status: 404 })
 }
 ---
 

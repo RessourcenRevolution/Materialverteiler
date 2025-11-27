@@ -1,25 +1,25 @@
 ---
-import Layout from "~/layouts/Layout.astro";
-import { useTranslations } from "~/i18n/ui";
-import ListingForm from "~/components/ListingForm.astro";
-import { ListingSchema, type Listing } from "~/schemas/listing";
+import Layout from '~/layouts/Layout.astro'
+import { useTranslations } from '~/i18n/ui'
+import ListingForm from '~/components/ListingForm.astro'
+import { ListingSchema, type Listing } from '~/schemas/listing'
 
-export const prerender = false;
+export const prerender = false
 
-const t = useTranslations();
+const t = useTranslations()
 
-const { id } = Astro.params;
+const { id } = Astro.params
 if (!id) {
-  return new Response(null, { status: 404 });
+  return new Response(null, { status: 404 })
 }
 
-const item = await Astro.locals.pb.collection("listings").getOne(id);
-const user = Astro.locals.pb.authStore.record?.id;
+const item = await Astro.locals.pb.collection('listings').getOne(id)
+const user = Astro.locals.pb.authStore.record?.id
 if (!user) {
-  return new Response(null, { status: 403 });
+  return new Response(null, { status: 403 })
 }
 if (item.user !== user) {
-  return new Response(null, { status: 404 });
+  return new Response(null, { status: 404 })
 }
 const listing = ListingSchema.parse(item) as Listing;
 ---
@@ -27,9 +27,9 @@ const listing = ListingSchema.parse(item) as Listing;
 <Layout>
   <div class="mx-auto max-w-lg">
     <h1 class="text-2xl font-bold text-heading mb-6">
-      {t("update-listing.title")}
+      {t('update-listing.title')}
     </h1>
-    <p class="text-base text-body mb-6">{t("update-listing.text")}</p>
+    <p class="text-base text-body mb-6">{t('update-listing.text')}</p>
     <ListingForm update listing={listing} />
   </div>
 </Layout>

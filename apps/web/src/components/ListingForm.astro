@@ -1,5 +1,5 @@
 ---
-import { actions } from "astro:actions";
+import { actions } from 'astro:actions'
 import {
   Input,
   Button,
@@ -7,41 +7,41 @@ import {
   Textarea,
   ImageInput,
   Heading,
-} from "@rr/ui/components";
-import { useTranslations } from "~/i18n/ui";
-import { fieldError } from "~/forms";
-import { isInputError } from "astro:actions";
-import type { Listing } from "~/schemas/listing";
-import { asIsoDate } from "~/lib/date";
+} from '@rr/ui/components'
+import { useTranslations } from '~/i18n/ui'
+import { fieldError } from '~/forms'
+import { isInputError } from 'astro:actions'
+import type { Listing } from '~/schemas/listing'
+import { asIsoDate } from '~/lib/date'
 
 interface Props {
-  update?: boolean;
-  listing?: Listing;
+  update?: boolean
+  listing?: Listing
 }
 
-const t = useTranslations();
+const t = useTranslations()
 
-const { update = false, listing } = Astro.props;
+const { update = false, listing } = Astro.props
 
-const teamCreationResult = Astro.getActionResult(actions.createTeam);
+const teamCreationResult = Astro.getActionResult(actions.createTeam)
 
-const result = Astro.getActionResult(actions.listing);
+const result = Astro.getActionResult(actions.listing)
 
-const formData =
-  Astro.request.method === "POST" ? await Astro.request.formData() : null;
+const formData
+  = Astro.request.method === 'POST' ? await Astro.request.formData() : null
 const postedListing = formData
   ? ({
-      title: formData.get("title") as string,
-      description: formData.get("description") as string,
+      title: formData.get('title') as string,
+      description: formData.get('description') as string,
     } as Partial<Listing>)
-  : null;
+  : null
 
 const data = postedListing ? postedListing : listing;
 ---
 
 {
   teamCreationResult?.data && (
-    <Alert variant="info" text={t("team-form.success")} class="mb-4" />
+    <Alert variant="info" text={t('team-form.success')} class="mb-4" />
   )
 }
 {
@@ -51,8 +51,8 @@ const data = postedListing ? postedListing : listing;
       variant="success"
       text={
         update
-          ? t("listing-form.update.success")
-          : t("listing-form.create.success")
+          ? t('listing-form.update.success')
+          : t('listing-form.create.success')
       }
       class="mb-4"
     />
@@ -63,98 +63,98 @@ const data = postedListing ? postedListing : listing;
       action={actions.listing}
       enctype="multipart/form-data"
     >
-      <input type="hidden" name="type" value={update ? "update" : "create"} />
+      <input type="hidden" name="type" value={update ? 'update' : 'create'} />
       <input type="hidden" name="id" value={data?.id} />
 
       <Heading tag="h2" size="md">
-        {t("listing-form.general.title")}
+        {t('listing-form.general.title')}
       </Heading>
-      <p class="text-body text-base">{t("listing-form.general.text")}</p>
+      <p class="text-body text-base">{t('listing-form.general.text')}</p>
       <Input
         name="title"
-        label={t("listing-form.title.label")}
+        label={t('listing-form.title.label')}
         value={data?.title}
-        error={fieldError("title", result?.error)}
+        error={fieldError('title', result?.error)}
         required
       />
       <Input
         name="material"
-        label={t("listing-form.material.label")}
+        label={t('listing-form.material.label')}
         value={data?.material}
-        error={fieldError("material", result?.error)}
+        error={fieldError('material', result?.error)}
       />
       <Input
         name="measurements"
-        label={t("listing-form.measurements.label")}
+        label={t('listing-form.measurements.label')}
         value={data?.measurements}
-        error={fieldError("measurements", result?.error)}
+        error={fieldError('measurements', result?.error)}
       />
       <Input
         name="condition"
-        label={t("listing-form.condition.label")}
+        label={t('listing-form.condition.label')}
         value={data?.condition}
-        error={fieldError("condition", result?.error)}
+        error={fieldError('condition', result?.error)}
       />
       <Textarea
         name="description"
-        label={t("listing-form.description.label")}
+        label={t('listing-form.description.label')}
         value={data?.description}
-        error={fieldError("description", result?.error)}
+        error={fieldError('description', result?.error)}
         required
       />
       <ImageInput
         name="images+"
         label={
           update
-            ? t("listing-form.update.images.label")
-            : t("listing-form.create.images.label")
+            ? t('listing-form.update.images.label')
+            : t('listing-form.create.images.label')
         }
-        error={fieldError("images", result?.error)}
+        error={fieldError('images', result?.error)}
       />
 
       {/* Pickup */}
       <Heading tag="h2" size="md">
-        {t("listing-form.pickup.title")}
+        {t('listing-form.pickup.title')}
       </Heading>
-      <p class="text-body text-base">{t("listing-form.pickup.text")}</p>
+      <p class="text-body text-base">{t('listing-form.pickup.text')}</p>
       <Input
         name="address"
-        label={t("listing-form.address.label")}
+        label={t('listing-form.address.label')}
         value={data?.address}
-        error={fieldError("address", result?.error)}
+        error={fieldError('address', result?.error)}
       />
       <Input
         name="postalcode"
-        label={t("listing-form.postalcode.label")}
+        label={t('listing-form.postalcode.label')}
         value={data?.postalcode}
-        error={fieldError("postalcode", result?.error)}
+        error={fieldError('postalcode', result?.error)}
       />
       <Input
         name="city"
-        label={t("listing-form.city.label")}
+        label={t('listing-form.city.label')}
         value={data?.city}
-        error={fieldError("city", result?.error)}
+        error={fieldError('city', result?.error)}
       />
       <Textarea
         name="pickup_description"
-        label={t("listing-form.pickup_description.label")}
+        label={t('listing-form.pickup_description.label')}
         value={data?.pickup_description}
-        error={fieldError("pickup_description", result?.error)}
+        error={fieldError('pickup_description', result?.error)}
       />
       <Input
         name="start_date"
         type="date"
-        label={t("listing-form.start_date.label")}
-        value={data?.start_date ? asIsoDate(data?.start_date) : ""}
-        error={fieldError("start_date", result?.error)}
+        label={t('listing-form.start_date.label')}
+        value={data?.start_date ? asIsoDate(data?.start_date) : ''}
+        error={fieldError('start_date', result?.error)}
         required
       />
       <Input
         name="end_date"
         type="date"
-        label={t("listing-form.end_date.label")}
-        value={data?.end_date ? asIsoDate(data?.end_date) : ""}
-        error={fieldError("end_date", result?.error)}
+        label={t('listing-form.end_date.label')}
+        value={data?.end_date ? asIsoDate(data?.end_date) : ''}
+        error={fieldError('end_date', result?.error)}
         required
       />
       {result?.error && !isInputError(result.error) && (
@@ -164,8 +164,8 @@ const data = postedListing ? postedListing : listing;
         variant="primary"
         label={
           update
-            ? t("listing-form.update.submit")
-            : t("listing-form.create.submit")
+            ? t('listing-form.update.submit')
+            : t('listing-form.create.submit')
         }
         class="self-start"
       />

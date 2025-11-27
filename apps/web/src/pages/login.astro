@@ -1,53 +1,53 @@
 ---
-import Layout from "~/layouts/Layout.astro";
-import { Input, Button, Alert, Heading } from "@rr/ui/components";
-import { useTranslations } from "~/i18n/ui";
-import { actions } from "astro:actions";
-import { isInputError } from "astro:actions";
-import { fieldError } from "~/forms";
-import { ActionError } from "astro:actions";
+import Layout from '~/layouts/Layout.astro'
+import { Input, Button, Alert, Heading } from '@rr/ui/components'
+import { useTranslations } from '~/i18n/ui'
+import { actions } from 'astro:actions'
+import { isInputError } from 'astro:actions'
+import { fieldError } from '~/forms'
+import { ActionError } from 'astro:actions'
 
-export const prerender = false;
+export const prerender = false
 
-const t = useTranslations();
+const t = useTranslations()
 
-const result = Astro.getActionResult(actions.login);
+const result = Astro.getActionResult(actions.login)
 if (!(result?.data instanceof ActionError) && result?.data) {
-  const { cookie } = result?.data;
+  const { cookie } = result?.data
   return new Response(null, {
     status: 302,
     headers: {
-      Location: "/dashboard",
-      "Set-Cookie": cookie,
+      'Location': '/dashboard',
+      'Set-Cookie': cookie,
     },
-  });
+  })
 }
 
-const data =
-  Astro.request.method === "POST" ? await Astro.request.formData() : null;
+const data
+  = Astro.request.method === 'POST' ? await Astro.request.formData() : null;
 ---
 
 <Layout>
   <div class="mx-auto max-w-lg">
     <Heading tag="h1" size="xl" class="mb-6">
-      {t("login.title")}
+      {t('login.title')}
     </Heading>
     <form class="flex flex-col gap-6" method="post" action={actions.login}>
       <input type="hidden" name="redirect" value="/dashboard" />
       <Input
         name="email"
         type="email"
-        label={t("forms.email")}
-        value={data?.get("email") as string}
-        error={fieldError("email", result?.error, "forms.errors.")}
+        label={t('forms.email')}
+        value={data?.get('email') as string}
+        error={fieldError('email', result?.error, 'forms.errors.')}
         required
       />
       <Input
         name="password"
         type="password"
-        label={t("forms.password")}
-        value={data?.get("password") as string}
-        error={fieldError("password", result?.error, "forms.errors.")}
+        label={t('forms.password')}
+        value={data?.get('password') as string}
+        error={fieldError('password', result?.error, 'forms.errors.')}
         required
       />
       {
@@ -57,11 +57,11 @@ const data =
       }
       <div class="flex gap-4">
         <Button
-          label={t("login.button")}
+          label={t('login.button')}
           variant="primary"
           class="self-start"
         />
-        <Button label={t("login.signup")} href="/signup" class="self-start" />
+        <Button label={t('login.signup')} href="/signup" class="self-start" />
       </div>
     </form>
   </div>

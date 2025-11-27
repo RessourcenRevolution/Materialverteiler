@@ -4,9 +4,10 @@
     "apps/keystone",
     "apps/web",
     "apps/astrobook",
-    "packages/ui",
-    "packages/image-uploader",
     "packages/astro-pocketbase",
-    "packages/drawer-menu"
+    "packages/eslint-config",
+    "packages/drawer-menu",
+    "packages/image-uploader",
+    "packages/ui"
   ]
 }

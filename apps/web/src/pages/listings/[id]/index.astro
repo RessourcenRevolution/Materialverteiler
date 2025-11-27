@@ -1,23 +1,23 @@
 ---
-import Layout from "~/layouts/Layout.astro";
-import { type Listing, ListingSchema } from "~/schemas/listing";
-import { Button, Container, Heading } from "@rr/ui/components";
-import { defaultLang, useTranslations } from "~/i18n/ui";
-import DateText from "~/components/DateText.astro";
-import LocationText from "~/components/LocationText.astro";
-export const prerender = false;
+import Layout from '~/layouts/Layout.astro'
+import { type Listing, ListingSchema } from '~/schemas/listing'
+import { Container, Heading } from '@rr/ui/components'
+import { useTranslations } from '~/i18n/ui'
+import DateText from '~/components/DateText.astro'
+import LocationText from '~/components/LocationText.astro'
+export const prerender = false
 
-const t = useTranslations();
+const t = useTranslations()
 
-const { id } = Astro.params;
+const { id } = Astro.params
 
 if (!id) {
-  return new Response(null, { status: 404 });
+  return new Response(null, { status: 404 })
 }
 
 const item = await Astro.locals.pb
-  .collection("listings")
-  .getOne(id, { expand: "team" });
+  .collection('listings')
+  .getOne(id, { expand: 'team' })
 const listing = ListingSchema.parse(item) as Listing;
 ---
 
