@@ -94,8 +94,24 @@ export const ui = {
     "team-form.submit": "Create team",
     "team-form.success": "Successfully created your team",
     // Listing form
+    "listing-form.general.title": "Material Information",
+    "listing-form.general.text":
+      "Please provide detailed information about the material you want to give away. Knowing the exact dimensions, weight, and condition will make pickup easier. Also, upload suitable photos from different angles showing the material in its current state.",
+    "listing-form.pickup.title": "Pickup Information",
+    "listing-form.pickup.text":
+      "Please enter precise details about the pickup. Is there anything to note about access? Can assistance be provided for loading? Are tools or electricity available on-site for disassembly?",
     "listing-form.title.label": "Title",
     "listing-form.description.label": "Description",
+    "listing-form.material.label": "Material",
+    "listing-form.measurements.label": "Dimensions and Weight",
+    "listing-form.condition.label":
+      "Condition (e.g., assembled / disassembled)",
+    "listing-form.address.label": "Street and House Number for Pickup",
+    "listing-form.postalcode.label": "Postal Code for Pickup",
+    "listing-form.city.label": "City for Pickup",
+    "listing-form.pickup_description.label": "Important Pickup Info (Optional)",
+    "listing-form.start_date.label": "Available From",
+    "listing-form.end_date.label": "Available Until (Optional)",
     "listing-form.create.images.label": "Images",
     "listing-form.update.images.label": "Add images",
     "listing-form.create.submit": "Create listing",
@@ -167,9 +183,10 @@ export const ui = {
     "create-listing.create-team.title": "Erstelle ein Team",
     "create-listing.create-team.text":
       "Bitte gib Informationen zu deinem Institut, deiner Organisation oder deinem Verein an.",
-    "create-listing.title": "Neues Angebot",
-    "create-listing.text":
-      "Gib einige Details zu dem Material an, das du anbietest.",
+    "create-listing.title": "Angebot anlegen",
+    "create-listing.text": `<p>Hier kannst du ein neues Angebot anlegen. Bitte nutze die Eintragungsfelder, um so viele Informationen wie möglich weiterzugeben.</p>
+      <p>Je genauer die Informationen sind, desto einfacher können wir eine geeignete Abnahme vermitteln.</p>
+      <p>Solltest du Fragen bezüglich unserer Plattform haben, schreib uns gerne eine Mail.</p>`,
     "create-listing.button": "Anlegen",
     "create-listing.errors.forbidden":
       "Du bist nicht berechtigt, neue Angebote zu erstellen",
@@ -193,8 +210,25 @@ export const ui = {
     "team-form.submit": "Team erstellen",
     "team-form.success": "Team erfolgreich erstellt.",
     // Listing form
-    "listing-form.title.label": "Titel",
-    "listing-form.description.label": "Beschreibung",
+    "listing-form.general.title": "Informationen zum Material",
+    "listing-form.general.text":
+      "Bitte mache hier ausführliche Angaben zum Material, das du abzugeben hast. Genaues Wissen zu Maßen, Gewicht und Zustand erleichtern die Abholung. Lade auch geeignete Fotos in verschiedenen Ansichten hoch, die das Material im aktuellen Zustand zeigen.",
+    "listing-form.pickup.title": "Informationen zur Abholung",
+    "listing-form.pickup.text":
+      "Bitte trage hier präzise Infos zur Abholung ein. Gibt es etwas bei der Anfahrt zu beachten? Kann vor Ort beim einladen geholfen werden? Sind Werkzeuge / Strom zum auseinandernehmen vorhanden?",
+    "listing-form.title.label": "Angebotstitel",
+    "listing-form.description.label": "Beschreibungstext",
+    "listing-form.material.label": "Material",
+    "listing-form.measurements.label": "Maße und Gewicht",
+    "listing-form.condition.label":
+      "Zustand (zB zusammengebaut / in Teile zerlegt)",
+    "listing-form.address.label": "Straße und Hausnummer des Abholungsortes",
+    "listing-form.postalcode.label": "PLZ des Abholungsortes",
+    "listing-form.city.label": "Stadt des Abholungsortes",
+    "listing-form.pickup_description.label":
+      "Wichtige Infos zur Abholung (Optional)",
+    "listing-form.start_date.label": "Verfügbar ab",
+    "listing-form.end_date.label": "Verfügbar bis (Optional)",
     "listing-form.create.images.label": "Bilder",
     "listing-form.update.images.label": "Bilder hinzufügen",
     "listing-form.create.submit": "Angebot anlegen",

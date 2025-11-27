@@ -31,8 +31,8 @@ const { listings, edit = false } = Astro.props;
       >
         <h2 class:list={["text-xl text-heading font-bold"]}>{listing.title}</h2>
         <p class="text-base text-body">
-          @{listing.expand?.user?.expand?.team?.name} -{" "}
-          {new Date(listing.created).toLocaleDateString(defaultLang)}
+          @{listing.expand?.team?.name} -{" "}
+          {new Date(listing.start_date).toLocaleDateString(defaultLang)}
         </p>
         <div class="text-base text-body" set:html={listing.description} />
         <div class="flex gap-2 flex-wrap mt-1">

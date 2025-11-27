@@ -3,6 +3,7 @@ import { z } from "astro:schema";
 import { ClientResponseError } from "pocketbase";
 import { defaultLang, ui, useTranslations } from "~/i18n/ui";
 import { login } from "@rr/astro-pocketbase/actions";
+import { ListingSchema } from "~/schemas/listing";
 
 const required = {
   required_error:
@@ -102,22 +103,17 @@ export const server = {
   /**
    * Create a new listing
    */
-  createListing: defineAction({
+  listing: defineAction({
     accept: "form",
     input: z.discriminatedUnion("type", [
-      z.object({
+      ListingSchema.omit({ id: true, user: true, team: true, images: true }).extend({
         type: z.literal("create"),
-        title: z.string(required),
-        description: z.string(required),
-        "images+": z.array(z.instanceof(File)),
+        "images+": z.array(z.instanceof(File)).optional(),
       }),
-      z.object({
+      ListingSchema.omit({ user: true, team: true, images: true }).extend({
         type: z.literal("update"),
-        id: z.string(required),
-        title: z.string(required),
-        description: z.string(required),
-        "images+": z.array(z.instanceof(File)),
-      }),
+        "images+": z.array(z.instanceof(File)).optional(),
+      })
     ]),
     handler: async (input, { locals }) => {
       const t = useTranslations();
@@ -126,17 +122,14 @@ export const server = {
 
         if (input.type === "create") {
           listing = await locals.pb.collection("listings").create({
-            title: input.title,
-            description: input.description,
-            "images+": input["images+"],
+            ...input,
             user: locals.pb.authStore!.record!.id,
+            team: locals.pb.authStore!.record!.team,
           });
         } else {
+          const { id, ...data } = input;
           listing = await locals.pb.collection("listings").update(input.id, {
-            title: input.title,
-            description: input.description,
-            "images+": input["images+"],
-            user: locals.pb.authStore!.record!.id,
+            ...data,
           });
         }
         return listing;

@@ -1,10 +1,6 @@
 {
   "extends": "astro/tsconfigs/strict",
-  "include": [
-    ".astro/types.d.ts",
-    "**/*",
-    "../../packages/astro-pocketbase/scripts/usePocketbase.ts"
-  ],
+  "include": [".astro/types.d.ts", "**/*"],
   "exclude": ["dist"],
   "compilerOptions": {
     "paths": {

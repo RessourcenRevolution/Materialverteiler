@@ -12,7 +12,7 @@ const t = useTranslations();
 
 const items = await Astro.locals.pb
   .collection("listings")
-  .getFullList({ expand: "user,user.team" });
+  .getFullList({ expand: "user,team" });
 const listings = ListingSchema.array().parse(items) as Listing[];
 
 const isNewUser = !Astro.locals.pb.authStore.record!.roles.includes("user");

@@ -1,9 +1,10 @@
 ---
 import { NavigationItem } from "@rr/ui/components";
 import { useTranslations } from "~/i18n/ui";
-import logo from "../../assets/logo.png";
+import logo from "~/assets/logo.png";
 import MenuIcon from "iconoir/icons/menu.svg";
 import CloseIcon from "iconoir/icons/xmark.svg";
+// import { Picture } from "astro:assets";
 
 interface Props {
   class?: string;
@@ -39,13 +40,14 @@ const items: Record<string, { href: string; label: string }[]> = {
 <header
   data-is-sticky
   class:list={[
-    "w-full flex mb-12 px-3 py-3 bg-background sticky top-0",
+    "w-full flex mb-12 px-3 py-3 bg-background sticky top-0 z-50",
     className,
   ]}
 >
   <nav class="w-full flex justify-between items-center [.is-sticky_&]:pt-1">
     <div class="flex items-center gap-6">
       <a href="/" class="font-bold mr-8">
+        <!-- <Picture src={logo} alt="Logo" class="w-55 max-w-[50vw]" /> -->
         <img src={logo.src} alt="Logo" class="w-55 max-w-[50vw]" />
       </a>
       {

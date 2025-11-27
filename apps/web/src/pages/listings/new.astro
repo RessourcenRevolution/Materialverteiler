@@ -26,7 +26,10 @@ const user = Astro.locals.pb.authStore.record as unknown as User;
       ) : (
         <>
           <h1 class="text-2xl font-bold mb-6">{t("create-listing.title")}</h1>
-          <p class="mb-6">{t("create-listing.text")}</p>
+          <div
+            class="prose prose-p:font-bold prose-p:text-base mb-6"
+            set:html={t("create-listing.text")}
+          />
           <ListingForm />
         </>
       )
