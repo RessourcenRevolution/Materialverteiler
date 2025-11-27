@@ -120,7 +120,7 @@ func sendListingContactConfirmationEmail(e *core.RequestEvent, listing *core.Rec
 	data := newEmailTemplateData(e.App)
 	data["listingId"] = listing.Id
 	data["listingTitle"] = listing.GetString("title")
-	data["firstname"] = user.GetString("name")
+	data["firstname"] = user.GetString("firstname")
 	data["name"] = name
 	data["email"] = email
 	data["phonenumber"] = phonenumber
@@ -139,7 +139,7 @@ func sendListingContactConfirmationEmail(e *core.RequestEvent, listing *core.Rec
 			Name:    e.App.Settings().Meta.SenderName,
 		},
 		To:      []mail.Address{{Address: user.Email()}},
-		Subject: "Neue Anfrage zu Ihrem Materialangebot",
+		Subject: "Bestätigung zu deine Materialangebot Anfrage",
 		HTML:    html,
 	}
 
