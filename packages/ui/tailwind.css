@@ -22,7 +22,7 @@
 
 @utility prose {
   --tw-prose-body: var(--color-body);
-  --tw-prose-headings: var(--color-body);
+  --tw-prose-headings: var(--color-heading);
   --tw-prose-bold: var(--color-body);
   --tw-prose-links: var(--color-body);
   line-height: 1.66;

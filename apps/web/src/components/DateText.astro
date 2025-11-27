@@ -1,0 +1,18 @@
+---
+import CalendarIcon from "iconoir/icons/calendar.svg";
+import { defaultLang } from "~/i18n/ui";
+interface Props {
+  text: string;
+  from: Date;
+  to?: Date;
+  class?: string;
+}
+const { text, from, to, class: className } = Astro.props;
+---
+
+<p class:list={["flex items-center gap-2 text-body", className]}>
+  <CalendarIcon width="1em" class="inline" />
+  {text}
+  {new Date(from).toLocaleDateString(defaultLang)}
+  {to ? ` bis ${new Date(to).toLocaleDateString(defaultLang)}` : ""}
+</p>

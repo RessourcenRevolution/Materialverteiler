@@ -1,0 +1,103 @@
+---
+import Layout from "~/layouts/Layout.astro";
+import { type Listing, ListingSchema } from "~/schemas/listing";
+import { Button, Container, Heading } from "@rr/ui/components";
+import { defaultLang, useTranslations } from "~/i18n/ui";
+import DateText from "~/components/DateText.astro";
+import LocationText from "~/components/LocationText.astro";
+export const prerender = false;
+
+const t = useTranslations();
+
+const { id } = Astro.params;
+
+if (!id) {
+  return new Response(null, { status: 404 });
+}
+
+const item = await Astro.locals.pb
+  .collection("listings")
+  .getOne(id, { expand: "team" });
+const listing = ListingSchema.parse(item) as Listing;
+---
+
+<Layout>
+  <Container size="xl" class="md:grid md:grid-cols-[2fr_1fr] gap-12">
+    <div>
+      <div class="flex">
+        <img
+          class="aspect-4/3 object-cover mb-8 rounded-xs"
+          src={listing.images && listing.images.length > 0
+            ? `${process.env.PUBLIC_API_URL}/api/files/listings/${listing.id}/${listing.images[0]}`
+            : undefined}
+        />
+      </div>
+      <Heading tag="h1" size="md" class="mb-3">
+        {listing.title}
+      </Heading>
+      <div class="md:hidden flex flex-wrap gap-x-8 gap-y-3 mb-6">
+        <LocationText text={listing.expand?.team?.name} />
+        <DateText
+          text="Verfügbar ab"
+          from={listing.start_date}
+          to={listing.end_date ? listing.end_date : undefined}
+        />
+      </div>
+      <p class="font-bold text-body mb-6">
+        {listing.description}
+      </p>
+      {
+        listing.material && (
+          <>
+            <h3 class="font-bold text-heading">Material</h3>
+            <p class="text-body mb-4">{listing.material}</p>
+          </>
+        )
+      }
+      {
+        listing.condition && (
+          <>
+            <h3 class="font-bold text-heading">Zustand</h3>
+            <p class="text-body mb-4">{listing.condition}</p>
+          </>
+        )
+      }
+      {
+        listing.pickup_description && (
+          <>
+            <h3 class="font-bold text-heading">Infos zur Abholung</h3>
+            <p class="text-body mb-4">{listing.pickup_description}</p>
+          </>
+        )
+      }
+      {
+        listing.address && (
+          <div class="md:hidden">
+            <h3 class="font-bold text-heading">Adresse</h3>
+            <p class="text-body mb-4">
+              {listing.address}, {listing.postalcode} {listing.city}
+            </p>
+          </div>
+        )
+      }
+
+      <Heading tag="h2" size="md" class="mt-12"> Kontakt Aufnehmen </Heading>
+    </div>
+    <div class="hidden md:block">
+      <div class="sticky top-[86px] bg-yellow-100 p-6 rounded-xs">
+        <LocationText text={listing.expand?.team?.name} class="mb-4" />
+        <DateText
+          text="Verfügbar ab"
+          from={listing.start_date}
+          to={listing.end_date ? listing.end_date : undefined}
+          class="items-start mb-4"
+        />
+        <h3 class="font-bold text-heading">Adresse</h3>
+        <p class="text-body">
+          {listing.address}, {listing.postalcode}
+          {listing.city}
+        </p>
+      </div>
+    </div>
+  </Container>
+</Layout>
