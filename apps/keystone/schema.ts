@@ -17,6 +17,7 @@ import {
   password,
   timestamp,
   image,
+  select,
 } from "@keystone-6/core/fields";
 
 // the document field is a more complicated field, so it has it's own package
@@ -112,6 +113,12 @@ export const lists = {
             fieldPosition: "sidebar",
           },
         },
+      }),
+
+      access: select({
+        options: [{ value: "public", label: "Public" }, { value: "authenticated", label: "Authenticated" }],
+        validation: { isRequired: true },
+        defaultValue: "public"
       }),
 
       // the document field can be used for making rich editable content

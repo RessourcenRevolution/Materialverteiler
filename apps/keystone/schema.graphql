@@ -183,6 +183,7 @@ type Page {
   slug: String
   parent: Page
   path: String
+  access: String
   content: Page_content_Document
 }
 
@@ -204,6 +205,7 @@ input PageWhereInput {
   slug: StringFilter
   parent: PageWhereInput
   path: StringFilter
+  access: StringFilter
 }
 
 input PageOrderByInput {
@@ -211,6 +213,7 @@ input PageOrderByInput {
   title: OrderDirection
   slug: OrderDirection
   path: OrderDirection
+  access: OrderDirection
 }
 
 input PageUpdateInput {
@@ -218,6 +221,7 @@ input PageUpdateInput {
   slug: String
   parent: PageRelateToOneForUpdateInput
   path: String
+  access: String
   content: JSON
 }
 
@@ -237,6 +241,7 @@ input PageCreateInput {
   slug: String
   parent: PageRelateToOneForCreateInput
   path: String
+  access: String
   content: JSON
 }
 

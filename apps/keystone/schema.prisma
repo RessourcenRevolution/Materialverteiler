@@ -37,6 +37,7 @@ model Page {
   parent           Page?   @relation("Page_parent", fields: [parentId], references: [id])
   parentId         String? @map("parent")
   path             String  @unique @default("")
+  access           String  @default("public")
   content          String  @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
   from_Page_parent Page[]  @relation("Page_parent")
 
