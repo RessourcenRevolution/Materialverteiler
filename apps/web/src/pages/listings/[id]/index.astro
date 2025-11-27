@@ -7,6 +7,8 @@ import DateText from '~/components/DateText.astro'
 import LocationText from '~/components/LocationText.astro'
 import ContactForm from '~/components/ContactForm.astro'
 import BackgroundRect from '~/components/BackgroundRect.astro'
+import ArrowLeftIcon from 'iconoir/icons/arrow-left.svg'
+import ArrowRightIcon from 'iconoir/icons/arrow-right.svg'
 
 export const prerender = false
 
@@ -27,14 +29,39 @@ const listing = ListingSchema.parse(item) as Listing;
 <Layout>
   <Container size="xl" class="md:grid md:grid-cols-[2fr_1fr] gap-12">
     <div>
-      <div class="flex">
-        <img
-          class="aspect-4/3 object-cover mb-8 rounded-xs"
-          src={listing.images && listing.images.length > 0
-            ? `${process.env.PUBLIC_API_URL}/api/files/listings/${listing.id}/${listing.images[0]}`
-            : undefined}
-        />
-      </div>
+      <!-- Image Gallery -->
+      {listing.images && listing.images.length > 0
+        && <div class="relative rounded-xs overflow-hidden">
+          {listing.images.length > 1
+            && <button data-scroll-snap="previous" class="absolute top-1/2 -translate-y-1/2 left-4 z-10 cursor-pointer bg-white p-2 rounded-xs">
+              <span class="sr-only">{t('previous')}</span>
+              <ArrowLeftIcon stroke-width="2" />
+            </button>
+          }
+          <div data-scroll-container class="relative flex overflow-x-scroll mb-8 snap-always snap-both snap-mandatory">
+            {listing.images.map(image =>
+              <button
+                data-image-gallery={`${process.env.PUBLIC_API_URL}/api/files/listings/${listing.id}/${image}`}
+                class="w-full shrink-0 flex cursor-pointer"
+              >
+                <img
+                  class="aspect-4/3 object-cover snap-start"
+                  src={
+                    `${process.env.PUBLIC_API_URL}/api/files/listings/${listing.id}/${image}?thumb=1024x1024f`
+                  }
+                />
+              </button>,
+            )}
+          </div>
+          {listing.images.length > 1
+            && <button data-scroll-snap="next" class="absolute top-1/2 -translate-y-1/2 right-4 z-10 cursor-pointer bg-white p-2 rounded-xs">
+              <span class="sr-only">{t('next')}</span>
+              <ArrowRightIcon stroke-width="2" />
+            </button>
+          }
+        </div>
+      }
+
       <Heading tag="h1" size="md" class="mb-3">
         {listing.title}
       </Heading>

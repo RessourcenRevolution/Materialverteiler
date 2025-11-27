@@ -11,6 +11,8 @@ export const defaultLang = APP_LANGUAGE
 
 export const ui = {
   en: {
+    'next': 'Next',
+    'previous': 'Previous',
     // Header
     'header.home': 'Home',
     'header.dashboard': 'Dashboard',
@@ -136,6 +138,8 @@ export const ui = {
     'contact-form.submit': 'Send',
   },
   de: {
+    'next': 'Nächstes',
+    'previous': 'Vorheriges',
     // Header
     'header.home': 'Startseite',
     'header.dashboard': 'Dashboard',
