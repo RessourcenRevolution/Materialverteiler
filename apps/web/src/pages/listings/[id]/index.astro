@@ -87,6 +87,16 @@ const listing = ListingSchema.parse(item) as Listing;
         )
       }
       {
+        listing.measurements && (
+          <>
+            <h3 class="font-bold text-heading">
+              {t('listing-page.measurements')}
+            </h3>
+            <p class="text-body mb-4">{listing.measurements}</p>
+          </>
+        )
+      }
+      {
         listing.condition && (
           <>
             <h3 class="font-bold text-heading">

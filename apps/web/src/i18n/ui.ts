@@ -126,6 +126,7 @@ export const ui = {
     'listing-card.remove': 'Remove',
     // Listing page
     'listing-page.material': 'Material',
+    'listing-page.measurements': 'Dimensions and Weight',
     'listing-page.condition': 'Condition',
     'listing-page.pickup_description': 'Pickup Info',
     'listing-page.address': 'Address',
@@ -257,6 +258,7 @@ export const ui = {
     'listing-card.remove': 'Löschen',
     // Listing page
     'listing-page.material': 'Material',
+    'listing-page.measurements': 'Maße und Gewicht',
     'listing-page.condition': 'Zustand',
     'listing-page.pickup_description': 'Infos zur Abholung',
     'listing-page.address': 'Addresse',
