@@ -1,7 +1,7 @@
 ---
 import Layout from "~/layouts/Layout.astro";
 import { type Listing, ListingSchema } from "~/schemas/listing";
-import { Button, Container } from "@rr/ui/components";
+import { Button, Container, Heading } from "@rr/ui/components";
 import EmailVerificationWarning from "~/components/EmailVerificationWarning/EmailVerificationWarning.astro";
 import { useTranslations } from "~/i18n/ui";
 import ListingList from "~/components/ListingList.astro";
@@ -22,9 +22,9 @@ const isNewUser = !Astro.locals.pb.authStore.record!.roles.includes("user");
   <Container size="xl">
     <EmailVerificationWarning />
     <div class="flex justify-between items-center flex-wrap gap-4 mb-4">
-      <h1 class="text-3xl font-bold text-heading">
+      <Heading tag="h1" size="xl">
         {t("dashboard.title")}
-      </h1>
+      </Heading>
       {!isNewUser && <Button label="New listing" href="/listings/new" />}
     </div>
     {

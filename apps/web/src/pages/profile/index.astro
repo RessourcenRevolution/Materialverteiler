@@ -1,5 +1,5 @@
 ---
-import { Container } from "@rr/ui/components";
+import { Container, Heading } from "@rr/ui/components";
 import ListingList from "~/components/ListingList.astro";
 import { useTranslations } from "~/i18n/ui";
 import Layout from "~/layouts/Layout.astro";
@@ -29,9 +29,9 @@ const listings = ListingSchema.array().parse(items) as Listing[];
 
 <Layout>
   <Container size="xl">
-    <h1 class="text-3xl font-bold text-heading mb-4">
+    <Heading tag="h1" size="xl" class="mb-4">
       {t("profile.title")}
-    </h1>
+    </Heading>
     <p class="mb-12">
       {t("profile.name")}:
       {user.firstname}
@@ -40,9 +40,9 @@ const listings = ListingSchema.array().parse(items) as Listing[];
       {t("profile.team")}: {user.expand?.team?.name}<br />
     </p>
 
-    <h2 class="text-2xl font-bold text-heading mb-4">
+    <Heading tag="h2" size="lg" class="mb-4">
       {t("profile.active-listings")}
-    </h2>
+    </Heading>
     <ListingList listings={listings} edit={true} />
   </Container>
 </Layout>

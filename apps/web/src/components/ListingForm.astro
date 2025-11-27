@@ -1,6 +1,13 @@
 ---
 import { actions } from "astro:actions";
-import { Input, Button, Alert, Textarea, ImageInput } from "@rr/ui/components";
+import {
+  Input,
+  Button,
+  Alert,
+  Textarea,
+  ImageInput,
+  Heading,
+} from "@rr/ui/components";
 import { useTranslations } from "~/i18n/ui";
 import { fieldError } from "~/forms";
 import { isInputError } from "astro:actions";
@@ -59,9 +66,9 @@ const data = postedListing ? postedListing : listing;
       <input type="hidden" name="type" value={update ? "update" : "create"} />
       <input type="hidden" name="id" value={data?.id} />
 
-      <h2 class="text-xl text-heading font-bold">
+      <Heading tag="h2" size="md">
         {t("listing-form.general.title")}
-      </h2>
+      </Heading>
       <p class="text-body text-base">{t("listing-form.general.text")}</p>
       <Input
         name="title"
@@ -106,9 +113,9 @@ const data = postedListing ? postedListing : listing;
       />
 
       {/* Pickup */}
-      <h2 class="text-xl text-heading font-bold">
+      <Heading tag="h2" size="md">
         {t("listing-form.pickup.title")}
-      </h2>
+      </Heading>
       <p class="text-body text-base">{t("listing-form.pickup.text")}</p>
       <Input
         name="address"

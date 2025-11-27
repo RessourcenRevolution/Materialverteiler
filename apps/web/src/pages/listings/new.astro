@@ -4,6 +4,7 @@ import { useTranslations } from "~/i18n/ui";
 import type { User } from "~/schemas/user";
 import TeamForm from "~/components/TeamForm.astro";
 import ListingForm from "~/components/ListingForm.astro";
+import { Heading } from "@rr/ui/components";
 
 export const prerender = false;
 
@@ -25,7 +26,9 @@ const user = Astro.locals.pb.authStore.record as unknown as User;
         </>
       ) : (
         <>
-          <h1 class="text-2xl font-bold mb-6">{t("create-listing.title")}</h1>
+          <Heading tag="h1" size="xl" class="mb-6">
+            {t("create-listing.title")}
+          </Heading>
           <div
             class="prose prose-p:font-bold prose-p:text-base mb-6"
             set:html={t("create-listing.text")}

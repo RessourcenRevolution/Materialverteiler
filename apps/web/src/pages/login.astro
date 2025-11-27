@@ -1,6 +1,6 @@
 ---
 import Layout from "~/layouts/Layout.astro";
-import { Input, Button, Alert } from "@rr/ui/components";
+import { Input, Button, Alert, Heading } from "@rr/ui/components";
 import { useTranslations } from "~/i18n/ui";
 import { actions } from "astro:actions";
 import { isInputError } from "astro:actions";
@@ -29,9 +29,9 @@ const data =
 
 <Layout>
   <div class="mx-auto max-w-lg">
-    <h1 class="text-2xl font-bold text-heading mb-6">
+    <Heading tag="h1" size="xl" class="mb-6">
       {t("login.title")}
-    </h1>
+    </Heading>
     <form class="flex flex-col gap-6" method="post" action={actions.login}>
       <input type="hidden" name="redirect" value="/dashboard" />
       <Input
