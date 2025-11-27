@@ -32,9 +32,9 @@ const result = Astro.getActionResult(actions.sendEmailVerification);
           !user.verified && (
             <Alert
               variant="warning"
-              text={t('confirm-email.warning.text')}
               class="mb-4"
             >
+              <p class="text-base">{t('confirm-email.warning.text')}</p>
               <form method="POST" action={actions.sendEmailVerification}>
                 <Button label={t('confirm-email.warning.button')} />
               </form>

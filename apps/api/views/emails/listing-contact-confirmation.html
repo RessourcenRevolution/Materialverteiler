@@ -1,0 +1,29 @@
+{{define "body"}}
+<p>Hallo {{.firstname}},</p>
+<p>
+  vielen Dank für Ihre Anfrage über den Materialverteiler von Ressourcen Revolution! Wir haben Ihre Nachricht erfolgreich an den Anbieter weitergeleitet.
+</p>
+<p>
+  <strong>Ihre Anfrage im Überblick:</strong><br />
+  Material: <a href="{{print .appURL "/listings/" .listingId}}">{{ .listingTitle }}</a><br />
+  Kontaktdaten: {{.email}}{{ if .phonenumber }}, {{.phonenumber }}{{ end }}
+</p>
+
+<p>
+  <strong>Ihre Nachricht:</strong><br />
+</p>
+
+{{ template "message" (dict "message" .message) }}
+
+<p>
+  <strong>Was passiert jetzt?</strong><br />
+  Der Anbieter wird sich bei Interesse direkt bei Ihnen melden.<br />
+  Falls Sie weitere Fragen haben, antworten Sie einfach auf diese E-Mail oder kontaktieren Sie uns unter [Kontakt-E-Mail].
+</p>
+<p>
+  Vielen Dank, dass Sie Teil der Ressourcen Revolution sind und nachhaltige Lösungen fördern!
+</p>
+<p>
+  Ihr Ressourcen Revolution-Team
+</p>
+{{end}}

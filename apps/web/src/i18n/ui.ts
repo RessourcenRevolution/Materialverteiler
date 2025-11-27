@@ -122,6 +122,18 @@ export const ui = {
     'listing-card.open': 'View',
     'listing-card.edit': 'Edit',
     'listing-card.remove': 'Remove',
+    // Listing page
+    'listing-page.material': 'Material',
+    'listing-page.condition': 'Condition',
+    'listing-page.pickup_description': 'Pickup Info',
+    'listing-page.address': 'Address',
+    'listing-page.contact.title': 'Contact',
+    // Contact form
+    'contact-form.name.label': 'Your name',
+    'contact-form.email.label': 'Your e-mail',
+    'contact-form.phonenumber.label': 'Your phonenumber',
+    'contact-form.message.label': 'Your message',
+    'contact-form.submit': 'Send',
   },
   de: {
     // Header
@@ -239,6 +251,18 @@ export const ui = {
     'listing-card.open': 'Zum Angebot',
     'listing-card.edit': 'Bearbeiten',
     'listing-card.remove': 'Löschen',
+    // Listing page
+    'listing-page.material': 'Material',
+    'listing-page.condition': 'Zustand',
+    'listing-page.pickup_description': 'Infos zur Abholung',
+    'listing-page.address': 'Addresse',
+    'listing-page.contact.title': 'Kontakt Aufnehmen',
+    // Contact form
+    'contact-form.name.label': 'Deine Name',
+    'contact-form.email.label': 'Deine Mail-Addresse',
+    'contact-form.phonenumber.label': 'Deine Telefonnummer',
+    'contact-form.message.label': 'Deine Nachricht',
+    'contact-form.submit': 'Absenden',
   },
 }
 

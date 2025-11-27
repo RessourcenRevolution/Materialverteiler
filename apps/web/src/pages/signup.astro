@@ -7,6 +7,7 @@ import { ActionError } from 'astro:actions'
 import { fieldError } from '~/forms'
 import { isInputError } from 'astro:actions'
 import type { TranslationKey } from '~/i18n/ui'
+import BackgroundRect from '~/components/BackgroundRect.astro'
 
 export const prerender = false
 
@@ -29,7 +30,8 @@ const data
 ---
 
 <Layout>
-  <div class="mx-auto max-w-lg">
+  <div class="mx-auto max-w-lg relative">
+    <BackgroundRect variant="page" />
     <Heading tag="h1" size="xl" class="mb-6">
       {t('signup.title')}
     </Heading>

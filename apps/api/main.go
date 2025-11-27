@@ -2,9 +2,11 @@ package main
 
 import (
 	"log"
+	"net/http"
 	"slices"
 
 	"github.com/pocketbase/pocketbase"
+	"github.com/pocketbase/pocketbase/apis"
 	"github.com/pocketbase/pocketbase/core"
 	"github.com/pocketbase/pocketbase/plugins/migratecmd"
 
@@ -40,6 +42,46 @@ func main() {
 		}
 
 		return e.Next()
+	})
+	app.OnServe().BindFunc(func(se *core.ServeEvent) error {
+		// register "POST /api/myapp/settings" route (allowed only for authenticated users)
+		se.Router.POST("/api/listings/{id}/contact", func(e *core.RequestEvent) error {
+			id := e.Request.PathValue("id")
+
+			// Get listing
+			listing, err := app.FindRecordById("listings", id)
+			if err != nil {
+				return e.Error(http.StatusInternalServerError, "error getting listing", nil)
+			}
+			if listing == nil {
+				return e.Error(http.StatusNotFound, "listing not found", nil)
+			}
+
+			// Expand listing user
+			errs := app.ExpandRecord(listing, []string{"user"}, nil)
+			if len(errs) > 0 {
+				return e.Error(http.StatusNotFound, "failed to expand", nil)
+			}
+
+			// Read post data
+			data := struct {
+				Name        string `json:"name"`
+				Email       string `json:"email"`
+				Phonenumber string `json:"phonenumber"`
+				Message     string `json:"message"`
+			}{}
+			if err := e.BindBody(&data); err != nil {
+				return e.BadRequestError("Failed to read request data", err)
+			}
+
+			log.Printf("Contact form submitted for listing %s by %s\n", data.Name, data.Email)
+
+			sendListingContactEmail(e, listing, listing.ExpandedOne("user"), data.Name, data.Email, data.Phonenumber, data.Message)
+			sendListingContactConfirmationEmail(e, listing, e.Auth, data.Name, data.Email, data.Phonenumber, data.Message)
+			return e.JSON(http.StatusOK, map[string]bool{"success": true})
+		}).Bind(apis.RequireAuth())
+
+		return se.Next()
 	})
 
 	if err := app.Start(); err != nil {

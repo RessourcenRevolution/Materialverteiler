@@ -1,10 +1,9 @@
 ---
 import { NavigationItem } from '@rr/ui/components'
 import { useTranslations } from '~/i18n/ui'
-import logo from '~/assets/logo.png'
+import Logo from '~/assets/logo.svg'
 import MenuIcon from 'iconoir/icons/menu.svg'
 import CloseIcon from 'iconoir/icons/xmark.svg'
-import { Image } from 'astro:assets'
 
 interface Props {
   class?: string
@@ -47,7 +46,7 @@ const items: Record<string, { href: string, label: string }[]> = {
   <nav class="w-full flex justify-between items-center [.is-sticky_&]:pt-1">
     <div class="flex items-center gap-6">
       <a href="/" class="font-bold mr-8">
-        <Image src={logo} alt="Logo" class="w-55 max-w-[50vw]" />
+        <Logo class="w-55 max-w-[50vw]" />
       </a>
       {
         items.main.map(item => (

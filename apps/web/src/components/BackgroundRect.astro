@@ -1,0 +1,14 @@
+---
+interface Props {
+  variant: 'page' | 'custom'
+  class?: string
+}
+
+const { variant, class: className } = Astro.props
+
+const variants = {
+  page: '-left-12 -top-12 w-[calc(90%+var(--spacing)*12)] md:w-[calc(70%+var(--spacing)*12)] h-[82%]',
+  custom: '',
+}
+---
+<div class:list={['absolute bg-[#ffff82] -z-1 animate-open-from-left', variants[variant], className]} />

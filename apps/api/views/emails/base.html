@@ -1,3 +1,21 @@
+{{define "button"}}
+<a
+  href="{{.href}}"
+  style="
+    display: inline-block;
+    font-weight: bold;
+    padding: 10px 12px 9px 12px;
+    border: solid #303633 3px;
+    border-radius: 2px;
+    text-decoration: none;
+  "
+  >{{.text}}</a
+>
+{{end}} {{define "message"}}
+<p style="padding: 16px; background-color: #ebebeb; border-radius: 3px">
+  {{.message}}
+</p>
+{{end}}
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
@@ -14,7 +32,10 @@
         font-size: 14px;
         line-height: 20px;
         font-weight: normal;
-        font-family: Source Sans Pro, sans-serif, emoji;
+        font-family:
+          Source Sans Pro,
+          sans-serif,
+          emoji;
       }
       body {
         padding: 20px 30px;
@@ -28,7 +49,7 @@
       }
       p {
         display: block;
-        margin: 10px 0;
+        margin: 16px 0;
         font-family: inherit;
       }
       small {
@@ -63,7 +84,10 @@
         text-align: center;
         padding: 0 20px;
         margin: 5px 0;
-        font-family: Source Sans Pro, sans-serif, emoji;
+        font-family:
+          Source Sans Pro,
+          sans-serif,
+          emoji;
         font-size: 14px;
         font-weight: bold;
         border-radius: 6px;
@@ -72,6 +96,11 @@
     </style>
   </head>
   <body>
+    <img
+      src="{{ .appURL }}/logo.png"
+      alt="Logo"
+      style="max-width: 200px; margin-bottom: 16px"
+    />
     {{block "body" .}}{{end}}
   </body>
 </html>

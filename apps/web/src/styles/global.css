@@ -5,9 +5,9 @@
     --body-inline-padding: calc(var(--spacing) * 4);
 
     --animate-slide-from-left: slide-from-left 200ms var(--ease-out) forwards;
+    --animate-open-from-left: open-from-left 300ms var(--ease-in-out) 200ms both;
 
     @keyframes slide-from-left {
-
         0% {
             transform: translateX(100%);
         }
@@ -15,5 +15,13 @@
         100% {
             transform: translateX(0%);
         }
+    }
+
+    @keyframes open-from-left {
+        0% {
+            width: 0;
+        }
+
+        100% {}
     }
 }

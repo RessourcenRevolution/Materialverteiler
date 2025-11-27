@@ -1,0 +1,86 @@
+---
+import { Alert, Button, Heading, Input, Textarea } from '@rr/ui/components'
+import { isInputError } from 'astro:actions'
+import { actions } from 'astro:actions'
+import { useTranslations } from '~/i18n/ui'
+import { fieldError } from '~/forms'
+
+export const prerender = false
+
+interface Props {
+  listing: string
+  class?: string
+}
+
+const { listing, class: className } = Astro.props
+
+const t = useTranslations()
+
+const result = Astro.getActionResult(actions.contactListing)
+
+const data
+  = Astro.request.method === 'POST' ? await Astro.request.formData() : null
+---
+
+<div id="contact-form" class={className}>
+  {result?.data
+    ? <Alert variant='success'>
+        <Heading tag="h2" size="md" class="mb-4">
+          Vielen Dank für deine Anfrage!
+        </Heading>
+        <p class="text-heading font-bold mb-4">
+          Deine Anfrage ist eingegangen und wurde übermittelt.
+          Der*die Abgebende kann sich direkt bei dir melden.
+          Bitte habe etwas Geduld und Verständnis, wenn das
+          Angebot schon vergeben ist.
+        </p>
+        <p class="text-heading">
+          Dein Team der Ressourcen Revolution
+        </p>
+      </Alert>
+    : <>
+        <Heading tag="h2" size="md" class="mb-6">
+          {t('listing-page.contact.title')}
+        </Heading>
+
+        <form method="post" action={actions.contactListing + '#contact-form'} class="flex flex-col gap-6">
+          <input type="hidden" name="listing" value={listing} />
+          <Input
+            type="text"
+            name="name"
+            label={t('contact-form.name.label')}
+            value={data?.get('name') as string}
+            error={fieldError('name', result?.error)}
+            required
+          />
+          <Input
+            type="email"
+            name="email"
+            label={t('contact-form.email.label')}
+            value={data?.get('email') as string}
+            error={fieldError('email', result?.error)}
+            required
+          />
+          <Input
+            name="phonenumber"
+            label={t('contact-form.phonenumber.label')}
+            value={data?.get('phonenumber') as string}
+            error={fieldError('phonenumber', result?.error)}
+          />
+          <Textarea
+            name="message"
+            label={t('contact-form.message.label')}
+            value={data?.get('message') as string}
+            error={fieldError('message', result?.error)}
+            required
+          />
+          {
+            result?.error && !isInputError(result.error) && (
+              <Alert variant="error" text={result.error.message} />
+            )
+          }
+          <Button type="submit" label={t('contact-form.submit')} class="self-start" />
+        </form>
+      </>
+  }
+</div>

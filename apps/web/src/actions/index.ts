@@ -202,4 +202,42 @@ export const server = {
       }
     },
   }),
+
+  contactListing: defineAction({
+    accept: 'form',
+    input: z.object({
+      listing: z.string(required),
+      name: z.string(required),
+      email: z.string(required),
+      phonenumber: z.string(required).optional(),
+      message: z.string(required),
+    }),
+    handler: async (input, { locals }) => {
+      try {
+        await locals.pb.send(`/api/listings/${input.listing}/contact`,
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              name: input.name,
+              email: input.email,
+              phonenumber: input.phonenumber,
+              message: input.message,
+            }),
+          })
+
+        return {
+          success: true,
+        }
+      }
+      catch (e) {
+        throw new ActionError({
+          code: 'INTERNAL_SERVER_ERROR',
+          message: 'error',
+        })
+      }
+    },
+  }),
 }
