@@ -73,7 +73,7 @@ const listing = ListingSchema.parse(item) as Listing;
           to={listing.end_date ? listing.end_date : undefined}
         />
       </div>
-      <p class="font-bold text-body mb-6">
+      <p class="font-bold text-body mb-6 whitespace-pre-line">
         {listing.description}
       </p>
       {

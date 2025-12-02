@@ -34,7 +34,9 @@ const { listings, edit = false } = Astro.props;
           @{listing.expand?.team?.name} -{' '}
           {new Date(listing.start_date).toLocaleDateString(defaultLang)}
         </p>
-        <div class="text-base text-body" set:html={listing.description} />
+        <p class="text-base text-body whitespace-pre-line line-clamp-2">
+          {listing.description}
+        </p>
         <div class="flex gap-2 flex-wrap mt-1">
           <Button
             href={`/listings/${listing.id}`}
