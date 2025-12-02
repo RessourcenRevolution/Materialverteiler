@@ -42,6 +42,10 @@ export const ui = {
     'login.title': 'Login',
     'login.button': 'Login',
     'login.signup': 'Create account',
+    'login.errors.unauthorized':
+      'Wrong e-mail or password, please try again.',
+    'login.errors.unknown':
+      'An unknown error occurred while logging in, please try again.',
     // Profile page
     'profile.title': 'Your profile',
     'profile.name': 'Name',
@@ -170,6 +174,10 @@ export const ui = {
     'login.title': 'Einloggen',
     'login.button': 'Einloggen',
     'login.signup': 'Konto anlegen',
+    'login.errors.unauthorized':
+      'Falsche E-Mail oder Passwort, versuch es bitte nochmal.',
+    'login.errors.unknown':
+      'Beim Einloggen ist ein unbekannter Fehler aufgetreten, probier es bitte nochmal.',
     // Profile page
     'profile.title': 'Dein Profil',
     'profile.name': 'Name',

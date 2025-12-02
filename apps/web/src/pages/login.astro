@@ -1,7 +1,7 @@
 ---
 import Layout from '~/layouts/Layout.astro'
 import { Input, Button, Alert, Heading } from '@rr/ui/components'
-import { useTranslations } from '~/i18n/ui'
+import { useTranslations, type TranslationKey } from '~/i18n/ui'
 import { actions } from 'astro:actions'
 import { isInputError } from 'astro:actions'
 import { fieldError } from '~/forms'
@@ -54,7 +54,12 @@ const data
       />
       {
         result?.error && !isInputError(result.error) && (
-          <Alert variant="error" text={result.error.message} />
+          <Alert
+            variant="error"
+            text={t(
+              ('login.errors.' + result.error.message) as TranslationKey,
+            )}
+          />
         )
       }
       <div class="flex gap-4">

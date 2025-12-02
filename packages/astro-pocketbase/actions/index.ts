@@ -18,7 +18,6 @@ export const login = defineAction({
       await locals.pb
         .collection("users")
         .authWithPassword(input.email, input.password);
-
       return {
         cookie: locals.pb.authStore.exportToCookie({
           secure: import.meta.env.DEV ? false : true,
@@ -26,12 +25,12 @@ export const login = defineAction({
       };
     } catch (e) {
       if (e instanceof ClientResponseError && e?.response?.status) {
-        return new ActionError({
+        throw new ActionError({
           code: "UNAUTHORIZED",
           message: "unauthorized",
         });
       } else {
-        return new ActionError({
+        throw new ActionError({
           code: "INTERNAL_SERVER_ERROR",
           message: "unknown_error",
         });
