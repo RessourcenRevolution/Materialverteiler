@@ -147,7 +147,7 @@ func sendNotifyNewListing(e *core.RecordEvent, manager *core.Record, user *core.
 			Name:    e.App.Settings().Meta.SenderName,
 		},
 		To:      []mail.Address{{Address: manager.Email()}},
-		Subject: "Neues Materialangebot: " + listing.GetString("title"),
+		Subject: "Neues Angebot wartet auf Freigabe: " + listing.GetString("title"),
 		HTML:    html,
 	}
 

@@ -1,0 +1,55 @@
+---
+import Layout from '~/layouts/Layout.astro'
+import { Alert, Button, Container } from '@rr/ui/components'
+import { useLocalTranslations } from '~/i18n/ui'
+import { ListingSchema, type Listing } from '~/schemas/listing'
+
+export const prerender = false
+
+const i18n = {
+  en: {
+    text: 'Your listing has been updated!',
+    buttonListing: 'View listing',
+    buttonOverview: 'Listing overview',
+  },
+  de: {
+    text: 'Deinen Angebot ist aktualisiert!',
+    buttonListing: 'Zum Angebot',
+    buttonOverview: 'Übersicht deiner Angebote',
+  },
+}
+
+const t = useLocalTranslations<typeof i18n>(i18n)
+
+const { id } = Astro.params
+
+if (!id) {
+  return new Response(null, { status: 404 })
+}
+
+// Get listing
+const item = await Astro.locals.pb
+  .collection('listings')
+  .getOne(id, { expand: 'team' })
+
+if (!item) {
+  return new Response(null, { status: 404 })
+}
+
+const listing = ListingSchema.parse(item) as Listing
+---
+
+<Layout>
+  <Container size="lg">
+    <Alert
+      variant="success"
+      class="mb-4"
+    >
+      <p class="text-body font-bold mb-4">{t('text')}</p>
+      <div class="flex flex-wrap gap-4">
+        <Button variant="primary" size="sm" href={`/listings/${listing.id}`} label={t('buttonListing')} />
+        <Button size="sm" href="/profile" label={t('buttonOverview')} />
+      </div>
+    </Alert>
+  </Container>
+</Layout>

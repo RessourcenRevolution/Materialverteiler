@@ -1,0 +1,67 @@
+---
+import { Alert, Button } from '@rr/ui/components'
+import { useTranslations } from '~/i18n/ui'
+import type { Listing } from '~/schemas/listing'
+
+const t = useTranslations()
+
+interface Props {
+  listing: Listing
+}
+
+const { listing } = Astro.props;
+---
+
+{
+  (() => {
+    switch (listing.status) {
+      case 'new':
+        return <Alert variant="info" class="flex flex-col gap-4 items-start mb-4">
+          <p class="text-body text-base font-bold">
+            {t('listing-user-status.new')}
+          </p>
+          <Button
+            size="sm"
+            href={`/listings/${listing.id}/edit`}
+            label="Bearbeiten"
+          />
+        </Alert>
+      case 'open':
+        return <Alert variant="info" class="flex flex-col gap-4 items-start mb-4">
+          <p class="text-body text-base font-bold">
+            {t('listing-user-status.open')}
+          </p>
+          <Button
+            size="sm"
+            href={`/listings/${listing.id}/edit`}
+            label="Bearbeiten"
+          />
+        </Alert>
+      case 'reserved':
+        return <Alert variant="info" class="flex flex-col gap-4 items-start mb-4">
+          <p class="text-body text-base font-bold">
+            {t('listing-user-status.reserved')}
+          </p>
+          <Button
+            size="sm"
+            href={`/listings/${listing.id}/edit`}
+            label="Bearbeiten"
+          />
+        </Alert>
+      case 'success':
+        return <Alert variant="info" class="flex flex-col gap-4 items-start mb-4">
+          <p class="text-body text-base font-bold">
+            {t('listing-user-status.success')}
+          </p>
+        </Alert>
+      case 'failure':
+        return <Alert variant="info" class="flex flex-col gap-4 items-start mb-4">
+          <p class="text-body text-base font-bold">
+            {t('listing-user-status.failure')}
+          </p>
+        </Alert>
+      default:
+        return <></>
+    }
+  })()
+  }

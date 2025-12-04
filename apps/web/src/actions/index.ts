@@ -3,7 +3,7 @@ import { z } from 'astro:schema'
 import { ClientResponseError } from 'pocketbase'
 import { defaultLang, ui, useTranslations } from '~/i18n/ui'
 import { login } from '@rr/astro-pocketbase/actions'
-import { ListingSchema } from '~/schemas/listing'
+import { ListingSchema, type Listing } from '~/schemas/listing'
 
 const required = {
   required_error:
@@ -123,11 +123,11 @@ export const server = {
   listing: defineAction({
     accept: 'form',
     input: z.discriminatedUnion('type', [
-      ListingSchema.omit({ id: true, user: true, team: true, images: true }).extend({
+      ListingSchema.omit({ id: true, user: true, team: true, images: true, status: true }).extend({
         'type': z.literal('create'),
         'images+': z.array(z.instanceof(File)).optional(),
       }),
-      ListingSchema.omit({ user: true, team: true, images: true }).extend({
+      ListingSchema.omit({ user: true, team: true, images: true, status: true }).extend({
         'type': z.literal('update'),
         'images+': z.array(z.instanceof(File)).optional(),
       }),
@@ -136,21 +136,25 @@ export const server = {
       const t = useTranslations()
       try {
         let listing
+        let status
 
         if (input.type === 'create') {
+          status = 'created'
           listing = await locals.pb.collection('listings').create({
             ...input,
+            status: 'new',
             user: locals.pb.authStore!.record!.id,
             team: locals.pb.authStore!.record!.team,
-          })
+          }) as Listing
         }
         else {
+          status = 'updated'
           const { id, ...data } = input
           listing = await locals.pb.collection('listings').update(input.id, {
             ...data,
-          })
+          }) as Listing
         }
-        return listing
+        return { listing, status }
       }
       catch (error) {
         if (error instanceof ClientResponseError && error?.status === 403) {

@@ -20,6 +20,7 @@ export const ListingSchema = z.object({
   city: z.string().optional(),
   pickup_description: z.string().optional(),
   images: z.array(z.string()).optional(),
+  status: z.enum(['new', 'open', 'reserved', 'success', 'failure']),
   expand: z
     .object({
       user: UserSchema.optional(),

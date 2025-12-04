@@ -13,7 +13,7 @@ const t = useTranslations()
 
 const items = await Astro.locals.pb
   .collection('listings')
-  .getFullList({ expand: 'user,team' })
+  .getFullList({ expand: 'user,team', filter: 'status = "open" || status = "reserved"' })
 const listings = ListingSchema.array().parse(items) as Listing[]
 
 const isNewUser = !Astro.locals.pb.authStore.record!.roles.includes('user');

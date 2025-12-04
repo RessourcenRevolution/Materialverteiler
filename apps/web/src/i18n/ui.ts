@@ -127,7 +127,6 @@ export const ui = {
     'listing-form.update.images.label': 'Add images',
     'listing-form.create.submit': 'Create listing',
     'listing-form.update.submit': 'Save listing',
-    'listing-form.create.success': 'Listing created successfully!',
     'listing-form.update.success': 'Listing updated successfully!',
     // Listing card
     'listing-card.open': 'View',
@@ -146,6 +145,13 @@ export const ui = {
     'contact-form.phonenumber.label': 'Your phonenumber',
     'contact-form.message.label': 'Your message',
     'contact-form.submit': 'Send',
+    'contact-form.deactivated': 'Currently, it is not possible to contact this listijng as it is already reserved or matched.',
+    // Listing user status
+    'listing-user-status.new': 'This Materialangebot is currently being reviewed. You will receive a message once it is unlocked.',
+    'listing-user-status.open': 'This Materialangebot is currently active.',
+    'listing-user-status.reserved': 'This Materialangebot is reserved, the contact form is disabled.',
+    'listing-user-status.success': 'This Materialangebot is closed.',
+    'listing-user-status.failure': 'This Materialangebot is closed.',
   },
   de: {
     'next': 'Nächstes',
@@ -287,11 +293,24 @@ export const ui = {
     'contact-form.phonenumber.label': 'Deine Telefonnummer',
     'contact-form.message.label': 'Deine Nachricht',
     'contact-form.submit': 'Absenden',
+    'contact-form.deactivated': 'Aktuell ist es nicht möglich, zu diesem Materialangebot Kontakt aufzunehmen, da das Angebot bereits reserviert oder vermittelt ist.',
+    // Listing user status
+    'listing-user-status.new': 'Dieses Materialangebot wird derzeit geprüft. Du erhältst eine Nachricht, sobald es freigeschaltet ist.',
+    'listing-user-status.open': 'Dieses Materialangebot ist gerade aktiv.',
+    'listing-user-status.reserved': 'Dieses Materialangebot ist reserviert, das Kontaktformular ist deaktiviert.',
+    'listing-user-status.success': 'Dieses Materialangebot ist vermittelt.',
+    'listing-user-status.failure': 'Dieses Materialangebot ist abgeschlossen.',
   },
 }
 
 export function useTranslations(lang: keyof typeof ui = defaultLang) {
   return function t(key: keyof (typeof ui)[typeof defaultLang]) {
     return ui[lang][key] || ui[defaultLang][key] || key
+  }
+}
+
+export function useLocalTranslations<T extends Record<keyof typeof ui, Record<keyof T[typeof defaultLang], string>>>(translations: T, lang: keyof typeof ui = defaultLang) {
+  return function t(key: keyof T[typeof defaultLang]) {
+    return translations[lang][key] || translations[defaultLang][key] || key
   }
 }

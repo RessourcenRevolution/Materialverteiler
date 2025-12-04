@@ -1,6 +1,6 @@
 ---
 import { Button, Card } from '@rr/ui/components'
-import { defaultLang, useTranslations } from '~/i18n/ui'
+import { useTranslations } from '~/i18n/ui'
 import type { Listing } from '~/schemas/listing'
 import EditIcon from 'iconoir/icons/edit-pencil.svg'
 import DateText from './DateText.astro'
@@ -28,7 +28,7 @@ const { listings, edit = false } = Astro.props;
             : undefined
         }
         class="md:flex-row md:gap-4"
-        imageClass="rounded-none! md:rounded-xs! md:max-w-[250px]"
+        imageClass="rounded-none! md:rounded-xs! md:max-w-[250px] shrink-0"
         contentClass="md:px-0"
       >
         <h2 class:list={['text-xl text-heading font-bold']}>{listing.title}</h2>

@@ -4,11 +4,12 @@ import { isInputError } from 'astro:actions'
 import { actions } from 'astro:actions'
 import { useTranslations } from '~/i18n/ui'
 import { fieldError } from '~/forms'
+import type { Listing } from '~/schemas/listing'
 
 export const prerender = false
 
 interface Props {
-  listing: string
+  listing: Listing
   class?: string
 }
 
@@ -43,44 +44,49 @@ const data
           {t('listing-page.contact.title')}
         </Heading>
 
-        <form method="post" action={actions.contactListing + '#contact-form'} class="flex flex-col gap-6">
-          <input type="hidden" name="listing" value={listing} />
-          <Input
-            type="text"
-            name="name"
-            label={t('contact-form.name.label')}
-            value={data?.get('name') as string}
-            error={fieldError('name', result?.error)}
-            required
-          />
-          <Input
-            type="email"
-            name="email"
-            label={t('contact-form.email.label')}
-            value={data?.get('email') as string}
-            error={fieldError('email', result?.error)}
-            required
-          />
-          <Input
-            name="phonenumber"
-            label={t('contact-form.phonenumber.label')}
-            value={data?.get('phonenumber') as string}
-            error={fieldError('phonenumber', result?.error)}
-          />
-          <Textarea
-            name="message"
-            label={t('contact-form.message.label')}
-            value={data?.get('message') as string}
-            error={fieldError('message', result?.error)}
-            required
-          />
-          {
-            result?.error && !isInputError(result.error) && (
-              <Alert variant="error" text={result.error.message} />
-            )
-          }
-          <Button type="submit" label={t('contact-form.submit')} class="self-start" />
-        </form>
+        {listing.status === 'reserved'
+          ? <Alert variant="info">
+              <p>{t('contact-form.deactivated')}</p>
+            </Alert>
+          : <form method="post" action={actions.contactListing + '#contact-form'} class="flex flex-col gap-6">
+              <input type="hidden" name="listing" value={listing.id} />
+              <Input
+                type="text"
+                name="name"
+                label={t('contact-form.name.label')}
+                value={data?.get('name') as string}
+                error={fieldError('name', result?.error)}
+                required
+              />
+              <Input
+                type="email"
+                name="email"
+                label={t('contact-form.email.label')}
+                value={data?.get('email') as string}
+                error={fieldError('email', result?.error)}
+                required
+              />
+              <Input
+                name="phonenumber"
+                label={t('contact-form.phonenumber.label')}
+                value={data?.get('phonenumber') as string}
+                error={fieldError('phonenumber', result?.error)}
+              />
+              <Textarea
+                name="message"
+                label={t('contact-form.message.label')}
+                value={data?.get('message') as string}
+                error={fieldError('message', result?.error)}
+                required
+              />
+              {
+                result?.error && !isInputError(result.error) && (
+                  <Alert variant="error" text={result.error.message} />
+                )
+              }
+              <Button type="submit" label={t('contact-form.submit')} class="self-start" />
+            </form>
+        }
       </>
   }
 </div>

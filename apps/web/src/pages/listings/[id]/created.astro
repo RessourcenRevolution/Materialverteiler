@@ -1,0 +1,72 @@
+---
+import Layout from '~/layouts/Layout.astro'
+import { Alert, Button, Container, Heading } from '@rr/ui/components'
+import { useLocalTranslations } from '~/i18n/ui'
+import { ListingSchema, type Listing } from '~/schemas/listing'
+
+export const prerender = false
+
+const i18n = {
+  en: {
+    title: 'Thank you for your contribution!',
+    text: `
+  <p class="font-bold">Your listing has been created. We are reviewing it
+    and will activate it shortly. Thank you for helping to reuse materials together!</p>
+  <p>Your Ressourcen Revolution Köln team</p>
+`,
+    buttonListing: 'View listing',
+    buttonNewListing: 'Create another listing',
+    buttonOverview: 'Listing overview',
+  },
+  de: {
+    title: 'Vielen Dank für deinen Beitrag!',
+    text: `
+      <p class="font-bold">Dein Materialangebot wurde angelegt. Wir prüfen es
+        und werden es zeitnah freigeben. Vielen Dank, dass du
+        dabei hilfst, Materialien gemeinsam weiterzunutzen!</p>
+      <p>Dein Team der Ressourcen Revolution Köln</p>
+    `,
+    buttonListing: 'Zum Angebot',
+    buttonNewListing: 'Weiteres Angebot anlegen',
+    buttonOverview: 'Übersicht deiner Angebote',
+  },
+}
+
+const t = useLocalTranslations<typeof i18n>(i18n)
+
+const { id } = Astro.params
+
+if (!id) {
+  return new Response(null, { status: 404 })
+}
+
+// Get listing
+const item = await Astro.locals.pb
+  .collection('listings')
+  .getOne(id, { expand: 'team' })
+
+if (!item) {
+  return new Response(null, { status: 404 })
+}
+
+const listing = ListingSchema.parse(item) as Listing
+---
+
+<Layout>
+  <Container size="lg">
+      <!-- Created/updated flash message -->
+      <Alert
+        variant="success"
+        class="mb-4"
+      >
+        <Heading tag="h2" class="mb-6">{t('title')}</Heading>
+        <div class="prose" set:html={t('text')}>
+        </div>
+        <div class="flex flex-wrap gap-4">
+          <Button variant="primary" size="sm" href={`/listings/${listing.id}`} label={t('buttonListing')} />
+          <Button size="sm" href="/listings/new" label={t('buttonNewListing')} />
+          <Button size="sm" href="/profile" label={t('buttonOverview')} />
+        </div>
+      </Alert>
+  </Container>
+</Layout>
