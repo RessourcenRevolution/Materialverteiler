@@ -3,6 +3,8 @@ import { Button, Card } from '@rr/ui/components'
 import { defaultLang, useTranslations } from '~/i18n/ui'
 import type { Listing } from '~/schemas/listing'
 import EditIcon from 'iconoir/icons/edit-pencil.svg'
+import DateText from './DateText.astro'
+import LocationText from './LocationText.astro'
 
 interface Props {
   listings: Listing[]
@@ -30,10 +32,13 @@ const { listings, edit = false } = Astro.props;
         contentClass="md:px-0"
       >
         <h2 class:list={['text-xl text-heading font-bold']}>{listing.title}</h2>
-        <p class="text-base text-body">
-          @{listing.expand?.team?.name} -{' '}
-          {new Date(listing.start_date).toLocaleDateString(defaultLang)}
-        </p>
+        <div class="flex gap-6">
+          <LocationText text={listing.postalcode + ' ' + listing.city} />
+          <DateText
+            text="Verfügbar ab"
+            from={listing.start_date}
+          />
+        </div>
         <p class="text-base text-body whitespace-pre-line line-clamp-2">
           {listing.description}
         </p>

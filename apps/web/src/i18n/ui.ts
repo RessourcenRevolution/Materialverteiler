@@ -15,7 +15,7 @@ export const ui = {
     'previous': 'Previous',
     // Header
     'header.home': 'Home',
-    'header.dashboard': 'Dashboard',
+    'header.dashboard': 'Listings',
     'header.profile': 'Profile',
     'header.login': 'Login',
     'header.signup': 'Signup',
@@ -67,6 +67,7 @@ export const ui = {
     'email-confirmation.button': 'Go to dashboard',
     // Dashboard page
     'dashboard.title': 'Offers',
+    'dashboard.new-listing': 'New listing',
     'dashboard.user-approval.title': 'Welcome',
     'dashboard.user-approval.text':
       'Your account is currently under review and will be approved soon. We’ll notify you by email once it’s ready.',
@@ -151,7 +152,7 @@ export const ui = {
     'previous': 'Vorheriges',
     // Header
     'header.home': 'Startseite',
-    'header.dashboard': 'Dashboard',
+    'header.dashboard': 'Materialangebote',
     'header.profile': 'Profil',
     'header.login': 'Einloggen',
     'header.signup': 'Registrieren',
@@ -203,6 +204,7 @@ export const ui = {
     'email-confirmation.button': 'Zum Dashboard',
     // Dashboard page
     'dashboard.title': 'Materialangebote',
+    'dashboard.new-listing': 'Angebot anlegen',
     'dashboard.user-approval.title': 'Wilkommen',
     'dashboard.user-approval.text':
       'Dein Konto wird derzeit geprüft und bald freigeschaltet. Sobald es aktiviert ist, erhältst du eine E-Mail von uns.',
