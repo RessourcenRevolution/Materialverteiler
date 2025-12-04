@@ -23,7 +23,7 @@ const user = UserSchema.parse(record) as User
 
 const items = await Astro.locals.pb.collection('listings').getFullList({
   filter: Astro.locals.pb.filter('user = {:user}', { user: user.id }),
-  expand: 'user,user.team',
+  expand: 'user,team',
 })
 const listings = ListingSchema.array().parse(items) as Listing[];
 ---
