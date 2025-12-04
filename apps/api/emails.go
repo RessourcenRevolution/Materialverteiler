@@ -3,6 +3,7 @@ package main
 import (
 	_ "embed"
 	"net/mail"
+	"os"
 	"strings"
 
 	"github.com/pocketbase/pocketbase/core"
@@ -19,6 +20,9 @@ var baseTemplate string
 
 //go:embed "views/emails/email-verified.html"
 var emailVerifiedTemplate string
+
+//go:embed "views/emails/notify-user-signup.html"
+var notifyUserSignupTemplate string
 
 //go:embed "views/emails/user-approved.html"
 var userApprovedTemplate string
@@ -63,6 +67,37 @@ func sendVerifiedEmail(e *core.RecordEvent) error {
 	return e.App.NewMailClient().Send(message)
 }
 
+func sendNotifyUserSignupEmail(e *core.RequestEvent, manager *core.Record, user *core.Record, team *core.Record, message string) error {
+	data := newEmailTemplateData(e.App)
+	data["managerFirstname"] = manager.GetString("firstname")
+	data["userId"] = user.Id
+	data["userFirstname"] = user.GetString("firstname")
+	data["userLastname"] = user.GetString("lastname")
+	data["userEmail"] = user.Email()
+	data["teamName"] = team.GetString("name")
+	data["publicApiUrl"] = os.Getenv("PUBLIC_API_URL")
+	data["message"] = htmlTemplate.HTML(strings.Replace(message, "\n", "<br>", -1))
+
+	html, err := newEmailTemplate().LoadString(baseTemplate + notifyUserSignupTemplate).Render(data)
+
+	if err != nil {
+		e.App.Logger().Error("Can't render listing-contact email template: %w", err)
+		return e.Next()
+	}
+
+	msg := &mailer.Message{
+		From: mail.Address{
+			Address: manager.Email(),
+			Name:    manager.GetString("firstname"),
+		},
+		To:      []mail.Address{{Address: user.Email()}},
+		Subject: "Neue Anfrage zum Beitritt zum Materialverteiler",
+		HTML:    html,
+	}
+
+	return e.App.NewMailClient().Send(msg)
+}
+
 func sendApprovedEmail(e *core.RecordEvent) error {
 	data := newEmailTemplateData(e.App)
 	data["firstname"] = e.Record.GetString("firstname")
@@ -80,7 +115,7 @@ func sendApprovedEmail(e *core.RecordEvent) error {
 			Name:    e.App.Settings().Meta.SenderName,
 		},
 		To:      []mail.Address{{Address: e.Record.Email()}},
-		Subject: "Dein Account is approved",
+		Subject: "Willkommen in der Community",
 		HTML:    html,
 	}
 

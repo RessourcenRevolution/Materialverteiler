@@ -29,7 +29,11 @@ export const ui = {
     'forms.password': 'Password',
     'forms.errors.required': 'This field is required',
     // Signup page
-    'signup.title': 'Signup',
+    'signup.title': 'Be part of our Materials Community!',
+    'signup.text': `<p>By submitting the form, you create an account in our community. This automatically enrolls you in our Materials Distributor. Through this, we regularly send out material offers from the region.</p>
+      <p>Full access to our entire platform is granted to members who want to donate materials themselves or have already reliably completed a pickup.</p>`,
+    'signup.fields.message': 'Your message to us',
+    'signup.fields.terms': 'I agree to the processing of my data in accordance with the <a href="#">Privacy Policy</a>.',
     'signup.button': 'Signup',
     'signup.errors.email_in_use':
       'There is already an account with this e-mail address.',
@@ -156,13 +160,17 @@ export const ui = {
     // Forms
     'forms.firstname': 'Vorname',
     'forms.lastname': 'Nachname',
-    'forms.team': 'Institution',
-    'forms.email': 'E-Mail Addresse',
+    'forms.team': 'Welcher Institution gehörst du an?',
+    'forms.email': 'Deine Mail-Adresse',
     'forms.password': 'Passwort',
     'forms.errors.required': 'Dieses Feld ist erforderlich',
     // Signup page
-    'signup.title': 'Registrieren',
-    'signup.button': 'Registrieren',
+    'signup.title': 'Sei Teil unserer Material-Community! ',
+    'signup.text': `<p>Mit dem Absenden des Formulars erstellst Du einen Account in unserer Community. Dadurch trittst du automatisch unserem Materialverteiler bei. In diesen senden wir regelmäßig Materialangebote aus der Region.</p>
+      <p>Zugriff auf unsere gesamte Plattform erhalten Mitglieder, die selbst Materialien abgeben wollen oder schonmal verlässlich eine Abholung durchgeführt haben.</p>`,
+    'signup.fields.message': 'Deine Nachricht an uns',
+    'signup.fields.terms': 'Ich erkläre mich mit der Verarbeitung meiner Daten im Rahmen der <a href="#">Datenschutzvereinbarung</a> einverstanden.',
+    'signup.button': 'Absenden',
     'signup.errors.email_in_use':
       'Es gibt bereits ein Konto mit dieser E-Mail-Adresse.',
     'signup.errors.password_too_short':

@@ -27,6 +27,8 @@ export const server = {
       team: z.string(required),
       email: z.string(required),
       password: z.string(required).min(8, 'password_too_short'),
+      message: z.string(required),
+      terms: z.boolean(required),
     }),
     handler: async (input, { locals }) => {
       try {
@@ -37,6 +39,7 @@ export const server = {
           email: input.email,
           password: input.password,
           passwordConfirm: input.password,
+          terms: input.terms,
         })
         // Login
         await locals.pb
@@ -50,6 +53,17 @@ export const server = {
         await locals.pb.collection('users').update(user.id, { team: team.id })
         // Request verification
         await locals.pb.collection('users').requestVerification(input.email)
+        // Notify managers
+        await locals.pb.send(`/api/users/${user.id}/notify-managers`,
+          {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              message: input.message,
+            }),
+          })
         return {
           cookie: locals.pb.authStore.exportToCookie({
             secure: import.meta.env.DEV ? false : true,

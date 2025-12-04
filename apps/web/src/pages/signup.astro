@@ -1,6 +1,6 @@
 ---
 import Layout from '~/layouts/Layout.astro'
-import { Input, Button, Alert, Heading } from '@rr/ui/components'
+import { Input, Button, Checkbox, Alert, Heading, Textarea } from '@rr/ui/components'
 import { useTranslations } from '~/i18n/ui'
 import { actions } from 'astro:actions'
 import { ActionError } from 'astro:actions'
@@ -35,6 +35,7 @@ const data
     <Heading tag="h1" size="xl" class="mb-6">
       {t('signup.title')}
     </Heading>
+    <div class="prose font-bold" set:html={t('signup.text')} />
     <form class="flex flex-col gap-6" method="post" action={actions.signup}>
       <Input
         name="firstname"
@@ -75,6 +76,22 @@ const data
         error={fieldError('password', result?.error, 'signup.errors.')}
         required
       />
+      <Textarea
+        name="message"
+        label={t('signup.fields.message')}
+        value={data?.get('message') as string}
+        error={fieldError('message', result?.error, 'signup.errors.')}
+        rows={6}
+        required
+      />
+      <Checkbox
+        name="terms"
+        value={(data?.get('terms') as string === 'true') || false}
+        error={fieldError('terms', result?.error, 'signup.errors.')}
+        required
+      >
+        <span set:html={t('signup.fields.terms')} class="prose" />
+      </Checkbox>
       {
         result?.error && !isInputError(result.error) && (
           <Alert

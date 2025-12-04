@@ -5,6 +5,7 @@ import (
 	"net/http"
 	"slices"
 
+	"github.com/pocketbase/dbx"
 	"github.com/pocketbase/pocketbase"
 	"github.com/pocketbase/pocketbase/apis"
 	"github.com/pocketbase/pocketbase/core"
@@ -44,7 +45,52 @@ func main() {
 		return e.Next()
 	})
 	app.OnServe().BindFunc(func(se *core.ServeEvent) error {
-		// register "POST /api/myapp/settings" route (allowed only for authenticated users)
+
+		// Notify managers of user signup
+		se.Router.POST("/api/users/{id}/notify-managers", func(e *core.RequestEvent) error {
+			// User id
+			id := e.Request.PathValue("id")
+			authId := e.Auth.Id
+			if id != authId {
+				return e.Error(http.StatusForbidden, "wrong user", nil)
+			}
+
+			// Get user
+			user, err := app.FindRecordById("users", id)
+			if err != nil {
+				return e.Error(http.StatusInternalServerError, "error getting user", nil)
+			}
+			if user == nil {
+				return e.Error(http.StatusNotFound, "user not found", nil)
+			}
+
+			// Expand user team
+			errs := app.ExpandRecord(user, []string{"team"}, nil)
+			if len(errs) > 0 {
+				return e.Error(http.StatusNotFound, "failed to expand", nil)
+			}
+
+			// Read post data
+			data := struct {
+				Message string `json:"message"`
+			}{}
+			if err := e.BindBody(&data); err != nil {
+				return e.BadRequestError("Failed to read request data", err)
+			}
+
+			managers, err := app.FindRecordsByFilter("users", "roles ~ 'manager'", "", -1, 0, dbx.Params{})
+
+			log.Printf("Notify %s managers of user signup (%s, %s)\n", len(managers), user.GetString("firstname"), user.Email())
+
+			for _, manager := range managers {
+				log.Printf("Notify manager: %s\n", manager.GetString("firstname"))
+				sendNotifyUserSignupEmail(e, manager, user, user.ExpandedOne("team"), data.Message)
+			}
+
+			return e.JSON(http.StatusOK, map[string]bool{"success": true})
+		}).Bind(apis.RequireAuth())
+
+		// Contact message from demander to supplier
 		se.Router.POST("/api/listings/{id}/contact", func(e *core.RequestEvent) error {
 			id := e.Request.PathValue("id")
 

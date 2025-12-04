@@ -1,6 +1,21 @@
 {{define "body"}}
 <p>Hallo {{.firstname}},</p>
-<p>Dein Account ist approved. Viel spaß!</p>
+<p>
+  Willkommen in der Ressourcen Revolution Community! Dein Account ist jetzt
+  freigeschaltet.
+</p>
+<p>
+  Besuche jetzt den Materialverteiler, um zu sehen, was aktuell verfügbar ist.
+</p>
+<p>
+  {{ template "button" (dict "text" "Zum Materialverteiler" "href" (print
+  .appURL "/dashboard") )}}
+</p>
+<p>Oder lege ein neues Angebot an:</p>
+<p>
+  {{ template "button" (dict "text" "Jetzt Angebot anlegen" "href" (print
+  .appURL "/listings/new") )}}
+</p>
 <p>
   Liebe Grüße,<br />
   Ressourcen Revolution

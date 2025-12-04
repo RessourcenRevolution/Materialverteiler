@@ -9,3 +9,6 @@ run = "go run . serve"
 [tasks.start]
 description = "Start API"
 run = "./api serve"
+
+[env]
+PUBLIC_API_URL = "http://localhost:8090"

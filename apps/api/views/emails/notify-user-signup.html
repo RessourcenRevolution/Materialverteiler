@@ -1,0 +1,25 @@
+{{define "body"}}
+<p>Hallo {{ .managerFirstname }},</p>
+<p>
+  {{ .userFirstname }} {{ .userLastname }} von {{ .teamName }} möchte dem
+  Materialverteiler beitreten.
+</p>
+<p>
+  <strong>Details:</strong><br />
+  Name: {{ .userFirstname }} {{ .userLastname }}<br />
+  E-Mail: <a href="mailto:{{ .userEmail }}">{{ .userEmail }}</a><br />
+  Institution: {{ .teamName }}<br />
+</p>
+<p>Die Nachricht lautet:</p>
+{{ template "message" (dict "message" .message) }}
+
+<div>
+  {{ template "button" (dict "text" "Nutzer freischalten" "href" (print
+  .publicApiUrl "/_/#/collections?collection=_pb_users_auth_&recordId=" .userId)
+  )}}
+</div>
+<p>
+  Liebe Grüße,<br />
+  Ressourcen Revolution
+</p>
+{{end}}
