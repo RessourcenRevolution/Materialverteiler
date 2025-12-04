@@ -18,11 +18,13 @@ const {
 
 <article class:list={["flex flex-col gap-4", className]}>
   {
-    image && (
+    image ? (
       <img
         src={image}
         class:list={["w-full aspect-4/3 object-cover rounded-xs", imageClass]}
       />
+    ) : (
+      <div class:list={["w-full aspect-4/3 bg-stone-200 rounded-xs", imageClass]} />
     )
   }
   <div class:list={["flex flex-col gap-2 px-6", contentClass]}>
