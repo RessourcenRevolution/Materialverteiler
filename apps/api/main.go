@@ -26,20 +26,44 @@ func main() {
 		Automigrate: isGoRun,
 	})
 
-	// fires only for "users" and "articles" records
+	// On listing create
+	app.OnRecordAfterCreateSuccess("listings").BindFunc(func(e *core.RecordEvent) error {
+		listing := e.Record
+		managers, err := app.FindRecordsByFilter("users", "roles ~ 'manager'", "", -1, 0, dbx.Params{})
+		if err != nil {
+			e.App.Logger().Error("Error fetching managers", "error", err.Error())
+			return e.Next()
+		}
+
+		// Expand user team
+		errs := app.ExpandRecord(listing, []string{"user", "team"}, nil)
+		if len(errs) > 0 {
+			e.App.Logger().Error("Error expanding listing team", "error", err.Error())
+			return e.Next()
+		}
+
+		log.Printf("Notify %s managers of new listing '%s' (%s)\n", len(managers), listing.GetString("title"), listing.Id)
+		for _, manager := range managers {
+			sendNotifyNewListing(e, manager, listing.ExpandedOne("user"), listing, listing.ExpandedOne("team"))
+		}
+
+		return e.Next()
+	})
+
+	// On user update
 	app.OnRecordAfterUpdateSuccess("users").BindFunc(func(e *core.RecordEvent) error {
 		original := e.Record.Original()
 
 		// User's email got verified
 		if !original.GetBool("verified") && e.Record.GetBool("verified") {
 			log.Printf("E-mail of user %s has been verified\n", e.Record.GetString("email"))
-			return sendVerifiedEmail(e)
+			sendVerifiedEmail(e)
 		}
 
 		// User's account got approved
 		if !slices.Contains(original.GetStringSlice("roles"), "user") && slices.Contains(e.Record.GetStringSlice("roles"), "user") {
 			log.Printf("User %s has been approved\n", e.Record.GetString("email"))
-			return sendApprovedEmail(e)
+			sendApprovedEmail(e)
 		}
 
 		return e.Next()
@@ -79,9 +103,7 @@ func main() {
 			}
 
 			managers, err := app.FindRecordsByFilter("users", "roles ~ 'manager'", "", -1, 0, dbx.Params{})
-
 			log.Printf("Notify %s managers of user signup (%s, %s)\n", len(managers), user.GetString("firstname"), user.Email())
-
 			for _, manager := range managers {
 				log.Printf("Notify manager: %s\n", manager.GetString("firstname"))
 				sendNotifyUserSignupEmail(e, manager, user, user.ExpandedOne("team"), data.Message)

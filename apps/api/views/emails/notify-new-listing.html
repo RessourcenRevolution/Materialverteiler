@@ -1,0 +1,27 @@
+{{define "body"}}
+<p>Hallo {{ .managerFirstname }},</p>
+
+<p>
+  Ein neues Materialangebot '{{ .listingTitle }}' von {{ .userFirstname }} {{
+  .userLastname }} ({{ .teamName }}) wurde eingereicht.
+</p>
+
+<p>
+  {{ template "button" (dict "text" "Materialangebot anzeigen" "href" (print
+  .appURL "/listings/" .listingId) )}}
+</p>
+
+<p>
+  Um das Materialangebot freizuschalten, ändere den Status von 'new' auf 'open'.
+</p>
+
+<p>
+  {{ template "button" (dict "text" "Materialangebot freischalten" "href" (print
+  .publicApiUrl "/_/#/collections?collection=listings&recordId=" .listingId) )}}
+</p>
+
+<p>
+  Liebe Grüße,<br />
+  Ressourcen Revolution
+</p>
+{{end}}

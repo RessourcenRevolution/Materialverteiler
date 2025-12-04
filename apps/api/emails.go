@@ -27,6 +27,9 @@ var notifyUserSignupTemplate string
 //go:embed "views/emails/user-approved.html"
 var userApprovedTemplate string
 
+//go:embed "views/emails/notify-new-listing.html"
+var notifyNewListingTemplate string
+
 //go:embed "views/emails/listing-contact.html"
 var listingContactTemplate string
 
@@ -35,7 +38,8 @@ var listingContactConfirmationTemplate string
 
 func newEmailTemplateData(app core.App) map[string]any {
 	return map[string]any{
-		"appURL": app.Settings().Meta.AppURL,
+		"appURL":       app.Settings().Meta.AppURL,
+		"publicApiUrl": os.Getenv("PUBLIC_API_URL"),
 	}
 }
 
@@ -75,7 +79,6 @@ func sendNotifyUserSignupEmail(e *core.RequestEvent, manager *core.Record, user 
 	data["userLastname"] = user.GetString("lastname")
 	data["userEmail"] = user.Email()
 	data["teamName"] = team.GetString("name")
-	data["publicApiUrl"] = os.Getenv("PUBLIC_API_URL")
 	data["message"] = htmlTemplate.HTML(strings.Replace(message, "\n", "<br>", -1))
 
 	html, err := newEmailTemplate().LoadString(baseTemplate + notifyUserSignupTemplate).Render(data)
@@ -116,6 +119,35 @@ func sendApprovedEmail(e *core.RecordEvent) error {
 		},
 		To:      []mail.Address{{Address: e.Record.Email()}},
 		Subject: "Willkommen in der Community",
+		HTML:    html,
+	}
+
+	return e.App.NewMailClient().Send(message)
+}
+
+func sendNotifyNewListing(e *core.RecordEvent, manager *core.Record, user *core.Record, listing *core.Record, team *core.Record) error {
+	data := newEmailTemplateData(e.App)
+	data["userFirstname"] = user.GetString("firstname")
+	data["userLastname"] = user.GetString("lastname")
+	data["managerFirstname"] = manager.GetString("firstname")
+	data["listingId"] = listing.Id
+	data["listingTitle"] = listing.GetString("title")
+	data["teamName"] = team.GetString("name")
+
+	html, err := newEmailTemplate().LoadString(baseTemplate + notifyNewListingTemplate).Render(data)
+
+	if err != nil {
+		e.App.Logger().Error("Can't render email-verified email template: %w", err)
+		return e.Next()
+	}
+
+	message := &mailer.Message{
+		From: mail.Address{
+			Address: e.App.Settings().Meta.SenderAddress,
+			Name:    e.App.Settings().Meta.SenderName,
+		},
+		To:      []mail.Address{{Address: manager.Email()}},
+		Subject: "Neues Materialangebot: " + listing.GetString("title"),
 		HTML:    html,
 	}
 
