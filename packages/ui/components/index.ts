@@ -7,6 +7,7 @@ export {
   type Props as ButtonProps,
 } from "./button/Button.astro";
 export { default as Card, type Props as CardProps } from "./card/Card.astro";
+export { default as Checkbox, type Props as CheckboxProps } from "./checkbox/Checkbox.astro";
 export {
   default as Container,
   type Props as ContainerProps,
