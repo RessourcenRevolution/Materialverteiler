@@ -35,7 +35,7 @@ const routeGuard = defineMiddleware(async ({ url, locals, redirect }, next) => {
 
   // Redirect to login page if the user is not authenticated
   if (!locals.pb.authStore.isValid) {
-    return redirect('/login')
+    return redirect('/login?redirect=' + encodeURIComponent(pathName))
   }
 
   // Always allow accessing unprotected routes

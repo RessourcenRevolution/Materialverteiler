@@ -12,13 +12,16 @@ export const prerender = false
 
 const t = useTranslations()
 
+const redirect = new URL(Astro.request.url).searchParams.get('redirect') || '/dashboard'
+
 const result = Astro.getActionResult(actions.login)
+console.log(redirect, result)
 if (!(result?.data instanceof ActionError) && result?.data) {
   const { cookie } = result?.data
   return new Response(null, {
     status: 302,
     headers: {
-      'Location': '/dashboard',
+      'Location': redirect,
       'Set-Cookie': cookie,
     },
   })
@@ -34,8 +37,7 @@ const data
     <Heading tag="h1" size="xl" class="mb-6">
       {t('login.title')}
     </Heading>
-    <form class="flex flex-col gap-6" method="post" action={actions.login}>
-      <input type="hidden" name="redirect" value="/dashboard" />
+    <form class="flex flex-col gap-6" method="post" action={`${actions.login}&redirect=${redirect}`}>
       <Input
         name="email"
         type="email"
