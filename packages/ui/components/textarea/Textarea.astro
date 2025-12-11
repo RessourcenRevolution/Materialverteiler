@@ -14,7 +14,7 @@ const {
   name,
   placeholder,
   required,
-  rows = "3",
+  rows = "4",
   error,
 } = Astro.props;
 ---
@@ -25,8 +25,9 @@ const {
       <label
         for={name}
         class:list={[
-          "absolute font-bold text-body text-base leading-none start-[0.9em]",
+          "absolute font-bold text-body text-base leading-none start-[0.9em] pr-1",
           "transform scale-75 top-[0.85em] -translate-y-[0.5em] z-10 origin-left duration-200",
+          'line-clamp-1',
           "has-[+textarea:focus]:scale-75! has-[+textarea:focus]:top-[0.85em]!",
           "has-[+textarea:placeholder-shown]:scale-100 has-[+textarea:placeholder-shown]:top-[1.65em]",
           "has-[+textarea:placeholder-shown]:pointer-events-none",

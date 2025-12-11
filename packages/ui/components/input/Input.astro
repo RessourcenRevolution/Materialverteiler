@@ -16,8 +16,9 @@ const { label, value, name, type, required, error } = Astro.props;
       <label
         for={name}
         class:list={[
-          "absolute font-bold text-body text-base leading-none start-[0.9em]",
+          "absolute font-bold text-body text-base leading-none start-[0.9em] pr-1",
           "transform scale-75 top-[0.85em] -translate-y-[0.5em] z-10 origin-left duration-200",
+          'line-clamp-1',
           "has-[+input:focus]:scale-75! has-[+input:focus]:top-[0.85em]!",
           "has-[+input:placeholder-shown]:scale-100 has-[+input:placeholder-shown]:top-[1.65em]",
           "has-[+input:placeholder-shown]:pointer-events-none",

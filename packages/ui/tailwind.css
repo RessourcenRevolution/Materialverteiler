@@ -1,12 +1,52 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
+/* roboto-300 - latin */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 300;
+  src: url("./fonts/roboto-v50-latin-300.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+
+/* roboto-regular - latin */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  src: url("./fonts/roboto-v50-latin-regular.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+
+/* roboto-700 - latin */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 700;
+  src: url("./fonts/roboto-v50-latin-700.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+
+/* roboto-900 - latin */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 900;
+  src: url("./fonts/roboto-v50-latin-900.woff2") format("woff2"); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+
 @theme {
+  --font-sans: "Roboto", sans-serif;
+  --font-display: "Roboto", sans-serif;
+  --font-base: "Roboto", sans-serif;
+
   /* #303633 */
-  --color-body: oklch(32.61% 0.010 164.34);
+  --color-body: oklch(32.61% 0.01 164.34);
 
   /* #201b1e */
-  --color-heading: oklch(22.92% 0.010 341.15);
+  --color-heading: oklch(22.92% 0.01 341.15);
 
   /* #FFFF82 */
   --color-primary: oklch(97.53% 0.147 108.85);
@@ -17,8 +57,10 @@
   /* #bddeae */
   --color-success: oklch(86.41% 0.074 135.96);
 
-  --text-base: clamp(0.875rem, 0.85rem + 0.125vw, 1rem);
+  /* --text-base: 1rem; // clamp(0.875rem, 0.85rem + 0.125vw, 1rem); */
   --text-sm: clamp(0.75rem, 0.725rem + 0.125vw, 0.875rem);
+
+  --font-weight-light: 300;
 
   --border: 3px;
 }
