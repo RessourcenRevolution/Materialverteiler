@@ -32,12 +32,18 @@ func main() {
 			app.Logger().Error("Error fetching email queue", err)
 			return
 		}
+		// Nothing to do
+		if len(records) == 0 {
+			return
+		}
+		// Send email
 		email := records[0]
 		log.Printf("Process email queue: '%s' - %s", email.GetString("subject"), email.GetDateTime("created").String())
 		sendRenderedEmail(app, mail.Address{Address: email.GetString("to")}, email.GetString("subject"), email.GetString("html"), mail.Address{
 			Address: email.GetString("fromAddress"),
 			Name:    email.GetString("fromName"),
 		})
+		// Delete from queue
 		err = app.Delete(email)
 		if err != nil {
 			app.Logger().Error("Error removing email from email queue", err)
