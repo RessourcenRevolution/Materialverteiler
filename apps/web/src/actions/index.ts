@@ -32,6 +32,7 @@ export const server = {
     }),
     handler: async (input, { locals }) => {
       try {
+        let time = performance.now()
         // Create user
         const user = await locals.pb.collection('users').create({
           firstname: input.firstname,
@@ -41,18 +42,28 @@ export const server = {
           passwordConfirm: input.password,
           terms: input.terms,
         })
+        console.log(`collection('users').create took ${performance.now() - time} milliseconds`)
+        time = performance.now()
         // Login
         await locals.pb
           .collection('users')
           .authWithPassword(input.email, input.password)
+        console.log(`authWithPassword() took ${performance.now() - time} milliseconds`)
+        time = performance.now()
         // Create team
         const team = await locals.pb
           .collection('teams')
           .create({ name: input.team })
+        console.log(`collection('teams').create took ${performance.now() - time} milliseconds`)
+        time = performance.now()
         // Update user
         await locals.pb.collection('users').update(user.id, { team: team.id })
+        console.log(`collection('users').update took ${performance.now() - time} milliseconds`)
+        time = performance.now()
         // Request verification
         await locals.pb.collection('users').requestVerification(input.email)
+        console.log(`collection('users').requestVerification took ${performance.now() - time} milliseconds`)
+        time = performance.now()
         // Notify managers
         await locals.pb.send(`/api/users/${user.id}/notify-managers`,
           {
@@ -64,6 +75,8 @@ export const server = {
               message: input.message,
             }),
           })
+        console.log(`POST notify-managers took ${performance.now() - time} milliseconds`)
+        time = performance.now()
         return {
           cookie: locals.pb.authStore.exportToCookie({
             secure: import.meta.env.DEV ? false : true,
