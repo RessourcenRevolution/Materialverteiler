@@ -1,0 +1,20 @@
+---
+import { Container, Link } from '@rr/ui/components'
+import Layout from '~/layouts/Layout.astro'
+
+export const prerender = false;
+---
+
+<Layout>
+  <Container size="lg" class="py-24">
+    <h1 class="text-2xl font-bold text-heading mb-4">
+      404 - Angebot nicht gefunden
+    </h1>
+    <p class="text-lg text-body mb-4">
+      Oops! Das Angebot, die du suchst, existiert nicht oder wurde verschoben.
+    </p>
+    <p>
+      <Link href="/dashboard" class="text-lg!">Kehre zur Übersicht zurück</Link>.
+    </p>
+  </Container>
+</Layout>

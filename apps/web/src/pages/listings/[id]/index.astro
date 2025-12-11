@@ -9,6 +9,7 @@ import ContactForm from '~/components/ContactForm.astro'
 import BackgroundRect from '~/components/BackgroundRect.astro'
 import ListingUserStatus from '~/components/ListingUserStatus.astro'
 import ImageGallery from '~/components/ImageGallery.astro'
+import { ClientResponseError } from 'pocketbase'
 
 export const prerender = false
 
@@ -22,12 +23,21 @@ if (!id) {
 const user = Astro.locals.pb.authStore.record!
 
 // Get listing
-const item = await Astro.locals.pb
-  .collection('listings')
-  .getOne(id, { expand: 'team' })
+let item
+try {
+  item = await Astro.locals.pb
+    .collection('listings')
+    .getOne(id, { expand: 'team' })
+}
+catch (err) {
+  if (err instanceof ClientResponseError && err.status === 404) {
+    return Astro.rewrite('/listings/404')
+  }
+  return Astro.rewrite('/404')
+}
 
 if (!item) {
-  return new Response(null, { status: 404 })
+  return Astro.rewrite('/listings/404')
 }
 
 const listing = ListingSchema.parse(item) as Listing
