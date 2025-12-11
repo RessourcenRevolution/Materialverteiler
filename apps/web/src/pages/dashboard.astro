@@ -21,7 +21,7 @@ const isNewUser = !Astro.locals.pb.authStore.record!.roles.includes('user');
 
 <Layout>
   <Container size="xl" class="relative">
-    <BackgroundRect variant="page" color="purple" class="h-[55%]!" />
+    {!isNewUser && <BackgroundRect variant="page" color="purple" class="h-[55%]!" />}
     <EmailVerificationWarning />
     <div class="flex justify-between items-center flex-wrap gap-4 mb-12">
       <Heading tag="h1" size="xl">
