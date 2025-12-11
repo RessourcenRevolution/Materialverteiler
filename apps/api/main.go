@@ -3,9 +3,9 @@ package main
 import (
 	"log"
 	"net/http"
+	"net/mail"
 	"slices"
 
-	"github.com/pocketbase/dbx"
 	"github.com/pocketbase/pocketbase"
 	"github.com/pocketbase/pocketbase/apis"
 	"github.com/pocketbase/pocketbase/core"
@@ -29,24 +29,27 @@ func main() {
 	// On listing create
 	app.OnRecordAfterCreateSuccess("listings").BindFunc(func(e *core.RecordEvent) error {
 		listing := e.Record
-		managers, err := app.FindRecordsByFilter("users", "roles ~ 'manager'", "", -1, 0, dbx.Params{})
-		if err != nil {
-			e.App.Logger().Error("Error fetching managers", "error", err.Error())
-			return e.Next()
-		}
 
-		// Expand user team
+		// Expand user & team
 		errs := app.ExpandRecord(listing, []string{"user", "team"}, nil)
 		if len(errs) > 0 {
-			e.App.Logger().Error("Error expanding listing team", "error", err.Error())
+			e.App.Logger().Error("Error expanding listing team")
 			return e.Next()
 		}
+		user := listing.ExpandedOne("user")
+		team := listing.ExpandedOne("team")
 
-		log.Printf("Notify %s managers of new listing '%s' (%s)\n", len(managers), listing.GetString("title"), listing.Id)
-		for _, manager := range managers {
-			sendNotifyNewListing(e, manager, listing.ExpandedOne("user"), listing, listing.ExpandedOne("team"))
-		}
-
+		sendManagersEmail(e.App, func(manager *core.Record) NotifyNewListingData {
+			return NotifyNewListingData{
+				DefaultFields:    getDefaultFields(e.App),
+				ManagerFirstname: manager.GetString("firstname"),
+				UserFirstname:    user.GetString("firstname"),
+				UserLastname:     user.GetString("lastname"),
+				ListingId:        listing.Id,
+				ListingTitle:     listing.GetString("title"),
+				TeamName:         team.GetString("name"),
+			}
+		})
 		return e.Next()
 	})
 
@@ -57,13 +60,21 @@ func main() {
 		// User's email got verified
 		if !original.GetBool("verified") && e.Record.GetBool("verified") {
 			log.Printf("E-mail of user %s has been verified\n", e.Record.GetString("email"))
-			sendVerifiedEmail(e)
+			data := EmailVerifiedData{
+				DefaultFields: getDefaultFields(e.App),
+				Firstname:     e.Record.GetString("firstname"),
+			}
+			sendEmail(e.App, mail.Address{Address: e.Record.Email()}, data, nil)
 		}
 
 		// User's account got approved
 		if !slices.Contains(original.GetStringSlice("roles"), "user") && slices.Contains(e.Record.GetStringSlice("roles"), "user") {
 			log.Printf("User %s has been approved\n", e.Record.GetString("email"))
-			sendApprovedEmail(e)
+			data := UserApprovedData{
+				DefaultFields: getDefaultFields(e.App),
+				Firstname:     e.Record.GetString("firstname"),
+			}
+			sendEmail(e.App, mail.Address{Address: e.Record.Email()}, data, nil)
 		}
 
 		return e.Next()
@@ -93,21 +104,28 @@ func main() {
 			if len(errs) > 0 {
 				return e.Error(http.StatusNotFound, "failed to expand", nil)
 			}
+			team := user.ExpandedOne("team")
 
 			// Read post data
-			data := struct {
+			body := struct {
 				Message string `json:"message"`
 			}{}
-			if err := e.BindBody(&data); err != nil {
+			if err := e.BindBody(&body); err != nil {
 				return e.BadRequestError("Failed to read request data", err)
 			}
 
-			managers, err := app.FindRecordsByFilter("users", "roles ~ 'manager'", "", -1, 0, dbx.Params{})
-			log.Printf("Notify %s managers of user signup (%s, %s)\n", len(managers), user.GetString("firstname"), user.Email())
-			for _, manager := range managers {
-				log.Printf("Notify manager: %s\n", manager.GetString("firstname"))
-				sendNotifyUserSignupEmail(e, manager, user, user.ExpandedOne("team"), data.Message)
-			}
+			sendManagersEmail(e.App, func(manager *core.Record) NotifyUserSignupData {
+				return NotifyUserSignupData{
+					DefaultFields:    getDefaultFields(e.App),
+					ManagerFirstname: manager.GetString("firstname"),
+					UserId:           user.Id,
+					UserFirstname:    user.GetString("firstname"),
+					UserLastname:     user.GetString("lastname"),
+					UserEmail:        user.Email(),
+					TeamName:         team.GetString("name"),
+					Message:          convertLinebreaksToHtml(body.Message),
+				}
+			})
 
 			return e.JSON(http.StatusOK, map[string]bool{"success": true})
 		}).Bind(apis.RequireAuth())
@@ -132,20 +150,50 @@ func main() {
 			}
 
 			// Read post data
-			data := struct {
+			body := struct {
 				Name        string `json:"name"`
 				Email       string `json:"email"`
 				Phonenumber string `json:"phonenumber"`
 				Message     string `json:"message"`
 			}{}
-			if err := e.BindBody(&data); err != nil {
+			if err := e.BindBody(&body); err != nil {
 				return e.BadRequestError("Failed to read request data", err)
 			}
 
-			log.Printf("Contact form submitted for listing %s by %s\n", data.Name, data.Email)
+			log.Printf("Contact form submitted for listing %s by %s\n", body.Name, body.Email)
 
-			sendListingContactEmail(e, listing, listing.ExpandedOne("user"), data.Name, data.Email, data.Phonenumber, data.Message)
-			sendListingContactConfirmationEmail(e, listing, e.Auth, data.Name, data.Email, data.Phonenumber, data.Message)
+			user := listing.ExpandedOne("user")
+
+			// Listing contact email
+			data := ListingContactData{
+				DefaultFields: getDefaultFields(e.App),
+				ListingId:     listing.Id,
+				Firstname:     user.GetString("firstname"),
+				OtherName:     body.Name,
+				Email:         body.Email,
+				Phonenumber:   body.Phonenumber,
+				Message:       convertLinebreaksToHtml(body.Message),
+			}
+			sendEmail(e.App, mail.Address{Address: user.Email()}, data, &EmailConfig{
+				CustomFrom: &mail.Address{
+					Address: body.Email,
+					Name:    body.Name,
+				},
+			})
+
+			// Listing contact confirmation email
+			confirmation := ListingContactConfirmationData{
+				DefaultFields: getDefaultFields(e.App),
+				ListingId:     listing.Id,
+				ListingTitle:  listing.GetString("title"),
+				Firstname:     user.GetString("firstname"),
+				Name:          body.Name,
+				Email:         body.Email,
+				Phonenumber:   body.Phonenumber,
+				Message:       convertLinebreaksToHtml(body.Message),
+			}
+			sendEmail(e.App, mail.Address{Address: user.Email()}, confirmation, nil)
+
 			return e.JSON(http.StatusOK, map[string]bool{"success": true})
 		}).Bind(apis.RequireAuth())
 

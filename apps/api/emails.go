@@ -2,10 +2,12 @@ package main
 
 import (
 	_ "embed"
+	"log"
 	"net/mail"
 	"os"
 	"strings"
 
+	"github.com/pocketbase/dbx"
 	"github.com/pocketbase/pocketbase/core"
 	"github.com/pocketbase/pocketbase/tools/mailer"
 	"github.com/pocketbase/pocketbase/tools/template"
@@ -36,179 +38,185 @@ var listingContactTemplate string
 //go:embed "views/emails/listing-contact-confirmation.html"
 var listingContactConfirmationTemplate string
 
-func newEmailTemplateData(app core.App) map[string]any {
-	return map[string]any{
-		"appURL":       app.Settings().Meta.AppURL,
-		"publicApiUrl": os.Getenv("PUBLIC_API_URL"),
-	}
+// DefaultFields contains fields that are common to all email types
+type DefaultFields struct {
+	AppURL string
+	ApiURL string
+}
+
+// Email data structs - now embedding CommonEmailFields
+type EmailVerifiedData struct {
+	DefaultFields
+	Firstname string
+}
+
+type NotifyUserSignupData struct {
+	DefaultFields
+	ManagerFirstname string
+	UserId           string
+	UserFirstname    string
+	UserLastname     string
+	UserEmail        string
+	TeamName         string
+	Message          htmlTemplate.HTML
+}
+
+type UserApprovedData struct {
+	DefaultFields
+	Firstname string
+}
+
+type NotifyNewListingData struct {
+	DefaultFields
+	UserFirstname    string
+	UserLastname     string
+	ManagerFirstname string
+	ListingId        string
+	ListingTitle     string
+	TeamName         string
+}
+
+type ListingContactData struct {
+	DefaultFields
+	ListingId   string
+	Firstname   string
+	OtherName   string
+	Email       string
+	Phonenumber string
+	Message     htmlTemplate.HTML
+}
+
+type ListingContactConfirmationData struct {
+	DefaultFields
+	ListingId    string
+	ListingTitle string
+	Firstname    string
+	Name         string
+	Email        string
+	Phonenumber  string
+	Message      htmlTemplate.HTML
+}
+
+// EmailData interface that all email data structs must implement
+type EmailData interface {
+	EmailVerifiedData | NotifyUserSignupData | UserApprovedData | NotifyNewListingData | ListingContactData | ListingContactConfirmationData
+}
+
+// EmailTemplate holds the template and subject for an email type
+type EmailTemplate struct {
+	Template string
+	Subject  string
+}
+
+// emailTemplates maps email data types to their templates and subjects
+var emailTemplates = map[any]EmailTemplate{
+	EmailVerifiedData{}: {
+		Subject:  "Wilkommen im Materialverteiler",
+		Template: emailVerifiedTemplate,
+	},
+	NotifyUserSignupData{}: {
+		Subject:  "Neue Anfrage zum Beitritt zum Materialverteiler",
+		Template: notifyUserSignupTemplate,
+	},
+	UserApprovedData{}: {
+		Subject:  "Willkommen in der Community",
+		Template: userApprovedTemplate,
+	},
+	NotifyNewListingData{}: {
+		Subject:  "Neues Angebot wartet auf Freigabe: {{.ListingTitle}}",
+		Template: notifyNewListingTemplate,
+	},
+	ListingContactData{}: {
+		Subject:  "Neue Anfrage zu Ihrem Materialangebot",
+		Template: listingContactTemplate,
+	},
+	ListingContactConfirmationData{}: {
+		Subject:  "Bestätigung zu deine Materialangebot Anfrage",
+		Template: listingContactConfirmationTemplate,
+	},
+}
+
+// getEmailTemplate returns the template and subject for a given data type
+func getEmailTemplate[T EmailData](data T) EmailTemplate {
+	// Create a zero value of the type to use as map key
+	var zero T
+	return emailTemplates[zero]
+}
+
+// Email configuration for custom sender
+type EmailConfig struct {
+	CustomFrom *mail.Address
 }
 
 func newEmailTemplate() *template.Registry {
 	return template.NewRegistry().AddFuncs(sprig.FuncMap())
 }
 
-func sendVerifiedEmail(e *core.RecordEvent) error {
-	data := newEmailTemplateData(e.App)
-	data["firstname"] = e.Record.GetString("firstname")
+// getDefaultFields creates CommonEmailFields from app settings
+func getDefaultFields(app core.App) DefaultFields {
+	return DefaultFields{
+		AppURL: app.Settings().Meta.AppURL,
+		ApiURL: os.Getenv("PUBLIC_API_URL"),
+	}
+}
 
-	html, err := newEmailTemplate().LoadString(baseTemplate + emailVerifiedTemplate).Render(data)
+func convertLinebreaksToHtml(text string) htmlTemplate.HTML {
+	return htmlTemplate.HTML(strings.Replace(text, "\n", "<br>", -1))
+}
 
+// Generic sendEmail function with type constraint
+func sendEmail[T EmailData](app core.App, to mail.Address, data T, config *EmailConfig) error {
+	// Get template and subject from the map
+	emailTemplate := getEmailTemplate(data)
+
+	html, err := newEmailTemplate().LoadString(baseTemplate + emailTemplate.Template).Render(data)
 	if err != nil {
-		e.App.Logger().Error("Can't render email-verified email template: %w", err)
-		return e.Next()
+		app.Logger().Error("Can't render email template", "error", err)
+		return err
+	}
+
+	// Render subject with data
+	subject, err := template.NewRegistry().LoadString(emailTemplate.Subject).Render(data)
+	if err != nil {
+		app.Logger().Error("Can't render email subject", "error", err)
+		return err
+	}
+
+	// Determine sender
+	from := mail.Address{
+		Address: app.Settings().Meta.SenderAddress,
+		Name:    app.Settings().Meta.SenderName,
+	}
+	if config != nil && config.CustomFrom != nil {
+		from = *config.CustomFrom
 	}
 
 	message := &mailer.Message{
-		From: mail.Address{
-			Address: e.App.Settings().Meta.SenderAddress,
-			Name:    e.App.Settings().Meta.SenderName,
-		},
-		To:      []mail.Address{{Address: e.Record.Email()}},
-		Subject: "Wilkommen im Materialverteiler",
+		From:    from,
+		To:      []mail.Address{to},
+		Subject: subject,
 		HTML:    html,
 	}
 
-	return e.App.NewMailClient().Send(message)
+	return app.NewMailClient().Send(message)
 }
 
-func sendNotifyUserSignupEmail(e *core.RequestEvent, manager *core.Record, user *core.Record, team *core.Record, message string) error {
-	data := newEmailTemplateData(e.App)
-	data["managerFirstname"] = manager.GetString("firstname")
-	data["userId"] = user.Id
-	data["userFirstname"] = user.GetString("firstname")
-	data["userLastname"] = user.GetString("lastname")
-	data["userEmail"] = user.Email()
-	data["teamName"] = team.GetString("name")
-	data["message"] = htmlTemplate.HTML(strings.Replace(message, "\n", "<br>", -1))
+type getData[T EmailData] func(*core.Record) T
 
-	html, err := newEmailTemplate().LoadString(baseTemplate + notifyUserSignupTemplate).Render(data)
-
+func sendManagersEmail[T EmailData](app core.App, fn getData[T]) error {
+	managers, err := app.FindRecordsByFilter("users", "roles ~ 'manager'", "", -1, 0, dbx.Params{})
 	if err != nil {
-		e.App.Logger().Error("Can't render listing-contact email template: %w", err)
-		return e.Next()
+		app.Logger().Error("Error fetching managers", err.Error())
+		return err
 	}
-
-	msg := &mailer.Message{
-		From: mail.Address{
-			Address: manager.Email(),
-			Name:    manager.GetString("firstname"),
-		},
-		To:      []mail.Address{{Address: user.Email()}},
-		Subject: "Neue Anfrage zum Beitritt zum Materialverteiler",
-		HTML:    html,
+	if managers == nil || len(managers) == 0 {
+		app.Logger().Info("No managers found to send email")
+		return nil
 	}
-
-	return e.App.NewMailClient().Send(msg)
-}
-
-func sendApprovedEmail(e *core.RecordEvent) error {
-	data := newEmailTemplateData(e.App)
-	data["firstname"] = e.Record.GetString("firstname")
-
-	html, err := newEmailTemplate().LoadString(baseTemplate + userApprovedTemplate).Render(data)
-
-	if err != nil {
-		e.App.Logger().Error("Can't render user-approved email template: %w", err)
-		return e.Next()
+	log.Printf("Notify %s managers\n", len(managers))
+	for _, manager := range managers {
+		data := fn(manager)
+		sendEmail(app, mail.Address{Address: manager.Email()}, data, nil)
 	}
-
-	message := &mailer.Message{
-		From: mail.Address{
-			Address: e.App.Settings().Meta.SenderAddress,
-			Name:    e.App.Settings().Meta.SenderName,
-		},
-		To:      []mail.Address{{Address: e.Record.Email()}},
-		Subject: "Willkommen in der Community",
-		HTML:    html,
-	}
-
-	return e.App.NewMailClient().Send(message)
-}
-
-func sendNotifyNewListing(e *core.RecordEvent, manager *core.Record, user *core.Record, listing *core.Record, team *core.Record) error {
-	data := newEmailTemplateData(e.App)
-	data["userFirstname"] = user.GetString("firstname")
-	data["userLastname"] = user.GetString("lastname")
-	data["managerFirstname"] = manager.GetString("firstname")
-	data["listingId"] = listing.Id
-	data["listingTitle"] = listing.GetString("title")
-	data["teamName"] = team.GetString("name")
-
-	html, err := newEmailTemplate().LoadString(baseTemplate + notifyNewListingTemplate).Render(data)
-
-	if err != nil {
-		e.App.Logger().Error("Can't render email-verified email template: %w", err)
-		return e.Next()
-	}
-
-	message := &mailer.Message{
-		From: mail.Address{
-			Address: e.App.Settings().Meta.SenderAddress,
-			Name:    e.App.Settings().Meta.SenderName,
-		},
-		To:      []mail.Address{{Address: manager.Email()}},
-		Subject: "Neues Angebot wartet auf Freigabe: " + listing.GetString("title"),
-		HTML:    html,
-	}
-
-	return e.App.NewMailClient().Send(message)
-}
-
-func sendListingContactEmail(e *core.RequestEvent, listing *core.Record, user *core.Record, name string, email string, phonenumber string, message string) error {
-	data := newEmailTemplateData(e.App)
-	data["listingId"] = listing.Id
-	data["firstname"] = user.GetString("firstname")
-	data["other_name"] = name
-	data["email"] = email
-	data["phonenumber"] = phonenumber
-	data["message"] = htmlTemplate.HTML(strings.Replace(message, "\n", "<br>", -1))
-
-	html, err := newEmailTemplate().LoadString(baseTemplate + listingContactTemplate).Render(data)
-
-	if err != nil {
-		e.App.Logger().Error("Can't render listing-contact email template: %w", err)
-		return e.Next()
-	}
-
-	msg := &mailer.Message{
-		From: mail.Address{
-			Address: email,
-			Name:    name,
-		},
-		To:      []mail.Address{{Address: user.Email()}},
-		Subject: "Neue Anfrage zu Ihrem Materialangebot",
-		HTML:    html,
-	}
-
-	return e.App.NewMailClient().Send(msg)
-}
-
-func sendListingContactConfirmationEmail(e *core.RequestEvent, listing *core.Record, user *core.Record, name string, email string, phonenumber string, message string) error {
-	data := newEmailTemplateData(e.App)
-	data["listingId"] = listing.Id
-	data["listingTitle"] = listing.GetString("title")
-	data["firstname"] = user.GetString("firstname")
-	data["name"] = name
-	data["email"] = email
-	data["phonenumber"] = phonenumber
-	data["message"] = htmlTemplate.HTML(strings.Replace(message, "\n", "<br>", -1))
-
-	html, err := newEmailTemplate().LoadString(baseTemplate + listingContactConfirmationTemplate).Render(data)
-
-	if err != nil {
-		e.App.Logger().Error("Can't render listing-contact-confirmation email template: %w", err)
-		return e.Next()
-	}
-
-	msg := &mailer.Message{
-		From: mail.Address{
-			Address: e.App.Settings().Meta.SenderAddress,
-			Name:    e.App.Settings().Meta.SenderName,
-		},
-		To:      []mail.Address{{Address: user.Email()}},
-		Subject: "Bestätigung zu deine Materialangebot Anfrage",
-		HTML:    html,
-	}
-
-	return e.App.NewMailClient().Send(msg)
+	return nil
 }

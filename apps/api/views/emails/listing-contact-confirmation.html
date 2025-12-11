@@ -1,20 +1,20 @@
 {{define "body"}}
-<p>Hallo {{.firstname}},</p>
+<p>Hallo {{.Firstname}},</p>
 <p>
   danke für deine Anfrage über den Materialverteiler von Ressourcen Revolution!
   Wir haben deine Nachricht erfolgreich an den Anbieter weitergeleitet.
 </p>
 <p>
   <strong>Deine Anfrage im Überblick:</strong><br />
-  Material: <a href="{{print .appURL "/listings/" .listingId}}">{{ .listingTitle }}</a><br />
-  Kontaktdaten: <a href="mailto:{{.email}}">{{.email}}</a>{{ if .phonenumber }}, {{.phonenumber }}{{ end }}
+  Material: <a href="{{print .AppURL "/listings/" .ListingId}}">{{ .ListingTitle }}</a><br />
+  Kontaktdaten: <a href="mailto:{{.Email}}">{{.Email}}</a>{{ if .Phonenumber }}, {{.Phonenumber }}{{ end }}
 </p>
 
 <p>
   <strong>Deine Nachricht:</strong><br />
 </p>
 
-{{ template "message" (dict "message" .message) }}
+{{ template "message" (dict "message" .Message) }}
 
 <p>
   <strong>Was passiert jetzt?</strong><br />
@@ -23,9 +23,5 @@
 </p>
 <p>
   Danke, dass du Teil der Ressourcen Revolution bist und nachhaltige Lösungen förderst!
-</p>
-<p>
-  Liebe Grüße,<br />
-  Ressourcen Revolution
 </p>
 {{end}}

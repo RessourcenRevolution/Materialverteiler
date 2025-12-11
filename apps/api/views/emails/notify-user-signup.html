@@ -1,25 +1,20 @@
 {{define "body"}}
-<p>Hallo {{ .managerFirstname }},</p>
+<p>Hallo {{ .ManagerFirstname }},</p>
 <p>
-  {{ .userFirstname }} {{ .userLastname }} von {{ .teamName }} möchte dem
+  {{ .UserFirstname }} {{ .UserLastname }} von {{ .TeamName }} möchte dem
   Materialverteiler beitreten.
 </p>
 <p>
   <strong>Details:</strong><br />
-  Name: {{ .userFirstname }} {{ .userLastname }}<br />
-  E-Mail: <a href="mailto:{{ .userEmail }}">{{ .userEmail }}</a><br />
-  Institution: {{ .teamName }}<br />
+  Name: {{ .UserFirstname }} {{ .UserLastname }}<br />
+  E-Mail: <a href="mailto:{{ .UserEmail }}">{{ .UserEmail }}</a><br />
+  Institution: {{ .TeamName }}<br />
 </p>
 <p>Die Nachricht lautet:</p>
-{{ template "message" (dict "message" .message) }}
+{{ template "message" (dict "message" .Message) }}
 
 <div>
-  {{ template "button" (dict "text" "Nutzer freischalten" "href" (print
-  .publicApiUrl "/_/#/collections?collection=_pb_users_auth_&recordId=" .userId)
-  )}}
+  {{ template "button" (dict "text" "Nutzer freischalten" "href" (print .ApiURL
+  "/_/#/collections?collection=_pb_users_auth_&recordId=" .UserId) )}}
 </div>
-<p>
-  Liebe Grüße,<br />
-  Ressourcen Revolution
-</p>
 {{end}}

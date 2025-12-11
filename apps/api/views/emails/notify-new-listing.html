@@ -1,14 +1,14 @@
 {{define "body"}}
-<p>Hallo {{ .managerFirstname }},</p>
+<p>Hallo {{ .ManagerFirstname }},</p>
 
 <p>
-  Ein neues Materialangebot '{{ .listingTitle }}' von {{ .userFirstname }} {{
-  .userLastname }} ({{ .teamName }}) wurde eingereicht.
+  Ein neues Materialangebot '{{ .ListingTitle }}' von {{ .UserFirstname }} {{
+  .UserLastname }} ({{ .TeamName }}) wurde eingereicht.
 </p>
 
 <p>
   {{ template "button" (dict "text" "Materialangebot anzeigen" "href" (print
-  .appURL "/listings/" .listingId) )}}
+  .AppURL "/listings/" .ListingId) )}}
 </p>
 
 <p>
@@ -17,11 +17,6 @@
 
 <p>
   {{ template "button" (dict "text" "Materialangebot freischalten" "href" (print
-  .publicApiUrl "/_/#/collections?collection=listings&recordId=" .listingId) )}}
-</p>
-
-<p>
-  Liebe Grüße,<br />
-  Ressourcen Revolution
+  .ApiURL "/_/#/collections?collection=listings&recordId=" .ListingId) )}}
 </p>
 {{end}}

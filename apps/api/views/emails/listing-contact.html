@@ -1,25 +1,21 @@
 {{define "body"}}
-<p>Hallo {{.firstname}},</p>
+<p>Hallo {{.Firstname}},</p>
 <p>
-  über den Materialverteiler von Ressourcen Revolution hat {{.other_name}} (<a
-    href="mailto:{{.email}}"
-    >{{.email}}</a
+  über den Materialverteiler von Ressourcen Revolution hat {{.OtherName}} (<a
+    href="mailto:{{.Email}}"
+    >{{.Email}}</a
   >) Interesse an deinem Angebot gezeigt. Die Nachricht lautet:
 </p>
-{{ template "message" (dict "message" .message) }}
+{{ template "message" (dict "message" .Message) }}
 <p>
-  <strong>Kontaktiere {{.other_name}}:</strong><br />
-  E-Mail: <a href="mailto:{{.email}}">{{.email}}</a>
-  {{ if .phonenumber }}
+  <strong>Kontaktiere {{.OtherName}}:</strong><br />
+  E-Mail: <a href="mailto:{{.Email}}">{{.Email}}</a>
+  {{ if .Phonenumber }}
   <br />
-  Telefon: {{ .phonenumber }} {{ end }}
+  Telefon: {{ .Phonenumber }} {{ end }}
 </p>
 <div>
-  {{ template "button" (dict "text" "Zum Angebot" "href" (print .appURL
-  "/listings/" .listingId) )}}
+  {{ template "button" (dict "text" "Zum Angebot" "href" (print .AppURL
+  "/listings/" .ListingId) )}}
 </div>
-<p>
-  Liebe Grüße,<br />
-  Ressourcen Revolution
-</p>
 {{end}}
