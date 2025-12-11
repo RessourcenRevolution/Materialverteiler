@@ -29,11 +29,21 @@ const result = Astro.getActionResult(actions.listing)
 
 const formData
   = Astro.request.method === 'POST' ? await Astro.request.formData() : null
+
 const postedListing = formData
   ? ({
       title: formData.get('title') as string,
       description: formData.get('description') as string,
-    } as Partial<Listing>)
+      material: formData.get('material') as string,
+      condition: formData.get('condition') as string,
+      measurements: formData.get('measurements') as string,
+      address: formData.get('address') as string,
+      postalcode: formData.get('postalcode') as string,
+      city: formData.get('city') as string,
+      pickup_description: formData.get('pickup_description') as string,
+      start_date: new Date(formData.get('start_date') as string),
+      end_date: formData.get('end_date') ? new Date(formData.get('end_date') as string) : '',
+    } satisfies Omit<Listing, 'id' | 'status' | 'team' | 'user' | 'created' | 'updated'>)
   : null
 
 const data = postedListing ? postedListing : listing;
@@ -69,18 +79,21 @@ const data = postedListing ? postedListing : listing;
     label={t('listing-form.material.label')}
     value={data?.material}
     error={fieldError('material', result?.error)}
+    required
   />
   <Input
     name="measurements"
     label={t('listing-form.measurements.label')}
     value={data?.measurements}
     error={fieldError('measurements', result?.error)}
+    required
   />
   <Input
     name="condition"
     label={t('listing-form.condition.label')}
     value={data?.condition}
     error={fieldError('condition', result?.error)}
+    required
   />
   <Textarea
     name="description"
@@ -107,18 +120,21 @@ const data = postedListing ? postedListing : listing;
     label={t('listing-form.address.label')}
     value={data?.address}
     error={fieldError('address', result?.error)}
+    required
   />
   <Input
     name="postalcode"
     label={t('listing-form.postalcode.label')}
     value={data?.postalcode}
     error={fieldError('postalcode', result?.error)}
+    required
   />
   <Input
     name="city"
     label={t('listing-form.city.label')}
     value={data?.city}
     error={fieldError('city', result?.error)}
+    required
   />
   <Textarea
     name="pickup_description"

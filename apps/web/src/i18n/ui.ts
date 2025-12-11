@@ -28,6 +28,7 @@ export const ui = {
     'forms.email': 'E-Mail',
     'forms.password': 'Password',
     'forms.errors.required': 'This field is required',
+    'forms.errors.postalcode': 'This is not a valid postalcode',
     // Signup page
     'signup.title': 'Be part of our Materials Community!',
     'signup.text': `<p>By submitting the form, you create an account in our community. This automatically enrolls you in our Materials Distributor. Through this, we regularly send out material offers from the region.</p>
@@ -176,6 +177,7 @@ export const ui = {
     'forms.email': 'Deine Mail-Adresse',
     'forms.password': 'Passwort',
     'forms.errors.required': 'Dieses Feld ist erforderlich',
+    'forms.errors.postalcode': 'Das ist keine gültige Postleitzahl',
     // Signup page
     'signup.title': 'Sei Teil unserer Material-Community! ',
     'signup.text': `<p>Mit dem Absenden des Formulars erstellst Du einen Account in unserer Community. Dadurch trittst du automatisch unserem Materialverteiler bei. In diesen senden wir regelmäßig Materialangebote aus der Region.</p>
