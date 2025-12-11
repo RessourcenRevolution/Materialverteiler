@@ -3,6 +3,7 @@ package main
 import (
 	"api/cron"
 	"api/email"
+	"api/hooks"
 	"log"
 	"net/http"
 	"net/mail"
@@ -58,60 +59,14 @@ func main() {
 		return e.Next()
 	})
 
+	// On listing validate
+	app.OnRecordValidate("listings").BindFunc(hooks.ListingValidate)
+
 	// On listing create
-	app.OnRecordAfterCreateSuccess("listings").BindFunc(func(e *core.RecordEvent) error {
-		listing := e.Record
-
-		// Expand user & team
-		errs := app.ExpandRecord(listing, []string{"user", "team"}, nil)
-		if len(errs) > 0 {
-			e.App.Logger().Error("Error expanding listing user or  team")
-			return e.Next()
-		}
-		user := listing.ExpandedOne("user")
-		team := listing.ExpandedOne("team")
-
-		email.QueueManagersEmail(e.App, func(manager *core.Record) email.NotifyNewListingData {
-			return email.NotifyNewListingData{
-				DefaultFields:    email.GetDefaultFields(e.App),
-				ManagerFirstname: manager.GetString("firstname"),
-				UserFirstname:    user.GetString("firstname"),
-				UserLastname:     user.GetString("lastname"),
-				ListingId:        listing.Id,
-				ListingTitle:     listing.GetString("title"),
-				TeamName:         team.GetString("name"),
-			}
-		})
-		return e.Next()
-	})
+	app.OnRecordAfterCreateSuccess("listings").BindFunc(hooks.AfterListingCreate)
 
 	// On listing update
-	app.OnRecordAfterUpdateSuccess("listings").BindFunc(func(e *core.RecordEvent) error {
-		original := e.Record.Original()
-
-		// Expand user
-		errs := app.ExpandRecord(e.Record, []string{"user"}, nil)
-		if len(errs) > 0 {
-			e.App.Logger().Error("Error expanding listing user")
-			return e.Next()
-		}
-
-		user := e.Record.ExpandedOne("user")
-
-		// Listing got approved
-		if original.GetString("status") == "new" && e.Record.GetString("status") == "open" {
-			log.Printf("Listing (%s) got approved\n", e.Record.GetString("title"))
-			data := email.ListingApprovedData{
-				DefaultFields: email.GetDefaultFields(e.App),
-				Firstname:     user.GetString("firstname"),
-				ListingId:     e.Record.Id,
-				ListingTitle:  e.Record.GetString("title"),
-			}
-			email.SendEmail(e.App, mail.Address{Address: user.Email()}, data, nil)
-		}
-
-		return e.Next()
-	})
+	app.OnRecordAfterUpdateSuccess("listings").BindFunc(hooks.AfterListingUpdate)
 
 	app.OnServe().BindFunc(func(se *core.ServeEvent) error {
 

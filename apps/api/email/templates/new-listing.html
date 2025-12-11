@@ -1,0 +1,20 @@
+{{define "body"}}
+<p>Hallo {{ .Firstname }},</p>
+
+<p>Ein neues Materialangebot '{{ .ListingTitle }}' steht verfügbar.</p>
+
+<p>
+  <strong>Materialangebot Details:</strong><br />
+  Name: {{.ListingTitle }}<br />
+  {{ if .ListingMaterial }}Material: {{.ListingMaterial}}<br />{{ end }}
+  {{ if .ListingMeasurements }}Große: {{.ListingMeasurements}}<br />{{ end }}
+  {{ if .ListingCondition }}Zustand: {{.ListingCondition}}<br />{{ end }}
+</p>
+
+{{ template "message" (dict "message" .ListingDescription) }}
+
+<p>
+  {{ template "button" (dict "text" "Materialangebot anzeigen" "href" (print
+  .AppURL "/listings/" .ListingId) )}}
+</p>
+{{end}}

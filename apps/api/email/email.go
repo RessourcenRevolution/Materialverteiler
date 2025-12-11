@@ -35,6 +35,9 @@ var notifyNewListingTemplate string
 //go:embed "templates/listing-approved.html"
 var listingApprovedTemplate string
 
+//go:embed "templates/new-listing.html"
+var newListingTemplate string
+
 //go:embed "templates/listing-contact.html"
 var listingContactTemplate string
 
@@ -86,6 +89,17 @@ type ListingApprovedData struct {
 	ListingTitle string
 }
 
+type NewListingData struct {
+	DefaultFields
+	Firstname           string
+	ListingId           string
+	ListingTitle        string
+	ListingMaterial     string
+	ListingMeasurements string
+	ListingCondition    string
+	ListingDescription  string
+}
+
 type ListingContactData struct {
 	DefaultFields
 	ListingId   string
@@ -109,7 +123,7 @@ type ListingContactConfirmationData struct {
 
 // EmailData interface that all email data structs must implement
 type EmailData interface {
-	EmailVerifiedData | NotifyUserSignupData | UserApprovedData | NotifyNewListingData | ListingApprovedData | ListingContactData | ListingContactConfirmationData
+	EmailVerifiedData | NotifyUserSignupData | UserApprovedData | NotifyNewListingData | ListingApprovedData | NewListingData | ListingContactData | ListingContactConfirmationData
 }
 
 // EmailTemplate holds the template and subject for an email type
@@ -139,6 +153,10 @@ var emailTemplates = map[any]EmailTemplate{
 	ListingApprovedData{}: {
 		Subject:  "Dein Angebot ist freigeschaltet: {{.ListingTitle}}",
 		Template: listingApprovedTemplate,
+	},
+	NewListingData{}: {
+		Subject:  "Neues Materialangebot: {{.ListingTitle}}",
+		Template: newListingTemplate,
 	},
 	ListingContactData{}: {
 		Subject:  "Neue Anfrage zu Ihrem Materialangebot",
