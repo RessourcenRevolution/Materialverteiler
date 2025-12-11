@@ -17,4 +17,10 @@
   {{ template "button" (dict "text" "Materialangebot anzeigen" "href" (print
   .AppURL "/listings/" .ListingId) )}}
 </p>
+
+<p>
+  <a href="{{ .AppURL }}/profile">
+    Klicke hier, um deine E-Mail-Einstellungen zu verwalten.
+  </a>
+</p>
 {{end}}
