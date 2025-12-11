@@ -28,33 +28,6 @@ func main() {
 		Automigrate: isGoRun,
 	})
 
-	// On listing create
-	app.OnRecordAfterCreateSuccess("listings").BindFunc(func(e *core.RecordEvent) error {
-		listing := e.Record
-
-		// Expand user & team
-		errs := app.ExpandRecord(listing, []string{"user", "team"}, nil)
-		if len(errs) > 0 {
-			e.App.Logger().Error("Error expanding listing team")
-			return e.Next()
-		}
-		user := listing.ExpandedOne("user")
-		team := listing.ExpandedOne("team")
-
-		sendManagersEmail(e.App, func(manager *core.Record) NotifyNewListingData {
-			return NotifyNewListingData{
-				DefaultFields:    getDefaultFields(e.App),
-				ManagerFirstname: manager.GetString("firstname"),
-				UserFirstname:    user.GetString("firstname"),
-				UserLastname:     user.GetString("lastname"),
-				ListingId:        listing.Id,
-				ListingTitle:     listing.GetString("title"),
-				TeamName:         team.GetString("name"),
-			}
-		})
-		return e.Next()
-	})
-
 	// On user update
 	app.OnRecordAfterUpdateSuccess("users").BindFunc(func(e *core.RecordEvent) error {
 		original := e.Record.Original()
@@ -81,6 +54,62 @@ func main() {
 
 		return e.Next()
 	})
+
+	// On listing create
+	app.OnRecordAfterCreateSuccess("listings").BindFunc(func(e *core.RecordEvent) error {
+		listing := e.Record
+
+		// Expand user & team
+		errs := app.ExpandRecord(listing, []string{"user", "team"}, nil)
+		if len(errs) > 0 {
+			e.App.Logger().Error("Error expanding listing user or  team")
+			return e.Next()
+		}
+		user := listing.ExpandedOne("user")
+		team := listing.ExpandedOne("team")
+
+		sendManagersEmail(e.App, func(manager *core.Record) NotifyNewListingData {
+			return NotifyNewListingData{
+				DefaultFields:    getDefaultFields(e.App),
+				ManagerFirstname: manager.GetString("firstname"),
+				UserFirstname:    user.GetString("firstname"),
+				UserLastname:     user.GetString("lastname"),
+				ListingId:        listing.Id,
+				ListingTitle:     listing.GetString("title"),
+				TeamName:         team.GetString("name"),
+			}
+		})
+		return e.Next()
+	})
+
+	// On listing update
+	app.OnRecordAfterUpdateSuccess("listings").BindFunc(func(e *core.RecordEvent) error {
+		original := e.Record.Original()
+
+		// Expand user
+		errs := app.ExpandRecord(e.Record, []string{"user"}, nil)
+		if len(errs) > 0 {
+			e.App.Logger().Error("Error expanding listing user")
+			return e.Next()
+		}
+
+		user := e.Record.ExpandedOne("user")
+
+		// Listing got approved
+		if original.GetString("status") == "new" && e.Record.GetString("status") == "open" {
+			log.Printf("Listing (%s) got approved\n", e.Record.GetString("title"))
+			data := ListingApprovedData{
+				DefaultFields: getDefaultFields(e.App),
+				Firstname:     user.GetString("firstname"),
+				ListingId:     e.Record.Id,
+				ListingTitle:  e.Record.GetString("title"),
+			}
+			sendEmail(e.App, mail.Address{Address: user.Email()}, data, nil)
+		}
+
+		return e.Next()
+	})
+
 	app.OnServe().BindFunc(func(se *core.ServeEvent) error {
 
 		// Notify managers of user signup
