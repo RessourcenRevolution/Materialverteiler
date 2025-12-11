@@ -32,6 +32,12 @@ func main() {
 		cron.ProcessEmailQueue(app)
 	})
 
+	app.OnRecordCreate("users").BindFunc(func(e *core.RecordEvent) error {
+		// Set default notifications value
+		e.Record.Set("notifications+", "new-listing")
+		return e.Next()
+	})
+
 	// On user update
 	app.OnRecordAfterUpdateSuccess("users").BindFunc(func(e *core.RecordEvent) error {
 		original := e.Record.Original()
