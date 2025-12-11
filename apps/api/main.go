@@ -1,13 +1,14 @@
 package main
 
 import (
+	"api/cron"
+	"api/email"
 	"log"
 	"net/http"
 	"net/mail"
 	"os"
 	"slices"
 
-	"github.com/pocketbase/dbx"
 	"github.com/pocketbase/pocketbase"
 	"github.com/pocketbase/pocketbase/apis"
 	"github.com/pocketbase/pocketbase/core"
@@ -27,27 +28,7 @@ func main() {
 
 	// Every minute process email queue
 	app.Cron().MustAdd("process email queue", "*/1 * * * *", func() {
-		records, err := app.FindRecordsByFilter("emailQueue", "", "created", 1, 0, dbx.Params{})
-		if err != nil {
-			app.Logger().Error("Error fetching email queue", err)
-			return
-		}
-		// Nothing to do
-		if len(records) == 0 {
-			return
-		}
-		// Send email
-		email := records[0]
-		log.Printf("Process email queue: '%s' - %s", email.GetString("subject"), email.GetDateTime("created").String())
-		sendRenderedEmail(app, mail.Address{Address: email.GetString("to")}, email.GetString("subject"), email.GetString("html"), mail.Address{
-			Address: email.GetString("fromAddress"),
-			Name:    email.GetString("fromName"),
-		})
-		// Delete from queue
-		err = app.Delete(email)
-		if err != nil {
-			app.Logger().Error("Error removing email from email queue", err)
-		}
+		cron.ProcessEmailQueue(app)
 	})
 
 	// On user update
@@ -57,21 +38,21 @@ func main() {
 		// User's email got verified
 		if !original.GetBool("verified") && e.Record.GetBool("verified") {
 			log.Printf("E-mail of user %s has been verified\n", e.Record.GetString("email"))
-			data := EmailVerifiedData{
-				DefaultFields: getDefaultFields(e.App),
+			data := email.EmailVerifiedData{
+				DefaultFields: email.GetDefaultFields(e.App),
 				Firstname:     e.Record.GetString("firstname"),
 			}
-			sendEmail(e.App, mail.Address{Address: e.Record.Email()}, data, nil)
+			email.SendEmail(e.App, mail.Address{Address: e.Record.Email()}, data, nil)
 		}
 
 		// User's account got approved
 		if !slices.Contains(original.GetStringSlice("roles"), "user") && slices.Contains(e.Record.GetStringSlice("roles"), "user") {
 			log.Printf("User %s has been approved\n", e.Record.GetString("email"))
-			data := UserApprovedData{
-				DefaultFields: getDefaultFields(e.App),
+			data := email.UserApprovedData{
+				DefaultFields: email.GetDefaultFields(e.App),
 				Firstname:     e.Record.GetString("firstname"),
 			}
-			sendEmail(e.App, mail.Address{Address: e.Record.Email()}, data, nil)
+			email.SendEmail(e.App, mail.Address{Address: e.Record.Email()}, data, nil)
 		}
 
 		return e.Next()
@@ -90,9 +71,9 @@ func main() {
 		user := listing.ExpandedOne("user")
 		team := listing.ExpandedOne("team")
 
-		queueManagersEmail(e.App, func(manager *core.Record) NotifyNewListingData {
-			return NotifyNewListingData{
-				DefaultFields:    getDefaultFields(e.App),
+		email.QueueManagersEmail(e.App, func(manager *core.Record) email.NotifyNewListingData {
+			return email.NotifyNewListingData{
+				DefaultFields:    email.GetDefaultFields(e.App),
 				ManagerFirstname: manager.GetString("firstname"),
 				UserFirstname:    user.GetString("firstname"),
 				UserLastname:     user.GetString("lastname"),
@@ -120,13 +101,13 @@ func main() {
 		// Listing got approved
 		if original.GetString("status") == "new" && e.Record.GetString("status") == "open" {
 			log.Printf("Listing (%s) got approved\n", e.Record.GetString("title"))
-			data := ListingApprovedData{
-				DefaultFields: getDefaultFields(e.App),
+			data := email.ListingApprovedData{
+				DefaultFields: email.GetDefaultFields(e.App),
 				Firstname:     user.GetString("firstname"),
 				ListingId:     e.Record.Id,
 				ListingTitle:  e.Record.GetString("title"),
 			}
-			sendEmail(e.App, mail.Address{Address: user.Email()}, data, nil)
+			email.SendEmail(e.App, mail.Address{Address: user.Email()}, data, nil)
 		}
 
 		return e.Next()
@@ -167,16 +148,16 @@ func main() {
 				return e.BadRequestError("Failed to read request data", err)
 			}
 
-			queueManagersEmail(e.App, func(manager *core.Record) NotifyUserSignupData {
-				return NotifyUserSignupData{
-					DefaultFields:    getDefaultFields(e.App),
+			email.QueueManagersEmail(e.App, func(manager *core.Record) email.NotifyUserSignupData {
+				return email.NotifyUserSignupData{
+					DefaultFields:    email.GetDefaultFields(e.App),
 					ManagerFirstname: manager.GetString("firstname"),
 					UserId:           user.Id,
 					UserFirstname:    user.GetString("firstname"),
 					UserLastname:     user.GetString("lastname"),
 					UserEmail:        user.Email(),
 					TeamName:         team.GetString("name"),
-					Message:          convertLinebreaksToHtml(body.Message),
+					Message:          email.ConvertLinebreaksToHtml(body.Message),
 				}
 			})
 
@@ -218,16 +199,16 @@ func main() {
 			user := listing.ExpandedOne("user")
 
 			// Listing contact email
-			data := ListingContactData{
-				DefaultFields: getDefaultFields(e.App),
+			data := email.ListingContactData{
+				DefaultFields: email.GetDefaultFields(e.App),
 				ListingId:     listing.Id,
 				Firstname:     user.GetString("firstname"),
 				OtherName:     body.Name,
 				Email:         body.Email,
 				Phonenumber:   body.Phonenumber,
-				Message:       convertLinebreaksToHtml(body.Message),
+				Message:       email.ConvertLinebreaksToHtml(body.Message),
 			}
-			sendEmail(e.App, mail.Address{Address: user.Email()}, data, &EmailConfig{
+			email.SendEmail(e.App, mail.Address{Address: user.Email()}, data, &email.EmailConfig{
 				CustomFrom: &mail.Address{
 					Address: body.Email,
 					Name:    body.Name,
@@ -235,17 +216,17 @@ func main() {
 			})
 
 			// Listing contact confirmation email
-			confirmation := ListingContactConfirmationData{
-				DefaultFields: getDefaultFields(e.App),
+			confirmation := email.ListingContactConfirmationData{
+				DefaultFields: email.GetDefaultFields(e.App),
 				ListingId:     listing.Id,
 				ListingTitle:  listing.GetString("title"),
 				Firstname:     user.GetString("firstname"),
 				Name:          body.Name,
 				Email:         body.Email,
 				Phonenumber:   body.Phonenumber,
-				Message:       convertLinebreaksToHtml(body.Message),
+				Message:       email.ConvertLinebreaksToHtml(body.Message),
 			}
-			sendEmail(e.App, mail.Address{Address: user.Email()}, confirmation, nil)
+			email.SendEmail(e.App, mail.Address{Address: user.Email()}, confirmation, nil)
 
 			return e.JSON(http.StatusOK, map[string]bool{"success": true})
 		}).Bind(apis.RequireAuth())

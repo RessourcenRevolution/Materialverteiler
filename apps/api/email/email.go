@@ -1,4 +1,4 @@
-package main
+package email
 
 import (
 	_ "embed"
@@ -17,28 +17,28 @@ import (
 	htmlTemplate "html/template"
 )
 
-//go:embed "views/emails/base.html"
+//go:embed "templates/base.html"
 var baseTemplate string
 
-//go:embed "views/emails/email-verified.html"
+//go:embed "templates/email-verified.html"
 var emailVerifiedTemplate string
 
-//go:embed "views/emails/notify-user-signup.html"
+//go:embed "templates/notify-user-signup.html"
 var notifyUserSignupTemplate string
 
-//go:embed "views/emails/user-approved.html"
+//go:embed "templates/user-approved.html"
 var userApprovedTemplate string
 
-//go:embed "views/emails/notify-new-listing.html"
+//go:embed "templates/notify-new-listing.html"
 var notifyNewListingTemplate string
 
-//go:embed "views/emails/listing-approved.html"
+//go:embed "templates/listing-approved.html"
 var listingApprovedTemplate string
 
-//go:embed "views/emails/listing-contact.html"
+//go:embed "templates/listing-contact.html"
 var listingContactTemplate string
 
-//go:embed "views/emails/listing-contact-confirmation.html"
+//go:embed "templates/listing-contact-confirmation.html"
 var listingContactConfirmationTemplate string
 
 // DefaultFields contains fields that are common to all email types
@@ -167,14 +167,14 @@ func newEmailTemplate() *template.Registry {
 }
 
 // getDefaultFields creates CommonEmailFields from app settings
-func getDefaultFields(app core.App) DefaultFields {
+func GetDefaultFields(app core.App) DefaultFields {
 	return DefaultFields{
 		AppURL: app.Settings().Meta.AppURL,
 		ApiURL: os.Getenv("PUBLIC_API_URL"),
 	}
 }
 
-func convertLinebreaksToHtml(text string) htmlTemplate.HTML {
+func ConvertLinebreaksToHtml(text string) htmlTemplate.HTML {
 	return htmlTemplate.HTML(strings.Replace(text, "\n", "<br>", -1))
 }
 
@@ -199,7 +199,7 @@ func renderEmail[T EmailData](app core.App, to mail.Address, data T) (string, st
 }
 
 // Send a rendered email
-func sendRenderedEmail(app core.App, to mail.Address, subject string, html string, from mail.Address) error {
+func SendRenderedEmail(app core.App, to mail.Address, subject string, html string, from mail.Address) error {
 	message := &mailer.Message{
 		From:    from,
 		To:      []mail.Address{to},
@@ -210,8 +210,8 @@ func sendRenderedEmail(app core.App, to mail.Address, subject string, html strin
 	return app.NewMailClient().Send(message)
 }
 
-// Generic sendEmail function with type constraint
-func sendEmail[T EmailData](app core.App, to mail.Address, data T, config *EmailConfig) error {
+// Generic SendEmail function with type constraint
+func SendEmail[T EmailData](app core.App, to mail.Address, data T, config *EmailConfig) error {
 	html, subject, err := renderEmail(app, to, data)
 	if err != nil {
 		app.Logger().Error("Can't render email", "error", err)
@@ -227,11 +227,11 @@ func sendEmail[T EmailData](app core.App, to mail.Address, data T, config *Email
 		from = *config.CustomFrom
 	}
 
-	return sendRenderedEmail(app, to, subject, html, from)
+	return SendRenderedEmail(app, to, subject, html, from)
 }
 
 // Generic sendEmail function with type constraint
-func queueEmail[T EmailData](app core.App, to mail.Address, data T, config *EmailConfig) error {
+func QueueEmail[T EmailData](app core.App, to mail.Address, data T, config *EmailConfig) error {
 	// Render
 	html, subject, err := renderEmail(app, to, data)
 	if err != nil {
@@ -264,7 +264,7 @@ func queueEmail[T EmailData](app core.App, to mail.Address, data T, config *Emai
 
 type getData[T EmailData] func(*core.Record) T
 
-func queueManagersEmail[T EmailData](app core.App, fn getData[T]) error {
+func QueueManagersEmail[T EmailData](app core.App, fn getData[T]) error {
 	managers, err := app.FindRecordsByFilter("users", "roles ~ 'manager'", "", -1, 0, dbx.Params{})
 	if err != nil {
 		app.Logger().Error("Error fetching managers", err.Error())
@@ -277,7 +277,7 @@ func queueManagersEmail[T EmailData](app core.App, fn getData[T]) error {
 	log.Printf("Notify %s managers\n", len(managers))
 	for _, manager := range managers {
 		data := fn(manager)
-		queueEmail(app, mail.Address{Address: manager.Email()}, data, nil)
+		QueueEmail(app, mail.Address{Address: manager.Email()}, data, nil)
 	}
 	return nil
 }

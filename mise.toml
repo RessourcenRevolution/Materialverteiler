@@ -12,4 +12,4 @@ file = "https://raw.githubusercontent.com/axllent/mailpit/develop/install.sh"
 
 [tasks.dev]
 description = "Run mailpit"
-run = "./bin/mailpit"
+run = "./bin/mailpit --enable-chaos"
