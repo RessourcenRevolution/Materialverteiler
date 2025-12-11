@@ -9,15 +9,16 @@ import LocationText from './LocationText.astro'
 interface Props {
   listings: Listing[]
   edit?: boolean
+  class?: string
 }
 
 const t = useTranslations()
 
-const { listings, edit = false } = Astro.props;
+const { listings, edit = false, class: className } = Astro.props;
 ---
 
 <div
-  class="grid grid-cols-1 md:grid-cols-1 gap-12 md:gap-6 -mx-(--body-inline-padding) md:mx-0"
+  class:list={['grid grid-cols-1 md:grid-cols-1 gap-12 md:gap-6 -mx-(--body-inline-padding) md:mx-0', className]}
 >
   {
     listings.map(listing => (

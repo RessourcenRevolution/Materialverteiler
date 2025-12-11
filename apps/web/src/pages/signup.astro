@@ -31,12 +31,12 @@ const data
 
 <Layout>
   <div class="mx-auto max-w-lg relative">
-    <BackgroundRect variant="page" />
-    <Heading tag="h1" size="xl" class="mb-6">
+    <BackgroundRect variant="page" class="animate-delay-400" />
+    <Heading tag="h1" size="xl" class="mb-6 animate-slide-in">
       {t('signup.title')}
     </Heading>
-    <div class="prose font-bold" set:html={t('signup.text')} />
-    <form class="flex flex-col gap-6" method="post" action={actions.signup}>
+    <div class="prose font-bold animate-slide-in animate-delay-100" set:html={t('signup.text')} />
+    <form class="flex flex-col gap-6 animate-slide-in animate-delay-200" method="post" action={actions.signup}>
       <Input
         name="firstname"
         type="text"

@@ -6,11 +6,12 @@ export interface Props {
   type?: astroHTML.JSX.HTMLInputTypeAttribute;
   required?: boolean;
   error?: string;
+  class?:string
 }
-const { label, value, name, type, required, error } = Astro.props;
+const { label, value, name, type, required, error, class: className } = Astro.props;
 ---
 
-<div class="relative">
+<div class:list={["relative", className]}>
   {
     label && (
       <label
