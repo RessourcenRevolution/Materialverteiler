@@ -4,7 +4,9 @@ import (
 	"log"
 	"net/http"
 	"net/mail"
+	"os"
 	"slices"
+	"strings"
 
 	"github.com/pocketbase/pocketbase"
 	"github.com/pocketbase/pocketbase/apis"
@@ -18,7 +20,7 @@ func main() {
 	app := pocketbase.New()
 
 	// loosely check if it was executed using "go run"
-	isGoRun := true // strings.HasPrefix(os.Args[0], os.TempDir())
+	isGoRun := strings.HasPrefix(os.Args[0], os.TempDir())
 
 	migratecmd.MustRegister(app, app.RootCmd, migratecmd.Config{
 		// enable auto creation of migration files when making collection changes in the Dashboard
