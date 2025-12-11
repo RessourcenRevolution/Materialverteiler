@@ -11,4 +11,5 @@ description = "Start API"
 run = "./api serve"
 
 [env]
+DEV_MODE = "true"
 PUBLIC_API_URL = "http://localhost:8090"

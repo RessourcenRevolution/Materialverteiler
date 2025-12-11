@@ -6,8 +6,8 @@ import (
 	"net/mail"
 	"os"
 	"slices"
-	"strings"
 
+	"github.com/pocketbase/dbx"
 	"github.com/pocketbase/pocketbase"
 	"github.com/pocketbase/pocketbase/apis"
 	"github.com/pocketbase/pocketbase/core"
@@ -19,13 +19,29 @@ import (
 func main() {
 	app := pocketbase.New()
 
-	// loosely check if it was executed using "go run"
-	isGoRun := strings.HasPrefix(os.Args[0], os.TempDir())
-
 	migratecmd.MustRegister(app, app.RootCmd, migratecmd.Config{
 		// enable auto creation of migration files when making collection changes in the Dashboard
 		// (the isGoRun check is to enable it only during development)
-		Automigrate: isGoRun,
+		Automigrate: os.Getenv("DEV_MODE") == "true",
+	})
+
+	// Every minute process email queue
+	app.Cron().MustAdd("process email queue", "*/1 * * * *", func() {
+		records, err := app.FindRecordsByFilter("emailQueue", "", "created", 1, 0, dbx.Params{})
+		if err != nil {
+			app.Logger().Error("Error fetching email queue", err)
+			return
+		}
+		email := records[0]
+		log.Printf("Process email queue: '%s' - %s", email.GetString("subject"), email.GetDateTime("created").String())
+		sendRenderedEmail(app, mail.Address{Address: email.GetString("to")}, email.GetString("subject"), email.GetString("html"), mail.Address{
+			Address: email.GetString("fromAddress"),
+			Name:    email.GetString("fromName"),
+		})
+		err = app.Delete(email)
+		if err != nil {
+			app.Logger().Error("Error removing email from email queue", err)
+		}
 	})
 
 	// On user update
@@ -68,7 +84,7 @@ func main() {
 		user := listing.ExpandedOne("user")
 		team := listing.ExpandedOne("team")
 
-		sendManagersEmail(e.App, func(manager *core.Record) NotifyNewListingData {
+		queueManagersEmail(e.App, func(manager *core.Record) NotifyNewListingData {
 			return NotifyNewListingData{
 				DefaultFields:    getDefaultFields(e.App),
 				ManagerFirstname: manager.GetString("firstname"),
@@ -145,7 +161,7 @@ func main() {
 				return e.BadRequestError("Failed to read request data", err)
 			}
 
-			sendManagersEmail(e.App, func(manager *core.Record) NotifyUserSignupData {
+			queueManagersEmail(e.App, func(manager *core.Record) NotifyUserSignupData {
 				return NotifyUserSignupData{
 					DefaultFields:    getDefaultFields(e.App),
 					ManagerFirstname: manager.GetString("firstname"),

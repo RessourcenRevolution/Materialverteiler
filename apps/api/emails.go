@@ -179,20 +179,42 @@ func convertLinebreaksToHtml(text string) htmlTemplate.HTML {
 }
 
 // Generic sendEmail function with type constraint
-func sendEmail[T EmailData](app core.App, to mail.Address, data T, config *EmailConfig) error {
+func renderEmail[T EmailData](app core.App, to mail.Address, data T) (string, string, error) {
 	// Get template and subject from the map
 	emailTemplate := getEmailTemplate(data)
 
+	// Render html
 	html, err := newEmailTemplate().LoadString(baseTemplate + emailTemplate.Template).Render(data)
 	if err != nil {
-		app.Logger().Error("Can't render email template", "error", err)
-		return err
+		return "", "", err
 	}
 
 	// Render subject with data
 	subject, err := template.NewRegistry().LoadString(emailTemplate.Subject).Render(data)
 	if err != nil {
-		app.Logger().Error("Can't render email subject", "error", err)
+		return "", "", err
+	}
+
+	return html, subject, nil
+}
+
+// Send a rendered email
+func sendRenderedEmail(app core.App, to mail.Address, subject string, html string, from mail.Address) error {
+	message := &mailer.Message{
+		From:    from,
+		To:      []mail.Address{to},
+		Subject: subject,
+		HTML:    html,
+	}
+
+	return app.NewMailClient().Send(message)
+}
+
+// Generic sendEmail function with type constraint
+func sendEmail[T EmailData](app core.App, to mail.Address, data T, config *EmailConfig) error {
+	html, subject, err := renderEmail(app, to, data)
+	if err != nil {
+		app.Logger().Error("Can't render email", "error", err)
 		return err
 	}
 
@@ -205,19 +227,44 @@ func sendEmail[T EmailData](app core.App, to mail.Address, data T, config *Email
 		from = *config.CustomFrom
 	}
 
-	message := &mailer.Message{
-		From:    from,
-		To:      []mail.Address{to},
-		Subject: subject,
-		HTML:    html,
+	return sendRenderedEmail(app, to, subject, html, from)
+}
+
+// Generic sendEmail function with type constraint
+func queueEmail[T EmailData](app core.App, to mail.Address, data T, config *EmailConfig) error {
+	// Render
+	html, subject, err := renderEmail(app, to, data)
+	if err != nil {
+		app.Logger().Error("Can't render email", "error", err)
+		return err
 	}
 
-	return app.NewMailClient().Send(message)
+	// Determine sender
+	from := mail.Address{
+		Address: app.Settings().Meta.SenderAddress,
+		Name:    app.Settings().Meta.SenderName,
+	}
+	if config != nil && config.CustomFrom != nil {
+		from = *config.CustomFrom
+	}
+
+	// Queue email
+	collection, err := app.FindCollectionByNameOrId("emailQueue")
+	if err != nil {
+		return err
+	}
+	record := core.NewRecord(collection)
+	record.Set("subject", subject)
+	record.Set("html", html)
+	record.Set("to", to.String())
+	record.Set("fromName", from.Name)
+	record.Set("fromAddress", from.Address)
+	return app.Save(record)
 }
 
 type getData[T EmailData] func(*core.Record) T
 
-func sendManagersEmail[T EmailData](app core.App, fn getData[T]) error {
+func queueManagersEmail[T EmailData](app core.App, fn getData[T]) error {
 	managers, err := app.FindRecordsByFilter("users", "roles ~ 'manager'", "", -1, 0, dbx.Params{})
 	if err != nil {
 		app.Logger().Error("Error fetching managers", err.Error())
@@ -230,7 +277,7 @@ func sendManagersEmail[T EmailData](app core.App, fn getData[T]) error {
 	log.Printf("Notify %s managers\n", len(managers))
 	for _, manager := range managers {
 		data := fn(manager)
-		sendEmail(app, mail.Address{Address: manager.Email()}, data, nil)
+		queueEmail(app, mail.Address{Address: manager.Email()}, data, nil)
 	}
 	return nil
 }
