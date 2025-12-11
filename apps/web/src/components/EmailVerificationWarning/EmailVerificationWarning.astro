@@ -32,10 +32,10 @@ const result = Astro.getActionResult(actions.sendEmailVerification);
           !user.verified && (
             <Alert
               variant="warning"
-              class="flex justify-between items-center gap-8 mb-12"
+              class="flex justify-between items-center flex-wrap md:flex-nowrap gap-y-4 gap-x-8 mb-12"
             >
               <p class="text-base">{t('confirm-email.warning.text')}</p>
-              <form method="POST" action={actions.sendEmailVerification} class="-m-1">
+              <form method="POST" action={actions.sendEmailVerification} class="-m-1 flex-shrink-0">
                 <Button label={t('confirm-email.warning.button')} />
               </form>
             </Alert>

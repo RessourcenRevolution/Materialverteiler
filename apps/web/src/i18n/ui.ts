@@ -228,7 +228,7 @@ export const ui = {
       'Dein Konto wird derzeit geprüft und bald freigeschaltet. Sobald es aktiviert ist, erhältst du eine E-Mail von uns.',
     'confirm-email.warning.text':
       'Deine E-Mail-Adresse wurde noch nicht bestätigt. Überprüfe deinen Posteingang nach dem Bestätigungslink.',
-    'confirm-email.warning.button': 'Eneut senden',
+    'confirm-email.warning.button': 'Erneut senden',
     'confirm-email.resend.error':
       'Beim erneuten Senden der Bestätigungs-E-Mail ist ein Fehler aufgetreten. Bitte versuche es erneut.',
     'confirm-email.resend.success': 'Eine Bestätigungs-E-Mail wurde gesendet.',
