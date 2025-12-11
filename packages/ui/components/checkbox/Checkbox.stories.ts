@@ -7,6 +7,7 @@ export default {
 
 export const Default = {
   args: {
+    id: "id1",
     name: "Checkbox",
     label: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
   } satisfies Props,
@@ -15,6 +16,7 @@ export const Default = {
 
 export const Error = {
   args: {
+    id: "id2",
     name: "Checkbox",
     label: "Label",
     error: "This field is required.",

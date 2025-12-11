@@ -4,6 +4,7 @@ import { ClientResponseError } from 'pocketbase'
 import { defaultLang, ui, useTranslations } from '~/i18n/ui'
 import { login } from '@rr/astro-pocketbase/actions'
 import { ListingSchema, type Listing } from '~/schemas/listing'
+import { UserSchema } from '~/schemas/user'
 
 const required = {
   required_error:
@@ -108,6 +109,29 @@ export const server = {
             message: 'unknown_error',
           })
         }
+      }
+    },
+  }),
+
+  user: defineAction({
+    accept: 'form',
+    input: UserSchema.pick({ notifications: true }),
+    handler: async (input, { locals }) => {
+      const t = useTranslations()
+      if (!locals.pb.authStore.record?.id) {
+        throw new ActionError({
+          code: 'UNAUTHORIZED',
+          message: 'unauthorized_user',
+        })
+      }
+      try {
+        return locals.pb.collection('users').update(locals.pb.authStore.record.id, input)
+      }
+      catch (error) {
+        throw new ActionError({
+          code: 'INTERNAL_SERVER_ERROR',
+          message: t('create-listing.errors.unknown'),
+        })
       }
     },
   }),

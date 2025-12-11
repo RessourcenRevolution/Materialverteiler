@@ -57,6 +57,11 @@ export const ui = {
     'profile.team': 'Institution',
     'profile.active-listings': 'Active offers',
     'profile.past-listings': 'Past offers',
+    'profile.notifications.title': 'E-mail preferences',
+    'profile.notifications.text': 'Configure here which emails you would like to receive.',
+    'profile.notifications.new-listing': 'Receive an e-mail for each new listing',
+    'profile.notifications.save': 'Save',
+    'profile.success': 'Profile updated successfully',
     // E-mail confirmation page
     'email-confirmation.title': 'E-mail confirmation',
     'email-confirmation.loading': 'Confirming e-mail address...',
@@ -200,6 +205,11 @@ export const ui = {
     'profile.team': 'Institution',
     'profile.active-listings': 'Aktive Angebote',
     'profile.past-listings': 'Vergangene Angebote',
+    'profile.notifications.title': 'E-Mail-Einstellungen',
+    'profile.notifications.text': 'Hier kannst du einstellen, welche E-Mails du erhalten möchtest.',
+    'profile.notifications.new-listing': 'Eine E-Mail bei jeder neuen Materialangebot erhalten',
+    'profile.notifications.save': 'Speichern',
+    'profile.success': 'Profil erfolgreich aktualisiert.',
     // E-mail confirmation page
     'email-confirmation.title': 'E-Mail-Bestätigung',
     'email-confirmation.loading': 'E-Mail-Adresse wird bestätigt...',

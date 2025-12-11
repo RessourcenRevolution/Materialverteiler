@@ -85,8 +85,10 @@ const data
         required
       />
       <Checkbox
+        id="terms"
         name="terms"
-        value={(data?.get('terms') as string === 'true') || false}
+        checked={(data?.get('terms') as string === 'true') || false}
+        value="true"
         error={fieldError('terms', result?.error, 'signup.errors.')}
         required
       >

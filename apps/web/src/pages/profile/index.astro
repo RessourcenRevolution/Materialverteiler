@@ -1,5 +1,6 @@
 ---
-import { Container, Heading } from '@rr/ui/components'
+import { Alert, Button, Checkbox, Container, Heading } from '@rr/ui/components'
+import { actions } from 'astro:actions'
 import ListingList from '~/components/ListingList.astro'
 import { useTranslations } from '~/i18n/ui'
 import Layout from '~/layouts/Layout.astro'
@@ -15,6 +16,12 @@ if (!Astro.locals.pb.authStore.record?.id) {
   return
 }
 
+const userAction = Astro.getActionResult(actions.user)
+console.log('userAction', userAction)
+if (!userAction?.error && userAction?.data) {
+  return Astro.redirect('/profile?success', 302)
+}
+
 const record = await Astro.locals.pb
   .collection('users')
   .getOne(Astro.locals.pb.authStore.record?.id, { expand: 'team' })
@@ -24,21 +31,39 @@ const items = await Astro.locals.pb.collection('listings').getFullList({
   filter: Astro.locals.pb.filter('user = {:user}', { user: user.id }),
   expand: 'user,team',
 })
-const listings = ListingSchema.array().parse(items) as Listing[];
+const listings = ListingSchema.array().parse(items) as Listing[]
+
+const success = Astro.url.searchParams.has('success')
 ---
 
 <Layout>
   <Container size="xl">
+    {success && <Alert variant="success" class="mb-12">
+      {t('profile.success')}
+    </Alert>
+    }
     <Heading tag="h1" size="xl" class="mb-4">
       {t('profile.title')}
     </Heading>
-    <p class="mb-12">
+    <p class="mb-18">
       {t('profile.name')}:
       {user.firstname}
       {user.lastname}<br />
       {t('profile.email')}: {user.email}<br />
       {t('profile.team')}: {user.expand?.team?.name}<br />
     </p>
+
+    <Heading tag="h2" size="lg" class="mb-4">
+      {t('profile.notifications.title')}
+    </Heading>
+    <div class="mb-18">
+      <p class="text-body mb-4">{t('profile.notifications.text')}</p>
+      <form class="flex flex-col gap-4" method="post" action={actions.user}>
+        <Checkbox id="notifications-new-listing" name="notifications" label={t('profile.notifications.new-listing')} value="new-listing" checked={user.notifications.includes('new-listing')} />
+        <!-- <Checkbox id="notifications-newsletter" name="notifications" label="Newsletter" value="newsletter" checked={user.notifications.includes('newsletter')} /> -->
+        <Button type="submit" size="sm" label={t('profile.notifications.save')} class="self-start" />
+      </form>
+    </div>
 
     <Heading tag="h2" size="lg" class="mb-4">
       {t('profile.active-listings')}
