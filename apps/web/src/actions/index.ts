@@ -23,12 +23,20 @@ export const server = {
   signup: defineAction({
     accept: 'form',
     input: z.object({
-      firstname: z.string(required),
-      lastname: z.string(required),
-      team: z.string(required),
+      firstname: z.string(required)
+        .trim()
+        .min(1, 'forms.errors.required' satisfies keyof (typeof ui)[typeof defaultLang]),
+      lastname: z.string(required)
+        .trim()
+        .min(1, 'forms.errors.required' satisfies keyof (typeof ui)[typeof defaultLang]),
+      team: z.string(required)
+        .trim()
+        .min(1, 'forms.errors.required' satisfies keyof (typeof ui)[typeof defaultLang]),
       email: z.string(required),
       password: z.string(required).min(8, 'password_too_short'),
-      message: z.string(required),
+      message: z.string(required)
+        .trim()
+        .min(1, 'forms.errors.required' satisfies keyof (typeof ui)[typeof defaultLang]),
       terms: z.boolean(required),
     }),
     handler: async (input, { locals }) => {

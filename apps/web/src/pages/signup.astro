@@ -42,7 +42,7 @@ const data
         type="text"
         label={t('forms.firstname')}
         value={data?.get('firstname') as string}
-        error={fieldError('firstname', result?.error, 'signup.errors.')}
+        error={fieldError('firstname', result?.error)}
         required
       />
       <Input
@@ -50,7 +50,7 @@ const data
         type="text"
         label={t('forms.lastname')}
         value={data?.get('lastname') as string}
-        error={fieldError('lastname', result?.error, 'signup.errors.')}
+        error={fieldError('lastname', result?.error)}
         required
       />
       <Input
@@ -58,7 +58,7 @@ const data
         type="text"
         label={t('forms.team')}
         value={data?.get('team') as string}
-        error={fieldError('team', result?.error, 'signup.errors.')}
+        error={fieldError('team', result?.error)}
         required
       />
       <Input
@@ -80,7 +80,7 @@ const data
         name="message"
         label={t('signup.fields.message')}
         value={data?.get('message') as string}
-        error={fieldError('message', result?.error, 'signup.errors.')}
+        error={fieldError('message', result?.error)}
         rows={6}
         required
       />
