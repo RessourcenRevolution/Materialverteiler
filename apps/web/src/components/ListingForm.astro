@@ -7,6 +7,7 @@ import {
   Textarea,
   ImageInput,
   Heading,
+  Select,
 } from '@rr/ui/components'
 import { useTranslations } from '~/i18n/ui'
 import { fieldError } from '~/forms'
@@ -32,6 +33,7 @@ const formData
 
 const postedListing = formData
   ? ({
+      status: formData.get('status') as Listing['status'],
       title: formData.get('title') as string,
       description: formData.get('description') as string,
       material: formData.get('material') as string,
@@ -43,7 +45,7 @@ const postedListing = formData
       pickup_description: formData.get('pickup_description') as string,
       start_date: new Date(formData.get('start_date') as string),
       end_date: formData.get('end_date') ? new Date(formData.get('end_date') as string) : '',
-    } satisfies Omit<Listing, 'id' | 'status' | 'team' | 'user' | 'created' | 'updated'>)
+    } satisfies Omit<Listing, 'id' | 'team' | 'user' | 'created' | 'updated'>)
   : null
 
 const data = postedListing ? postedListing : listing;
@@ -61,7 +63,23 @@ const data = postedListing ? postedListing : listing;
   enctype="multipart/form-data"
 >
   <input type="hidden" name="type" value={update ? 'update' : 'create'} />
-  <input type="hidden" name="id" value={data?.id} />
+  { update && <input type="hidden" name="id" value={data?.id} /> }
+
+  { update && listing?.status !== 'new'
+    && <Select
+      id="status"
+      label={t('listing-form.status.label')}
+      name="status"
+      value={data?.status || ''}
+      options={[
+        { value: '', label: 'Status' },
+        { value: 'open', label: t('listing.status.long.open') },
+        { value: 'reserved', label: t('listing.status.long.reserved') },
+        { value: 'success', label: t('listing.status.long.success') },
+        { value: 'failure', label: t('listing.status.long.failure') },
+      ]}
+    />
+  }
 
   <Heading tag="h2" size="md">
     {t('listing-form.general.title')}

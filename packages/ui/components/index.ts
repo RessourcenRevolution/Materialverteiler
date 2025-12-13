@@ -26,6 +26,7 @@ export {
 } from "./input/Input.astro";
 export { default as Link, type Props as LinkProps } from "./link/Link.astro";
 export { default as NavigationItem, type Props as NavigationItemProps } from "./navigation-item/NavigationItem.astro";
+export { default as Select, type Props as SelectProps } from "./select/Select.astro";
 export {
   default as Textarea,
   type Props as TextareaProps,

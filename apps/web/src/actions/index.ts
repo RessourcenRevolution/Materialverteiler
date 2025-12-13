@@ -135,7 +135,7 @@ export const server = {
       try {
         return locals.pb.collection('users').update(locals.pb.authStore.record.id, input)
       }
-      catch (error) {
+      catch {
         throw new ActionError({
           code: 'INTERNAL_SERVER_ERROR',
           message: t('create-listing.errors.unknown'),
@@ -172,7 +172,7 @@ export const server = {
         'type': z.literal('create'),
         'images+': z.array(z.instanceof(File)).optional(),
       }),
-      ListingSchema.omit({ user: true, team: true, images: true, status: true }).extend({
+      ListingSchema.omit({ user: true, team: true, images: true }).extend({
         'type': z.literal('update'),
         'images+': z.array(z.instanceof(File)).optional(),
       }),
@@ -194,7 +194,7 @@ export const server = {
         }
         else {
           status = 'updated'
-          const { id, ...data } = input
+          const { id: _id, ...data } = input
           listing = await locals.pb.collection('listings').update(input.id, {
             ...data,
           }) as Listing

@@ -30,6 +30,17 @@ export const ui = {
     'forms.errors.required': 'This field is required',
     'forms.errors.postalcode': 'This is not a valid postalcode',
     'forms.errors.unknown': 'An unknown error occurred.',
+    // Listing
+    'listing.status.short.new': 'Pending',
+    'listing.status.short.open': 'Open',
+    'listing.status.short.reserved': 'Reserved',
+    'listing.status.short.success': 'Matched',
+    'listing.status.short.failure': 'Closed',
+    'listing.status.long.new': 'Pending',
+    'listing.status.long.open': 'Open for inquiries',
+    'listing.status.long.reserved': 'Reserved',
+    'listing.status.long.success': 'Matched',
+    'listing.status.long.failure': 'Closed / withdrawn',
     // Signup page
     'signup.title': 'Be part of our Materials Community!',
     'signup.text': `<p>By submitting the form, you create an account in our community. This automatically enrolls you in our Materials Distributor. Through this, we regularly send out material offers from the region.</p>
@@ -121,6 +132,7 @@ export const ui = {
     'listing-form.pickup.title': 'Pickup Information',
     'listing-form.pickup.text':
       'Please enter precise details about the pickup. Is there anything to note about access? Can assistance be provided for loading? Are tools or electricity available on-site for disassembly?',
+    'listing-form.status.label': 'Status',
     'listing-form.title.label': 'Title',
     'listing-form.description.label': 'Description',
     'listing-form.material.label': 'Material',
@@ -184,6 +196,17 @@ export const ui = {
     'forms.errors.required': 'Dieses Feld ist erforderlich',
     'forms.errors.postalcode': 'Das ist keine gültige Postleitzahl',
     'forms.errors.unknown': 'Ein unbekannter Fehler ist aufgetreten.',
+    // Listing
+    'listing.status.short.new': 'Im Freigabe',
+    'listing.status.short.open': 'Offen',
+    'listing.status.short.reserved': 'Reserviert',
+    'listing.status.short.success': 'Vermittelt',
+    'listing.status.short.failure': 'Abgeschloßen',
+    'listing.status.long.new': 'Im Freigabe',
+    'listing.status.long.open': 'Offen für anfrage',
+    'listing.status.long.reserved': 'Reserviert',
+    'listing.status.long.success': 'Vermittelt',
+    'listing.status.long.failure': 'Abgeschloßen / zurückgezogen',
     // Signup page
     'signup.title': 'Sei Teil unserer Material-Community! ',
     'signup.text': `<p>Mit dem Absenden des Formulars erstellst Du einen Account in unserer Community. Dadurch trittst du automatisch unserem Materialverteiler bei. In diesen senden wir regelmäßig Materialangebote aus der Region.</p>
@@ -278,6 +301,7 @@ export const ui = {
     'listing-form.pickup.title': 'Informationen zur Abholung',
     'listing-form.pickup.text':
       'Bitte trage hier präzise Infos zur Abholung ein. Gibt es etwas bei der Anfahrt zu beachten? Kann vor Ort beim einladen geholfen werden? Sind Werkzeuge / Strom zum auseinandernehmen vorhanden?',
+    'listing-form.status.label': 'Status',
     'listing-form.title.label': 'Angebotstitel',
     'listing-form.description.label': 'Beschreibungstext',
     'listing-form.material.label': 'Material',
