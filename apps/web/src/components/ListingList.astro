@@ -6,6 +6,7 @@ import EditIcon from 'iconoir/icons/edit-pencil.svg'
 import DateText from './DateText.astro'
 import LocationText from './LocationText.astro'
 import { actions } from 'astro:actions'
+import ListingStatusBadge from './ListingStatusBadge.astro'
 
 interface Props {
   listings: Listing[]
@@ -34,7 +35,13 @@ const { listings, edit = false, class: className } = Astro.props;
         imageClass="rounded-none! md:rounded-xs! md:max-w-[250px] shrink-0"
         contentClass="md:px-0"
       >
-        <h2 class:list={['text-xl text-heading font-bold']}>{listing.title}</h2>
+        { edit
+          ? <div class="flex flex-wrap gap-3 items-center">
+              <h2 class:list={['text-xl text-heading font-bold']}>{listing.title}</h2>
+              <ListingStatusBadge status={listing.status} />
+            </div>
+          : <h2 class:list={['text-xl text-heading font-bold']}>{listing.title}</h2>
+        }
         <div class="flex gap-6">
           <LocationText text={listing.postalcode + ' ' + listing.city} />
           <DateText

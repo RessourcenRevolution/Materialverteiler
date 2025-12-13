@@ -1,0 +1,31 @@
+---
+import { Badge, type BadgeProps } from '@rr/ui/components'
+import { useTranslations } from '~/i18n/ui'
+import type { Listing } from '~/schemas/listing'
+
+const t = useTranslations()
+
+interface Props {
+  status: Listing['status']
+}
+
+const { status } = Astro.props
+
+const variants: Record<Listing['status'], BadgeProps['variant']> = {
+  open: 'success',
+  new: 'info',
+  reserved: 'success',
+  success: 'neutral',
+  failure: 'neutral',
+}
+
+const statuses: Record<Listing['status'], string> = {
+  open: t('listing.status.short.open'),
+  new: t('listing.status.short.new'),
+  reserved: t('listing.status.short.reserved'),
+  success: t('listing.status.short.success'),
+  failure: t('listing.status.short.failure'),
+}
+---
+
+<Badge variant={variants[status]} label={statuses[status]} />

@@ -3,6 +3,10 @@ export {
   type Props as AlertProps,
 } from "./alert/Alert.astro";
 export {
+  default as Badge,
+  type Props as BadgeProps,
+} from "./badge/Badge.astro";
+export {
   default as Button,
   type Props as ButtonProps,
 } from "./button/Button.astro";
