@@ -1,4 +1,5 @@
 import '@rr/image-gallery'
+import './confirm-form-submit'
 
 /*
  * Open ImageGallery when clicking on an image with a data-image-gallery attribute

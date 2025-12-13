@@ -17,9 +17,13 @@ if (!Astro.locals.pb.authStore.record?.id) {
 }
 
 const userAction = Astro.getActionResult(actions.user)
-console.log('userAction', userAction)
 if (!userAction?.error && userAction?.data) {
-  return Astro.redirect('/profile?success', 302)
+  return Astro.redirect('/profile?success=profile', 302)
+}
+
+const removeListingAction = Astro.getActionResult(actions.removeListing)
+if (!removeListingAction?.error && removeListingAction?.data) {
+  return Astro.redirect('/profile?success=remove', 302)
 }
 
 const record = await Astro.locals.pb
@@ -33,14 +37,25 @@ const items = await Astro.locals.pb.collection('listings').getFullList({
 })
 const listings = ListingSchema.array().parse(items) as Listing[]
 
-const success = Astro.url.searchParams.has('success')
+const success = Astro.url.searchParams.get('success')
 ---
 
 <Layout>
   <Container size="xl">
-    {success && <Alert variant="success" class="mb-12">
-      {t('profile.success')}
-    </Alert>
+    {success && success === 'profile'
+      && <Alert variant="success" class="mb-12">
+        {t('profile.success.profile')}
+      </Alert>
+    }
+    {success && success === 'remove'
+      && <Alert variant="success" class="mb-12">
+        {t('profile.success.remove')}
+      </Alert>
+    }
+    {removeListingAction?.error
+      && <Alert variant="error" class="mb-12">
+        {t('profile.error.remove')}
+      </Alert>
     }
     <Heading tag="h1" size="xl" class="mb-4">
       {t('profile.title')}
@@ -68,6 +83,10 @@ const success = Astro.url.searchParams.has('success')
     <Heading tag="h2" size="lg" class="mb-4">
       {t('profile.active-listings')}
     </Heading>
-    <ListingList listings={listings} edit={true} />
+    {
+      listings && listings.length > 0
+        ? <ListingList listings={listings} edit={true} />
+        : <p class="text-body mb-12 italic">{t('profile.active-listings.none')}</p>
+    }
   </Container>
 </Layout>

@@ -226,6 +226,31 @@ export const server = {
       }
     },
   }),
+
+  /**
+   * Remove a listing
+   */
+  removeListing: defineAction({
+    accept: 'form',
+    input: z.object({
+      id: z.string(),
+    }),
+    handler: async (input, { locals }) => {
+      const t = useTranslations()
+      try {
+        await locals.pb.collection('listings').update(input.id, { deleted: new Date() })
+        return { success: true }
+      }
+      catch (error) {
+        console.error(error)
+        throw new ActionError({
+          code: 'INTERNAL_SERVER_ERROR',
+          message: t('forms.errors.unknown'),
+        })
+      }
+    },
+  }),
+
   createTeam: defineAction({
     accept: 'form',
     input: z.object({

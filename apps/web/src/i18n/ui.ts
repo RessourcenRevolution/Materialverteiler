@@ -29,6 +29,7 @@ export const ui = {
     'forms.password': 'Password',
     'forms.errors.required': 'This field is required',
     'forms.errors.postalcode': 'This is not a valid postalcode',
+    'forms.errors.unknown': 'An unknown error occurred.',
     // Signup page
     'signup.title': 'Be part of our Materials Community!',
     'signup.text': `<p>By submitting the form, you create an account in our community. This automatically enrolls you in our Materials Distributor. Through this, we regularly send out material offers from the region.</p>
@@ -56,13 +57,16 @@ export const ui = {
     'profile.name': 'Name',
     'profile.email': 'E-mail',
     'profile.team': 'Institution',
-    'profile.active-listings': 'Active offers',
-    'profile.past-listings': 'Past offers',
+    'profile.active-listings': 'Active listings',
+    'profile.active-listings.none': 'You currently don\'t have any active listings.',
+    'profile.past-listings': 'Past listings',
     'profile.notifications.title': 'E-mail preferences',
     'profile.notifications.text': 'Configure here which emails you would like to receive.',
     'profile.notifications.new-listing': 'Receive an e-mail for each new listing',
     'profile.notifications.save': 'Save',
-    'profile.success': 'Profile updated successfully',
+    'profile.success.profile': 'Profile updated successfully',
+    'profile.success.remove': 'Listing removed successfully',
+    'profile.error.remove': 'An error occured remove the listing, please try agian.',
     // E-mail confirmation page
     'email-confirmation.title': 'E-mail confirmation',
     'email-confirmation.loading': 'Confirming e-mail address...',
@@ -138,6 +142,7 @@ export const ui = {
     'listing-card.open': 'View',
     'listing-card.edit': 'Edit',
     'listing-card.remove': 'Remove',
+    'listing-card.remove-confirm': 'Are you sure you want to remove this listing?',
     // Listing page
     'listing-page.material': 'Material',
     'listing-page.measurements': 'Dimensions and Weight',
@@ -178,6 +183,7 @@ export const ui = {
     'forms.password': 'Passwort',
     'forms.errors.required': 'Dieses Feld ist erforderlich',
     'forms.errors.postalcode': 'Das ist keine gültige Postleitzahl',
+    'forms.errors.unknown': 'Ein unbekannter Fehler ist aufgetreten.',
     // Signup page
     'signup.title': 'Sei Teil unserer Material-Community! ',
     'signup.text': `<p>Mit dem Absenden des Formulars erstellst Du einen Account in unserer Community. Dadurch trittst du automatisch unserem Materialverteiler bei. In diesen senden wir regelmäßig Materialangebote aus der Region.</p>
@@ -206,18 +212,21 @@ export const ui = {
     'profile.email': 'E-Mail',
     'profile.team': 'Institution',
     'profile.active-listings': 'Aktive Angebote',
+    'profile.active-listings.none': 'Du hast gerade keine aktive Angebote.',
     'profile.past-listings': 'Vergangene Angebote',
     'profile.notifications.title': 'E-Mail-Einstellungen',
     'profile.notifications.text': 'Hier kannst du einstellen, welche E-Mails du erhalten möchtest.',
     'profile.notifications.new-listing': 'Eine E-Mail bei jeder neuen Materialangebot erhalten',
     'profile.notifications.save': 'Speichern',
-    'profile.success': 'Profil erfolgreich aktualisiert.',
+    'profile.success.profile': 'Profil erfolgreich aktualisiert.',
+    'profile.success.remove': 'Materialangebot erfolgreich entfernt.',
+    'profile.error.remove': 'Beim entfernen des Materialangebots ist ein Fehler aufgetreten. Bitte versuche es erneut.',
     // E-mail confirmation page
     'email-confirmation.title': 'E-Mail-Bestätigung',
     'email-confirmation.loading': 'E-Mail-Adresse wird bestätigt...',
     'email-confirmation.missing-token': 'Token fehlt',
     'email-confirmation.error':
-      'Fehler bei der Bestätigung der E-Mail-Adresse, bitte versuche es erneut...',
+      'Beim bestätigen dine E-Mail-Adresse ist eine Fehler augetreten. Bitte versuche es erneut.',
     'email-confirmation.success': 'E-Mail Addresse ist bestätigt!',
     'email-confirmation.button': 'Zum Dashboard',
     // Dashboard page
@@ -292,6 +301,7 @@ export const ui = {
     'listing-card.open': 'Zum Angebot',
     'listing-card.edit': 'Bearbeiten',
     'listing-card.remove': 'Löschen',
+    'listing-card.remove-confirm': 'Soll das Angebot wirklich gelöscht werden?',
     // Listing page
     'listing-page.material': 'Material',
     'listing-page.measurements': 'Maße und Gewicht',

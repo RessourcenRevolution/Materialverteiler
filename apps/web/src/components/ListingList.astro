@@ -5,6 +5,7 @@ import type { Listing } from '~/schemas/listing'
 import EditIcon from 'iconoir/icons/edit-pencil.svg'
 import DateText from './DateText.astro'
 import LocationText from './LocationText.astro'
+import { actions } from 'astro:actions'
 
 interface Props {
   listings: Listing[]
@@ -15,6 +16,7 @@ interface Props {
 const t = useTranslations()
 
 const { listings, edit = false, class: className } = Astro.props;
+
 ---
 
 <div
@@ -44,6 +46,7 @@ const { listings, edit = false, class: className } = Astro.props;
           {listing.description}
         </p>
         <div class="flex gap-2 flex-wrap mt-1">
+          {/* View listing */}
           <Button
             href={`/listings/${listing.id}`}
             variant="primary"
@@ -51,6 +54,7 @@ const { listings, edit = false, class: className } = Astro.props;
             label={t('listing-card.open')}
             class="self-start"
           />
+          {/* Edit listing */}
           {edit && (
             <Button
               href={`/listings/${listing.id}/edit`}
@@ -61,13 +65,20 @@ const { listings, edit = false, class: className } = Astro.props;
               class="self-start"
             />
           )}
+          {/* Remove listing */}
           {edit && (
-            <Button
-              variant="secondary"
-              size="sm"
-              label={t('listing-card.remove')}
-              class="self-start"
-            />
+            <form method="post" action={actions.removeListing}>
+              <input type="hidden" name="id" value={listing.id} />
+              <confirm-form-submit message={t('listing-card.remove-confirm')}>
+                <Button
+                  type="submit"
+                  variant="secondary"
+                  size="sm"
+                  label={t('listing-card.remove')}
+                  class="self-start"
+                />
+              </confirm-form-submit>
+            </form>
           )}
         </div>
       </Card>
