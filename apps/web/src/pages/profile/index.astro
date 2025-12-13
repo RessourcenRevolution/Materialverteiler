@@ -31,11 +31,19 @@ const record = await Astro.locals.pb
   .getOne(Astro.locals.pb.authStore.record?.id, { expand: 'team' })
 const user = UserSchema.parse(record) as User
 
-const items = await Astro.locals.pb.collection('listings').getFullList({
-  filter: Astro.locals.pb.filter('user = {:user}', { user: user.id }),
+const active = await Astro.locals.pb.collection('listings').getFullList({
+  filter: Astro.locals.pb.filter('user = {:user} && (status = "new" || status = "open" || status = "reserved")', { user: user.id }),
+  sort: 'start_date',
   expand: 'user,team',
 })
-const listings = ListingSchema.array().parse(items) as Listing[]
+const activeListings = ListingSchema.array().parse(active) as Listing[]
+
+const past = await Astro.locals.pb.collection('listings').getFullList({
+  filter: Astro.locals.pb.filter('user = {:user} && (status = "success" || status = "failure")', { user: user.id }),
+  sort: 'start_date',
+  expand: 'user,team',
+})
+const pastListings = ListingSchema.array().parse(past) as Listing[]
 
 const success = Astro.url.searchParams.get('success')
 ---
@@ -84,9 +92,19 @@ const success = Astro.url.searchParams.get('success')
       {t('profile.active-listings')}
     </Heading>
     {
-      listings && listings.length > 0
-        ? <ListingList listings={listings} edit={true} />
-        : <p class="text-body mb-12 italic">{t('profile.active-listings.none')}</p>
+      activeListings && activeListings.length > 0
+        ? <ListingList listings={activeListings} edit={true} class="mb-18" />
+        : <p class="text-body italic mb-18">{t('profile.active-listings.none')}</p>
     }
+
+    <Heading tag="h2" size="lg" class="mb-4">
+      {t('profile.past-listings')}
+    </Heading>
+    {
+      pastListings && pastListings.length > 0
+        ? <ListingList listings={pastListings} edit={true} class="mb-12" />
+        : <p class="text-body mb-12 italic">{t('profile.past-listings.none')}</p>
+    }
+
   </Container>
 </Layout>
