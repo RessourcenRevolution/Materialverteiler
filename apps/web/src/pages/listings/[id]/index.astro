@@ -27,7 +27,7 @@ let item
 try {
   item = await Astro.locals.pb
     .collection('listings')
-    .getOne(id, { expand: 'team' })
+    .getOne(id)
 }
 catch (err) {
   if (err instanceof ClientResponseError && err.status === 404) {
@@ -58,7 +58,7 @@ const listing = ListingSchema.parse(item) as Listing
         {listing.title}
       </Heading>
       <div class="md:hidden flex flex-wrap gap-x-8 gap-y-3 mb-6">
-        <LocationText text={listing.expand?.team?.name} />
+        <LocationText text={listing.postalcode + ' ' + listing.city} />
         <DateText
           text="Verfügbar ab"
           from={listing.start_date}
@@ -131,7 +131,7 @@ const listing = ListingSchema.parse(item) as Listing
     <div class="hidden md:block">
       <div class="sticky top-[86px] py-6 rounded-xs -z-1">
         <BackgroundRect variant="custom" class="w-[66%] h-[calc(100%+1rem)]! -left-6 top-0" />
-        <LocationText text={listing.expand?.team?.name} class="mb-4" />
+        <LocationText text={listing.postalcode + ' ' + listing.city} class="mb-4" />
         <DateText
           text="Verfügbar ab"
           from={listing.start_date}
