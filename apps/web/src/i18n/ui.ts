@@ -93,6 +93,8 @@ export const ui = {
     'dashboard.user-approval.title': 'Welcome',
     'dashboard.user-approval.text':
       'Your account is currently under review and will be approved soon. We’ll notify you by email once it’s ready.',
+    'dashboard.no-listing.title': 'No active listings',
+    'dashboard.no-listing.text': 'Here you will find materials that are offered by institutes on the platform. Currently there are no active listings. You will receive an e-mail when a new listing has been added.',
     'confirm-email.warning.text':
       'Your email address is not yet confirmed. Check your inbox for the confirmation link.',
     'confirm-email.warning.button': 'Resend e-mail',
@@ -260,6 +262,8 @@ export const ui = {
     'dashboard.user-approval.title': 'Wilkommen',
     'dashboard.user-approval.text':
       'Dein Konto wird derzeit geprüft und bald freigeschaltet. Sobald es aktiviert ist, erhältst du eine E-Mail von uns.',
+    'dashboard.no-listing.title': 'Keine aktive Materialangebote',
+    'dashboard.no-listing.text': 'Hier findest du Materialangebote, die von Instituten auf der Plattform angeboten werden. Aktuell gibt es keine aktive Materialangebote. Du erhältst eine E-Mail, sobald ein neues Materialangebot hinzugefügt wurde.',
     'confirm-email.warning.text':
       'Deine E-Mail-Adresse wurde noch nicht bestätigt. Überprüfe deinen Posteingang nach dem Bestätigungslink.',
     'confirm-email.warning.button': 'Erneut senden',

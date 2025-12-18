@@ -1,7 +1,7 @@
 ---
 import Layout from '~/layouts/Layout.astro'
 import { type Listing, ListingSchema } from '~/schemas/listing'
-import { Button, Container, Heading } from '@rr/ui/components'
+import { Button, Container, Heading, Alert } from '@rr/ui/components'
 import EmailVerificationWarning from '~/components/EmailVerificationWarning/EmailVerificationWarning.astro'
 import { useTranslations } from '~/i18n/ui'
 import ListingList from '~/components/ListingList.astro'
@@ -21,7 +21,10 @@ const isNewUser = !Astro.locals.pb.authStore.record!.roles.includes('user');
 
 <Layout>
   <Container size="xl" class="relative">
-    {!isNewUser && <BackgroundRect variant="page" color="purple" class="h-[55%]! animate-delay-300" />}
+    {
+      !isNewUser && listings.length > 0
+      && <BackgroundRect variant="page" color="purple" class="h-[55%]! animate-delay-300" />
+    }
     <EmailVerificationWarning class="animate-slide-in" />
     <div class="flex justify-between items-center flex-wrap gap-4 mb-12 animate-slide-in">
       <Heading tag="h1" size="xl">
@@ -39,9 +42,16 @@ const isNewUser = !Astro.locals.pb.authStore.record!.roles.includes('user');
               <p>{t('dashboard.user-approval.text')}</p>
             </div>
           )
-        : (
-            <ListingList listings={listings} class="animate-slide-in animate-delay-150" />
-          )
+        : listings && listings.length > 0
+          ? <ListingList listings={listings} class="animate-slide-in animate-delay-150" />
+          : <Alert variant="neutral" spacing="md">
+              <Heading tag="h2" size="md" class="mb-4">
+                {t('dashboard.no-listing.title')}
+              </Heading>
+              <p>
+                {t('dashboard.no-listing.text')}
+              </p>
+            </Alert>
     }
   </Container>
 </Layout>
