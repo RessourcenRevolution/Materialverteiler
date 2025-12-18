@@ -138,13 +138,11 @@ class DrawerMenu extends HTMLElement {
       _focusable?.[1]?.focus();
     });
 
-    console.log('dialog', this._dialog)
     this._dialog.addEventListener('click', (event) => {
       if (!this._dialog) return;
       var rect = this._dialog.getBoundingClientRect();
       var isInDialog = (rect.top <= event.clientY && event.clientY <= rect.top + rect.height &&
         rect.left <= event.clientX && event.clientX <= rect.left + rect.width);
-        console.log(isInDialog)
       if (!isInDialog) {
         this._dialog.close();
       }

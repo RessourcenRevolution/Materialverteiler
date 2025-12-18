@@ -15,7 +15,6 @@ const t = useTranslations()
 const redirect = new URL(Astro.request.url).searchParams.get('redirect') || '/app/listings'
 
 const result = Astro.getActionResult(actions.login)
-console.log(redirect, result)
 if (!(result?.data instanceof ActionError) && result?.data) {
   const { cookie } = result?.data
   return new Response(null, {

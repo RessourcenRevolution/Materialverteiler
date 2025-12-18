@@ -7,8 +7,6 @@ import node from "@astrojs/node";
 
 import tailwindcss from "@tailwindcss/vite";
 
-console.log(path.resolve("../packages/ui"));
-
 // https://astro.build/config
 export default defineConfig({
   server: {
