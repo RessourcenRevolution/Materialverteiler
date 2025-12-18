@@ -39,9 +39,10 @@ const items: Record<string, { href: string, label: string, icon?: AstroComponent
         <Logo class="w-55 max-w-[50vw]" />
       </a>
       {
-        items.main.map(item => (
-          <NavigationItem href={item.href} class="hidden lg:block">
-            {item.label}
+        items.main.map(({ href, icon: Icon, label }) => (
+          <NavigationItem href={href} class="hidden lg:block">
+            {Icon && <Icon width={30} height={30} />}
+            {label}
           </NavigationItem>
         ))
       }
@@ -50,9 +51,7 @@ const items: Record<string, { href: string, label: string, icon?: AstroComponent
       {
         items.meta.map(({ href, icon: Icon, label }) => (
           <NavigationItem href={href}>
-            {
-              Icon ? <Icon width={30} height={30} /> : label
-            }
+            {Icon && <Icon width={30} height={30} />}
             {label}
           </NavigationItem>
         ))
@@ -83,26 +82,30 @@ const items: Record<string, { href: string, label: string, icon?: AstroComponent
               <CloseIcon width="30" height="30" />
             </button>
           </form>
-          <ul class="flex flex-col gap-4">
+          <ul class="flex flex-col gap-4 mb-8">
             <li>
               <NavigationItem href="/" class="text-lg">
                 {t('header.home')}
               </NavigationItem>
             </li>
             {
-              items.main.map(item => (
+              items.main.map(({ href, label, icon: Icon }) => (
                 <li>
-                  <NavigationItem href={item.href} class="text-lg">
-                    {item.label}
+                  <NavigationItem href={href} class="text-lg">
+                    {Icon && <Icon width={30} height={30} />}
+                    {label}
                   </NavigationItem>
                 </li>
               ))
             }
+          </ul>
+          <ul class="flex flex-col gap-4">
             {
-              items.meta.map(item => (
+              items.meta.map(({ href, label, icon: Icon }) => (
                 <li>
-                  <NavigationItem href={item.href} class="text-lg">
-                    {item.label}
+                  <NavigationItem href={href} class="text-lg">
+                    {Icon && <Icon width={30} height={30} />}
+                    {label}
                   </NavigationItem>
                 </li>
               ))
