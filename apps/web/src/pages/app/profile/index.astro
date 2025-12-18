@@ -68,12 +68,15 @@ const success = Astro.url.searchParams.get('success')
     <Heading tag="h1" size="xl" class="mb-4">
       {t('profile.title')}
     </Heading>
-    <p class="text-body mb-18">
+    <p class="text-body mb-4">
       {t('profile.name')}:
       {user.firstname}
       {user.lastname}<br />
       {t('profile.email')}: {user.email}<br />
       {t('profile.team')}: {user.expand?.team?.name}<br />
+    </p>
+    <p class="mb-18">
+      <Button size="sm" href="/app/logout" label={t('profile.logout')} />
     </p>
 
     <Heading tag="h2" size="lg" class="mb-4">

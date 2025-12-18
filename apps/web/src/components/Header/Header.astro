@@ -4,6 +4,8 @@ import { useTranslations } from '~/i18n/ui'
 import Logo from '~/assets/logo.svg'
 import MenuIcon from 'iconoir/icons/menu.svg'
 import CloseIcon from 'iconoir/icons/xmark.svg'
+import ProfileCircle from 'iconoir/icons/profile-circle.svg'
+import type { AstroComponentFactory } from 'astro/runtime/server/index.js'
 
 interface Props {
   class?: string
@@ -11,27 +13,15 @@ interface Props {
 
 const { class: className } = Astro.props
 
-const authStore = Astro.locals.pb.authStore
-
 const t = useTranslations()
 
-const items: Record<string, { href: string, label: string }[]> = {
+const items: Record<string, { href: string, label: string, icon?: AstroComponentFactory }[]> = {
   main: [
-    ...(authStore.isValid
-      ? [{ href: '/app/listings', label: t('header.dashboard') }]
-      : []),
+    { href: '/app/listings', label: t('header.dashboard') },
     { href: '/ueber-uns', label: t('header.about') },
   ],
   meta: [
-    ...(authStore.isValid
-      ? [
-          { href: '/app/profile', label: t('header.profile') },
-          { href: '/app/logout', label: t('header.logout') },
-        ]
-      : [
-          { href: '/app/login', label: t('header.login') },
-          { href: '/app/signup', label: t('header.signup') },
-        ]),
+    { href: '/app/profile', label: t('header.profile'), icon: ProfileCircle },
   ],
 };
 ---
@@ -58,8 +48,13 @@ const items: Record<string, { href: string, label: string }[]> = {
     </div>
     <div class="hidden lg:flex gap-6 pr-4">
       {
-        items.meta.map(item => (
-          <NavigationItem href={item.href}>{item.label}</NavigationItem>
+        items.meta.map(({ href, icon: Icon, label }) => (
+          <NavigationItem href={href}>
+            {
+              Icon ? <Icon width={30} height={30} /> : label
+            }
+            {label}
+          </NavigationItem>
         ))
       }
     </div>

@@ -15,10 +15,12 @@ export const authPocketbase = defineMiddleware(
     const response = await next();
 
     // Set the auth cookie with the updated auth state
+    if (locals.pb.authStore.isValid) {
     const authCookie = locals.pb.authStore.exportToCookie({
       sameSite: "lax",
     });
     response.headers.append("set-cookie", authCookie);
+  }
 
     return response;
   }

@@ -16,10 +16,9 @@ export const ui = {
     // Header
     'header.home': 'Home',
     'header.dashboard': 'Listings',
-    'header.profile': 'Profile',
+    'header.profile': 'Account',
     'header.login': 'Login',
     'header.signup': 'Signup',
-    'header.logout': 'Logout',
     'header.about': 'About us',
     // Forms
     'forms.firstname': 'Firstname',
@@ -68,6 +67,7 @@ export const ui = {
     'profile.name': 'Name',
     'profile.email': 'E-mail',
     'profile.team': 'Institution',
+    'profile.logout': 'Logout',
     'profile.active-listings': 'Active listings',
     'profile.active-listings.none': 'You currently don\'t have any active listings.',
     'profile.past-listings': 'Past listings',
@@ -185,11 +185,10 @@ export const ui = {
     // Header
     'header.home': 'Startseite',
     'header.dashboard': 'Materialangebote',
-    'header.profile': 'Profil',
+    'header.profile': 'Account',
     'header.login': 'Einloggen',
     'header.signup': 'Registrieren',
     'header.about': 'Über uns',
-    'header.logout': 'Ausloggen',
     // Forms
     'forms.firstname': 'Vorname',
     'forms.lastname': 'Nachname',
@@ -237,6 +236,7 @@ export const ui = {
     'profile.name': 'Name',
     'profile.email': 'E-Mail',
     'profile.team': 'Institution',
+    'profile.logout': 'Ausloggen',
     'profile.active-listings': 'Aktive Angebote',
     'profile.active-listings.none': 'Du hast gerade keine aktive Angebote.',
     'profile.past-listings': 'Vergangene Angebote',
