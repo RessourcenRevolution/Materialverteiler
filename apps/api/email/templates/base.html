@@ -96,11 +96,13 @@
     </style>
   </head>
   <body>
-    <img
-      src="{{ .AppURL }}/logo.png"
-      alt="Logo"
-      style="max-width: 200px; margin-bottom: 16px"
-    />
+    <a href="{{.AppURL }}" target="_blank">
+      <img
+        src="{{ .AppURL }}/logo.png"
+        alt="Logo"
+        style="max-width: 200px; margin-bottom: 16px"
+      />
+    </a>
     {{block "body" .}}{{end}}
     <p>
       Liebe Grüße,<br />
