@@ -24,7 +24,12 @@ const isNewUserRoute = (path: string): boolean => {
   return NEW_USER_ROUTES.some(pattern => pattern.test(path))
 }
 
-const routeGuard = defineMiddleware(async ({ url, locals, redirect }, next) => {
+const routeGuard = defineMiddleware(async ({ url, locals, redirect, isPrerendered }, next) => {
+  // Prerendered routes are always accessible, for now
+  if (isPrerendered) {
+    return next()
+  }
+
   const pathName = new URL(url).pathname
 
   // Not an app route, don't verify authentication
