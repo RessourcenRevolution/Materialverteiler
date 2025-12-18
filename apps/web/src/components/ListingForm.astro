@@ -14,6 +14,7 @@ import { fieldError } from '~/forms'
 import { isInputError } from 'astro:actions'
 import type { Listing } from '~/schemas/listing'
 import { asIsoDate } from '~/lib/date'
+import EditImageInput from './EditImageInput.astro'
 
 interface Props {
   update?: boolean
@@ -28,12 +29,17 @@ const teamCreationResult = Astro.getActionResult(actions.createTeam)
 
 const result = Astro.getActionResult(actions.listing)
 
+if (result?.error) {
+  console.error(result.error)
+}
+
 const formData
   = Astro.request.method === 'POST' ? await Astro.request.formData() : null
 
 const postedListing = formData
   ? ({
       status: formData.get('status') as Listing['status'],
+      images: formData.getAll('images') as string[],
       title: formData.get('title') as string,
       description: formData.get('description') as string,
       material: formData.get('material') as string,
@@ -63,7 +69,7 @@ const data = postedListing ? postedListing : listing;
   enctype="multipart/form-data"
 >
   <input type="hidden" name="type" value={update ? 'update' : 'create'} />
-  { update && <input type="hidden" name="id" value={data?.id} /> }
+  { update && <input type="hidden" name="id" value={listing?.id} /> }
 
   { update && listing?.status !== 'new'
     && <Select
@@ -120,6 +126,14 @@ const data = postedListing ? postedListing : listing;
     error={fieldError('description', result?.error)}
     required
   />
+  {update && listing?.id && ((data?.images && data.images.length > 0) || (listing?.images && listing.images.length > 0))
+    && <EditImageInput
+      collection="listings"
+      recordId={listing?.id}
+      images={listing?.images || []}
+      selected={data?.images || []}
+    />
+  }
   <ImageInput
     name="images+"
     label={update

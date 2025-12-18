@@ -172,7 +172,7 @@ export const server = {
         'type': z.literal('create'),
         'images+': z.array(z.instanceof(File)).optional(),
       }),
-      ListingSchema.omit({ user: true, team: true, images: true }).extend({
+      ListingSchema.omit({ user: true, team: true }).extend({
         'type': z.literal('update'),
         'images+': z.array(z.instanceof(File)).optional(),
       }),

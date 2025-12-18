@@ -1,0 +1,43 @@
+---
+import CloseIcon from 'iconoir/icons/xmark.svg'
+import { useTranslations } from '~/i18n/ui'
+
+const t = useTranslations()
+
+interface Props {
+  collection: string
+  recordId: string
+  images: string[]
+  selected: string[]
+}
+
+const { collection, recordId, images, selected } = Astro.props;
+---
+<div>
+  <strong class="text-body mb-4">{t('forms.images')}</strong>
+  <div class="flex flex-wrap gap-4">
+    {images.length > 0
+      ? images.map(image => (
+          <div class="group relative w-[calc((100%-(var(--spacing)*3))/4)]">
+            <img class="rounded-xs aspect-square h-full w-full object-cover opacity-50 has-[+input:checked]:opacity-100" src={`${process.env.PUBLIC_API_URL}/api/files/${collection}/${recordId}/${image}`} />
+            <input
+              id={'images' + image}
+              name="images"
+              type="checkbox"
+              value={image}
+              checked={selected.includes(image)}
+              class="absolute opacity-0"
+            />
+            <label class="cursor-pointer absolute min-w-7 h-7 right-1 top-1 flex items-center justify-center bg-white rounded-full" for={'images' + image}>
+              <CloseIcon width={20} height={20} class="hidden group-has-[input:checked]:block" />
+              <span class="text-sm block group-has-[input:checked]:hidden px-3">
+                Restore
+              </span>
+            </label>
+          </div>
+        ))
+      : <p class="text-body text-base italic">
+          {t('forms.images.no-images')}
+        </p>}
+  </div>
+</div>
