@@ -19,7 +19,7 @@ if (!(result?.data instanceof ActionError) && result?.data) {
   return new Response(null, {
     status: 302,
     headers: {
-      'Location': '/dashboard',
+      'Location': '/app/listings',
       'Set-Cookie': cookie,
     },
   })

@@ -12,7 +12,7 @@ export const prerender = false
 
 const t = useTranslations()
 
-const redirect = new URL(Astro.request.url).searchParams.get('redirect') || '/dashboard'
+const redirect = new URL(Astro.request.url).searchParams.get('redirect') || '/app/listings'
 
 const result = Astro.getActionResult(actions.login)
 console.log(redirect, result)
@@ -72,7 +72,7 @@ const data
           variant="primary"
           class="self-start"
         />
-        <Button label={t('login.signup')} href="/signup" class="self-start" />
+        <Button label={t('login.signup')} href="/app/signup" class="self-start" />
       </div>
     </form>
   </div>

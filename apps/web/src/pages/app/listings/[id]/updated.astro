@@ -47,8 +47,8 @@ const listing = ListingSchema.parse(item) as Listing
     >
       <p class="text-body font-bold mb-4">{t('text')}</p>
       <div class="flex flex-wrap gap-4">
-        <Button variant="primary" size="sm" href={`/listings/${listing.id}`} label={t('buttonListing')} />
-        <Button size="sm" href="/profile" label={t('buttonOverview')} />
+        <Button variant="primary" size="sm" href={`/app/listings/${listing.id}`} label={t('buttonListing')} />
+        <Button size="sm" href="/app/profile" label={t('buttonOverview')} />
       </div>
     </Alert>
   </Container>

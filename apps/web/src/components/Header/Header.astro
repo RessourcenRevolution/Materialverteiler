@@ -18,19 +18,19 @@ const t = useTranslations()
 const items: Record<string, { href: string, label: string }[]> = {
   main: [
     ...(authStore.isValid
-      ? [{ href: '/dashboard', label: t('header.dashboard') }]
+      ? [{ href: '/app/listings', label: t('header.dashboard') }]
       : []),
     { href: '/ueber-uns', label: t('header.about') },
   ],
   meta: [
     ...(authStore.isValid
       ? [
-          { href: '/profile', label: t('header.profile') },
-          { href: '/logout', label: t('header.logout') },
+          { href: '/app/profile', label: t('header.profile') },
+          { href: '/app/logout', label: t('header.logout') },
         ]
       : [
-          { href: '/login', label: t('header.login') },
-          { href: '/signup', label: t('header.signup') },
+          { href: '/app/login', label: t('header.login') },
+          { href: '/app/signup', label: t('header.signup') },
         ]),
   ],
 };

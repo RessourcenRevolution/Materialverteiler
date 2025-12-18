@@ -12,18 +12,18 @@ export const prerender = false
 const t = useTranslations()
 
 if (!Astro.locals.pb.authStore.record?.id) {
-  Astro.redirect('/logout')
+  Astro.redirect('/app/logout')
   return
 }
 
 const userAction = Astro.getActionResult(actions.user)
 if (!userAction?.error && userAction?.data) {
-  return Astro.redirect('/profile?success=profile', 302)
+  return Astro.redirect('/app/profile?success=profile', 302)
 }
 
 const removeListingAction = Astro.getActionResult(actions.removeListing)
 if (!removeListingAction?.error && removeListingAction?.data) {
-  return Astro.redirect('/profile?success=remove', 302)
+  return Astro.redirect('/app/profile?success=remove', 302)
 }
 
 const record = await Astro.locals.pb

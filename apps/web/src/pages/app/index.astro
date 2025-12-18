@@ -30,7 +30,7 @@ const isNewUser = !Astro.locals.pb.authStore.record!.roles.includes('user');
       <Heading tag="h1" size="xl">
         {t('dashboard.title')}
       </Heading>
-      {!isNewUser && <Button label={t('dashboard.new-listing')} href="/listings/new" />}
+      {!isNewUser && <Button label={t('dashboard.new-listing')} href="/app/listings/new" />}
     </div>
     {
       isNewUser

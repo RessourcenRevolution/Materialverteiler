@@ -17,7 +17,7 @@ const listingAction = Astro.getActionResult(actions.listing)
 
 if (!listingAction?.error && listingAction?.data) {
   return Astro.redirect(
-    `/listings/${listingAction.data.listing.id}/${listingAction.data.status}`,
+    `/app/listings/${listingAction.data.listing.id}/${listingAction.data.status}`,
     302,
   )
 }

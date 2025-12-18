@@ -31,13 +31,13 @@ try {
 }
 catch (err) {
   if (err instanceof ClientResponseError && err.status === 404) {
-    return Astro.rewrite('/listings/404')
+    return Astro.rewrite('/app/listings/404')
   }
   return Astro.rewrite('/404')
 }
 
 if (!item) {
-  return Astro.rewrite('/listings/404')
+  return Astro.rewrite('/app/listings/404')
 }
 
 const listing = ListingSchema.parse(item) as Listing
