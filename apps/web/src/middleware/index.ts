@@ -15,6 +15,7 @@ const UNAUTHENTICATED_APP_ROUTES = [
 
 // Routes a user can visit without having the 'user' role
 const NEW_USER_ROUTES = [
+  /^\/app\/logout$/,
   /^\/app\/listings$/,
   /^\/app\/profile$/,
   /^\/app\/profile\/confirm-email$/,
