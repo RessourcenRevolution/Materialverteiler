@@ -1,5 +1,6 @@
 @import "@rr/ui/tailwind.css";
 @source "../../../../packages/ui";
+@import "./page-animation.css";
 
 @theme {
   --body-inline-padding: calc(var(--spacing) * 4);
