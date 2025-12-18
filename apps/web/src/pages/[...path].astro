@@ -3,7 +3,6 @@ import { Container } from '@rr/ui/components'
 import { DocumentRenderer } from 'astro-document-renderer'
 import Layout from '~/layouts/Layout.astro'
 import Image from '~/components/keystone/Image.astro'
-import type { GetStaticPaths } from 'astro'
 
 interface Page {
   title: string
@@ -15,20 +14,21 @@ interface Props {
   page: Page
 }
 
-export const prerender = true
+export const prerender = false
 
-export const getStaticPaths = (async () => {
-  if (!process.env.KEYSTONE_GRAPHQL_ENDPOINT) {
-    throw new Error('KEYSTONE_GRAPHQL_ENDPOINT environment variable is not set')
-  }
-  const response = await fetch(process.env.KEYSTONE_GRAPHQL_ENDPOINT, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      query: `
-      query Pages {
-        pages {
-          path
+const { path } = Astro.params
+
+if (!process.env.KEYSTONE_GRAPHQL_ENDPOINT) {
+  throw new Error('KEYSTONE_GRAPHQL_ENDPOINT environment variable is not set')
+}
+
+const response = await fetch(process.env.KEYSTONE_GRAPHQL_ENDPOINT, {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    query: `
+      query Page($where: PageWhereUniqueInput!) {
+        page(where: $where) {
           title
           content {
             document(hydrateRelationships: true)
@@ -36,18 +36,15 @@ export const getStaticPaths = (async () => {
         }
       }
       `,
-    }),
-  })
-
-  const result = await response.json()
-  const pages = result?.data?.pages as Page[]
-  return pages.map(page => ({
-    params: { path: page.path },
-    props: { page },
-  }))
-}) satisfies GetStaticPaths
-
-const { page } = Astro.props
+    variables: {
+      where: {
+        path: `/${path || ''}`,
+      },
+    },
+  }),
+})
+const result = await response.json()
+const page = result?.data?.page
 
 if (!page) {
   return new Response(null, { status: 404 })
