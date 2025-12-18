@@ -185,7 +185,7 @@ export const ui = {
     // Header
     'header.home': 'Startseite',
     'header.dashboard': 'Materialangebote',
-    'header.profile': 'Account',
+    'header.profile': 'Konto',
     'header.login': 'Einloggen',
     'header.signup': 'Registrieren',
     'header.about': 'Über uns',
