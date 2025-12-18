@@ -169,12 +169,7 @@ func main() {
 				Phonenumber:   body.Phonenumber,
 				Message:       email.ConvertLinebreaksToHtml(body.Message),
 			}
-			email.SendEmail(e.App, mail.Address{Address: user.Email()}, data, &email.EmailConfig{
-				CustomFrom: &mail.Address{
-					Address: body.Email,
-					Name:    body.Name,
-				},
-			})
+			email.SendEmail(e.App, mail.Address{Address: user.Email()}, data, nil)
 
 			// Listing contact confirmation email
 			confirmation := email.ListingContactConfirmationData{
