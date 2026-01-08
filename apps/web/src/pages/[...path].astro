@@ -10,6 +10,7 @@ import Button from '~/components/keystone/Button.astro'
 interface Page {
   title: string
   path: string
+  access: 'public' | 'authenticated'
   content: { document: any }
 }
 
@@ -29,6 +30,7 @@ const response = await fetch(process.env.KEYSTONE_GRAPHQL_ENDPOINT, {
       query Page($where: PageWhereUniqueInput!) {
         page(where: $where) {
           title
+          access
           content {
             document(hydrateRelationships: true)
           }
@@ -46,19 +48,29 @@ const response = await fetch(process.env.KEYSTONE_GRAPHQL_ENDPOINT, {
 const result = await response.json()
 const page = result?.data?.page as Page
 
-if (!page) {
+if (!page || page.access !== 'public') {
   return new Response(null, { status: 404 })
 }
 ---
 
 <Layout>
-  <Container size="xl" class="prose page-animation [&>[data-module]]:my-12 md:[&>[data-module]]:my-24 [&>[data-module]:first-child]:mt-0">
+  <Container
+    size="xl"
+    class:list={[
+      'prose page-animation',
+      '[&>[data-module]]:my-12 md:[&>[data-module]]:my-24 [&>[data-module]:first-child]:mt-0',
+    ]}
+  >
     <DocumentRenderer
       document={page.content.document}
       renderers={{
         block: { layout: Columns },
       }}
-      componentBlocks={{ image: Image, text: Text, button: Button }}
+      componentBlocks={{
+        image: Image,
+        text: Text,
+        button: Button,
+      }}
     />
   </Container>
 </Layout>
