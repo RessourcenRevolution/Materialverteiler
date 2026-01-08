@@ -29,6 +29,14 @@ export const Small = {
   decorators: [{ component: FlexDecorator }],
 };
 
+export const Large = {
+  args: {
+    label: "Button",
+    size: 'lg'
+  } satisfies Props,
+  decorators: [{ component: FlexDecorator }],
+};
+
 export const Icon = {
   args: {
     label: "Button",

@@ -6,7 +6,7 @@ export type Props = HTMLAttributes<"a"> &
   HTMLAttributes<"button"> & {
     label: string;
     variant?: "primary" | "secondary";
-    size?: "sm" | "md";
+    size?: "sm" | "md" | "lg";
     icon?: AstroComponentFactory;
   };
 
@@ -30,6 +30,7 @@ const Element = href ? "a" : "button";
     "border-body border-(length:--border) rounded-xs",
     size === "sm" && "px-2 py-0.5 gap-1",
     size === "md" && "px-3 py-2.5 gap-2",
+    size === "lg" && "px-3 py-2.5 gap-2 text-lg",
     variant === "primary" && "bg-primary hover:bg-body hover:text-primary",
     variant === "secondary" && "text-body hover:text-white hover:bg-body",
     "cursor-pointer",
