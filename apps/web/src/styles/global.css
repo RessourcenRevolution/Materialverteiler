@@ -44,3 +44,17 @@
 @utility animate-delay-* {
   animation-delay: calc(--value(integer) * 1ms);
 }
+
+.corner-border {
+  --b: 3px;
+  --c: var(--color-body);
+  --w: 1.25rem;
+  border: var(--b) solid #0000;
+  --_g: #0000 90deg, var(--c) 0;
+  --_p: var(--w) var(--w) border-box no-repeat;
+  background:
+    conic-gradient(from 90deg at top var(--b) left var(--b), var(--_g)) 0 0 /
+      var(--_p),
+    conic-gradient(from -90deg at bottom var(--b) right var(--b), var(--_g))
+      100% 100% / var(--_p);
+}

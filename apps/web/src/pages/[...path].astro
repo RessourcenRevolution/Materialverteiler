@@ -2,16 +2,14 @@
 import { Container } from '@rr/ui/components'
 import { DocumentRenderer } from 'astro-document-renderer'
 import Layout from '~/layouts/Layout.astro'
+import Columns from '~/components/keystone/Columns.astro'
 import Image from '~/components/keystone/Image.astro'
+import Text from '~/components/keystone/Text.astro'
 
 interface Page {
   title: string
   path: string
   content: { document: any }
-}
-
-interface Props {
-  page: Page
 }
 
 export const prerender = false
@@ -43,8 +41,9 @@ const response = await fetch(process.env.KEYSTONE_GRAPHQL_ENDPOINT, {
     },
   }),
 })
+
 const result = await response.json()
-const page = result?.data?.page
+const page = result?.data?.page as Page
 
 if (!page) {
   return new Response(null, { status: 404 })
@@ -52,10 +51,13 @@ if (!page) {
 ---
 
 <Layout>
-  <Container size="lg" class="prose page-animation">
+  <Container size="xl" class="prose page-animation [&>[data-module]]:my-12 md:[&>[data-module]]:my-24 [&>[data-module]:first-child]:mt-0">
     <DocumentRenderer
       document={page.content.document}
-      componentBlocks={{ image: Image }}
+      renderers={{
+        block: { layout: Columns },
+      }}
+      componentBlocks={{ image: Image, text: Text }}
     />
   </Container>
 </Layout>

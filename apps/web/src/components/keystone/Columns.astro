@@ -19,7 +19,8 @@ Astro.locals.columns = layout.length;
 ---
 
 <div
-  class={`grid gap-12 items-center ${
+  data-module
+  class={`grid gap-12 md:gap-12 lg:gap-18 items-center ${
     layouts[layout.join('')] || 'grid-cols-1'
   }`}
 >

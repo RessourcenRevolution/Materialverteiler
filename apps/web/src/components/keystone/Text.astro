@@ -1,0 +1,29 @@
+---
+import { DocumentRenderer } from 'astro-document-renderer'
+
+interface Props {
+  size: 'normal' | 'large'
+  framed: boolean
+  documentRendererProps: any
+  getDocument: (name: string) => any
+}
+
+const { size, framed, documentRendererProps, getDocument } = Astro.props
+
+const sizes = {
+  normal: 'text-md',
+  large: 'text-xl',
+}
+---
+
+<div
+  data-module
+  class:list={[
+    '[&_p]:hyphens-auto',
+    sizes[size],
+    framed ? 'corner-border p-4' : '',
+    '[&>:first-child]:mt-0 [&>:last-child]:mb-0',
+  ]}
+>
+  <DocumentRenderer document={getDocument('content')} {...documentRendererProps} />
+</div>
