@@ -26,7 +26,7 @@ Astro.locals.columns = layout.length;
 >
   {
     children.map((node, i) => (
-      <div>
+      <div class="[&>[data-module]]:my-6 [&>[data-module]:first-child]:mt-0 [&>[data-module]:last-child]:mb-0">
         <DocumentRenderer document={node.children} {...documentRendererProps} />
       </div>
     ))

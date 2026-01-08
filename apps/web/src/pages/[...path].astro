@@ -5,6 +5,7 @@ import Layout from '~/layouts/Layout.astro'
 import Columns from '~/components/keystone/Columns.astro'
 import Image from '~/components/keystone/Image.astro'
 import Text from '~/components/keystone/Text.astro'
+import Button from '~/components/keystone/Button.astro'
 
 interface Page {
   title: string
@@ -57,7 +58,7 @@ if (!page) {
       renderers={{
         block: { layout: Columns },
       }}
-      componentBlocks={{ image: Image, text: Text }}
+      componentBlocks={{ image: Image, text: Text, button: Button }}
     />
   </Container>
 </Layout>

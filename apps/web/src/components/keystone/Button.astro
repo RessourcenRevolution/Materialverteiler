@@ -1,0 +1,26 @@
+---
+import { Button as UIButton } from '@rr/ui/components'
+
+interface Props {
+  link: string
+  size: 'small' | 'normal' | 'large'
+  variant: 'primary' | 'secondary'
+  documentRendererProps: any
+  getDocument: (name: string) => any
+}
+
+const { link, size = 'normal', variant = 'secondary', getDocument } = Astro.props
+
+const sizes: Record<'small' | 'normal' | 'large', 'sm' | 'md' | 'lg'> = {
+  small: 'sm',
+  normal: 'md',
+  large: 'lg',
+}
+
+const content = getDocument('content')
+const text = content[0].text
+---
+
+<div data-module class="flex justify-center">
+  <UIButton label={text} href={link} variant={variant} size={sizes[size]} class="not-prose" />
+</div>

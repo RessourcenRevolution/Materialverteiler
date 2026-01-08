@@ -58,7 +58,7 @@ export const componentBlocks = {
       return (
         <p
           style={{
-            fontSize: props.fields.size.value === "large" ? "1.25rem" : "1rem",
+            fontSize: props.fields.size.value === "large" ? "18px" : "16px",
             padding: framed ? "1rem" : "0",
             background: framed
               ? "linear-gradient(to right, black 3px, transparent 3px) 0 0, linear-gradient(to bottom, black 3px, transparent 3px) 0 0,linear-gradient(to left, black 3px, transparent 3px) 100% 100%, linear-gradient(to top, black 3px, transparent 3px) 100% 100%"
@@ -68,6 +68,55 @@ export const componentBlocks = {
           }}
         >
           {props.fields.content.element}
+        </p>
+      );
+    },
+  }),
+  button: component({
+    label: "Button",
+    schema: {
+      link: fields.url({
+        label: "Link",
+      }),
+      size: fields.select({
+        label: "Size",
+        options: [
+          { label: "Small", value: "small" },
+          { label: "Normal", value: "normal" },
+          { label: "Large", value: "large" },
+        ],
+        defaultValue: "normal",
+      }),
+      variant: fields.select({
+        label: "Variant",
+        options: [
+          { label: "Primary", value: "primary" },
+          { label: "Secondary", value: "secondary" },
+        ],
+        defaultValue: "secondary",
+      }),
+      content: fields.child({
+        kind: "inline",
+        placeholder: "Enter text...",
+      }),
+    },
+    preview: (props) => {
+      return (
+        <p>
+          <span
+            style={{
+              padding: "0.5rem 1rem",
+              border: "3px solid black",
+              fontSize: props.fields.size.value === "large" ? "18px" : "16px",
+              fontWeight: "bold",
+              backgroundColor:
+                props.fields.variant.value === "primary"
+                  ? "oklch(97.53% 0.147 108.85)"
+                  : "transparent",
+            }}
+          >
+            {props.fields.content.element}
+          </span>
         </p>
       );
     },
