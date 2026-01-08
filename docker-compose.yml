@@ -26,6 +26,8 @@ services:
       dockerfile: ./apps/keystone/Dockerfile
     ports:
       - "3002:3002"
+    environment:
+      KEYSTONE_BASE_URL: ${KEYSTONE_BASE_URL:-http://localhost:3002}
     volumes:
       - ../files/keystone-data:/app/apps/keystone/data
       - ../files/keystone-assets:/app/apps/keystone/assets
