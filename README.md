@@ -1,38 +1,109 @@
-# Mise-Astro-Pocketbase
+# Resource Revolution
 
-Example/Template of a mono-repository with Pocketbase as back-end application,
-Astro as web application, Astrobook as component documentation application, and
-an NPM Workspace UI subpackage containing UI Components. Tool versioning and
-repository task management using Mise. Production ready setup using Docker.
+Resource Revolution offers a ready to go solution to start a material exchange
+platform.
 
-## Stack
+The platform connects institutions, allowing them to pass on items and materials
+to give them a second life, instead of discarding them.
+
+## Features
+
+- **📦 Material listings**: Create, browse, and view materials
+- **✉️ Transaction emails**: Automatic emails for new listings and interactions
+- **👤 User Management**: Signup, login, email verification and password reset
+- **🔒 Signup approval**: Grant access to users/institutions only after admin
+  approval
+- **📩 Admin email workflow**: Automated email notifications for new signups and
+  listing activities
+- **🔧 Keystone integration**: CMS for content management
+
+## Architecture
+
+This project is a monorepo containing several applications that work together to
+form the platform.
+
+### Pocketbase (API Backend)
+
+The core backend is a [Pocketbase](https://pocketbase.io/) application. It
+serves as the primary API, handling:
+
+- User authentication and management
+- Database storage for listings, teams, and user data
+- Business logic and custom API endpoints
+- Transactional e-mail sending
+
+### Keystone (Content Management)
+
+A [Keystone](https://keystonejs.com) instance functions as the Headless Content
+Management System (CMS). It is used for managing structured content that is
+displayed on the frontend.
+
+### Astro (Frontend)
+
+The user-facing website is built with [Astro](https://astro.build). This
+application is responsible for:
+
+- Rendering the user interface
+- Communicating with the Pocketbase API for dynamic data and user actions (like
+  logging in and creating listings)
+- Fetching content from the Keystone CMS to display on pages
+
+## Tech
 
 - [NPM Workspaces](https://docs.npmjs.com/cli/v8/using-npm/workspaces)
 - [Mise](https://github.com/jdx/mise)
-- [Pocketbase](pocketbase.io)
+- [Mailpit](https://github.com/axllent/mailpit)
+- [Pocketbase](https://pocketbase.io/)
+- [Keystone](https://keystonejs.com)
 - [Astro](https://astro.build)
 - [Tailwind](https://tailwindcss.com)
 - [Astrobook](https://github.com/ocavue/astrobook)
 
-## Setup
-
-1. Set up [mise](https://github.com/jdx/mise?tab=readme-ov-file#quickstart)
-1. Run `$ mise install`
-1. Run `$ npm i`
-1. Run `$ export MISE_EXPERIMENTAL=true`
-1. Run `$ mise run //:setup`
-1. Run `$ mise run //...:dev`
-
-## Dev
-
-```sh
-$ export MISE_EXPERIMENTAL=true
-$ mise run //...:dev
-```
-
-## Docker
+## Deployment
 
 ```sh
 $ docker compose build
 $ docker compose up
 ```
+
+## Development
+
+### Getting started
+
+- Set up [mise](https://github.com/jdx/mise?tab=readme-ov-file#quickstart).
+- Clone the repository
+
+```bash
+# Install required platform dependencies
+$ mise install
+
+# Install required npm dependencies
+$ npm i
+
+# Enable mono-repo support for mise
+$ export MISE_EXPERIMENTAL=true
+
+# Run setup actions
+$ mise run //:setup
+```
+
+### Run
+
+Use `mise` to start the project in development mode, including `mailpit` as
+email testing tool.
+
+```sh
+# Enable mono-repo support for mise
+$ export MISE_EXPERIMENTAL=true
+
+# Start the project in dev mode
+$ mise run //...:dev
+```
+
+The following services will be available:
+
+- Front-end: https://localhost:3000
+- Astrobook: https://localhost:3001
+- Keystone: https://localhost:3002
+- Pocketbase: https://localhost:8090
+- Mailpit: https://localhost:8025
