@@ -50,10 +50,17 @@ model NavigationItem {
   title                 String       @default("")
   path                  String       @default("")
   from_Navigation_items Navigation[] @relation("Navigation_items")
+  from_Footer_links     Footer[]     @relation("Footer_links")
 }
 
 model Navigation {
   id    String           @id @default(cuid())
   name  String           @unique
   items NavigationItem[] @relation("Navigation_items")
+}
+
+model Footer {
+  id      Int              @id
+  content String           @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
+  links   NavigationItem[] @relation("Footer_links")
 }

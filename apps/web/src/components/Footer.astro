@@ -1,10 +1,13 @@
 ---
 import { Container } from '@rr/ui/components'
+import { DocumentRenderer } from 'astro-document-renderer'
+import type { Footer } from '~/schemas/footer'
 
 interface Props {
+  footer: Footer | null
   class?: string
 }
-const { class: className } = Astro.props;
+const { footer, class: className } = Astro.props;
 ---
 
 <footer class:list={['w-full px-(--body-inline-padding)', className]}>
@@ -16,26 +19,8 @@ const { class: className } = Astro.props;
       'lg:px-0',
     ]}
   >
-    <div>
-      <p class="mb-3">
-        <strong>
-          Ressourcen<br />
-          Revolution
-        </strong>
-      </p>
-      <p class="mb-3">
-        Ressourcen Revolution e.V.<br />
-        Dünnewalder Straße 11<br />
-        51063 Köln
-      </p>
-      <p>
-        <a href="mailto:info@ressourcenrevolution.org" class="underline">
-          info@ressourcenrevolution.org
-        </a><br />
-        <a href="https://ressourcenrevolution.org" class="underline">
-          ressourcenrevolution.org
-        </a>
-      </p>
+    <div class="[&>p]:mb-3 [&_a]:underline">
+      {footer?.content?.document && <DocumentRenderer document={footer.content.document} />}
     </div>
     <ul
       class:list={[
@@ -43,11 +28,9 @@ const { class: className } = Astro.props;
         'md:items-end md:min-w-1/3',
       ]}
     >
-      <li>Log In</li>
-      <li>Materialverteiler</li>
-      <li>Über Uns</li>
-      <li>Impressum</li>
-      <li>Datenschutz</li>
+      {footer?.links?.map(({ title, path }) => (
+        <li><a href={path}>{title}</a></li>
+      ))}
     </ul>
   </Container>
 </footer>

@@ -368,6 +368,48 @@ input NavigationItemRelateToManyForCreateInput {
   connect: [NavigationItemWhereUniqueInput!]
 }
 
+type Footer {
+  id: ID!
+  content: Footer_content_Document
+  links(where: NavigationItemWhereInput! = {}, orderBy: [NavigationItemOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: NavigationItemWhereUniqueInput): [NavigationItem!]
+  linksCount(where: NavigationItemWhereInput! = {}): Int
+}
+
+type Footer_content_Document {
+  document(hydrateRelationships: Boolean! = false): JSON!
+}
+
+input FooterWhereUniqueInput {
+  id: ID
+}
+
+input FooterWhereInput {
+  AND: [FooterWhereInput!]
+  OR: [FooterWhereInput!]
+  NOT: [FooterWhereInput!]
+  id: IDFilter
+  links: NavigationItemManyRelationFilter
+}
+
+input FooterOrderByInput {
+  id: OrderDirection
+}
+
+input FooterUpdateInput {
+  content: JSON
+  links: NavigationItemRelateToManyForUpdateInput
+}
+
+input FooterUpdateArgs {
+  where: FooterWhereUniqueInput! = {id: 1}
+  data: FooterUpdateInput!
+}
+
+input FooterCreateInput {
+  content: JSON
+  links: NavigationItemRelateToManyForCreateInput
+}
+
 """
 The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 """
@@ -404,6 +446,12 @@ type Mutation {
   updateNavigations(data: [NavigationUpdateArgs!]!): [Navigation]
   deleteNavigation(where: NavigationWhereUniqueInput!): Navigation
   deleteNavigations(where: [NavigationWhereUniqueInput!]!): [Navigation]
+  createFooter(data: FooterCreateInput!): Footer
+  createFooters(data: [FooterCreateInput!]!): [Footer]
+  updateFooter(where: FooterWhereUniqueInput! = {id: 1}, data: FooterUpdateInput!): Footer
+  updateFooters(data: [FooterUpdateArgs!]!): [Footer]
+  deleteFooter(where: FooterWhereUniqueInput! = {id: 1}): Footer
+  deleteFooters(where: [FooterWhereUniqueInput!]!): [Footer]
   endSession: Boolean!
   authenticateUserWithPassword(email: String!, password: String!): UserAuthenticationWithPasswordResult
   createInitialUser(data: CreateInitialUserInput!): UserAuthenticationWithPasswordSuccess!
@@ -442,6 +490,9 @@ type Query {
   navigation(where: NavigationWhereUniqueInput!): Navigation
   navigations(where: NavigationWhereInput! = {}, orderBy: [NavigationOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: NavigationWhereUniqueInput): [Navigation!]
   navigationsCount(where: NavigationWhereInput! = {}): Int
+  footer(where: FooterWhereUniqueInput! = {id: 1}): Footer
+  footers(where: FooterWhereInput! = {id: {equals: 1}}, orderBy: [FooterOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FooterWhereUniqueInput): [Footer!]
+  footersCount(where: FooterWhereInput! = {id: {equals: 1}}): Int
   keystone: KeystoneMeta!
   authenticatedItem: AuthenticatedItem
 }

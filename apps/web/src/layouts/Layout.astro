@@ -3,10 +3,10 @@ import Header from '~/components/Header/Header.astro'
 import '~/styles/global.css'
 import { APP_NAME } from 'astro:env/client'
 import { defaultLang } from '~/i18n/ui'
-import { fetchNavigations } from '~/keystone'
+import { fetchLayout } from '~/keystone'
 import Footer from '~/components/Footer.astro'
 
-const { mainNavigation, metaNavigation } = await fetchNavigations()
+const { mainNavigation, metaNavigation, footer } = await fetchLayout()
 ---
 
 <!doctype html>
@@ -23,7 +23,7 @@ const { mainNavigation, metaNavigation } = await fetchNavigations()
     <main class="w-full max-w-[1600px] mx-auto px-(--body-inline-padding)">
       <slot />
     </main>
-    <Footer class="max-w-6xl mx-auto" />
+    <Footer footer={footer} class="max-w-6xl mx-auto" />
     <script src="~/scripts/main.ts"></script>
   </body>
 </html>

@@ -28,6 +28,10 @@ import { document } from "@keystone-6/fields-document";
 // the generated types from '.keystone/types'
 import { type Lists } from ".keystone/types";
 
+if (!process.env.WEB_APP_BASE_URL) {
+  throw new Error("WEB_APP_BASE_URL environment variable is not set");
+}
+
 const isAuthenticated = ({ session }: { session?: any }) => !!session?.data?.id;
 
 const queryOnly = {
@@ -186,7 +190,20 @@ export const lists = {
         validation: { isRequired: false }
       }),
       title: text({ validation: { isRequired: true } }),
-      path: text({ validation: { isRequired: true } }),
+      path: text({ label: "Link", validation: { isRequired: true } }),
+    },
+    hooks: {
+      resolveInput: async ({ inputData, resolvedData }) => {
+        let path = inputData?.path || ''
+        // Remove web app url, if path is prefixed with it
+        if(process.env.WEB_APP_BASE_URL && path.startsWith(process.env.WEB_APP_BASE_URL)) {
+          path = path.replace(process.env.WEB_APP_BASE_URL, '');
+        }
+        return {
+          ...resolvedData,
+          path,
+        }
+      },
     },
   }),
 
@@ -209,6 +226,29 @@ export const lists = {
           cardFields: ["icon", "title", "path"],
           inlineCreate: { fields: ["icon", "title", "path"] },
           inlineEdit: { fields: ["icon", "title", "path"] },
+        },
+      }),
+    },
+  }),
+
+  Footer: list({
+    access: queryOnly,
+    isSingleton: true,
+    fields: {
+      content: document({
+        formatting: true,
+        links: true,
+        dividers: undefined,
+        layouts: undefined,
+      }),
+      links: relationship({
+        ref: "NavigationItem",
+        many: true,
+        ui: {
+          displayMode: "cards",
+          cardFields: ["title", "path"],
+          inlineCreate: { fields: ["title", "path"] },
+          inlineEdit: { fields: ["title", "path"] },
         },
       }),
     },
