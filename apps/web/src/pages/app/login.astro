@@ -14,6 +14,16 @@ const t = useTranslations()
 
 const redirect = new URL(Astro.request.url).searchParams.get('redirect') || '/app/listings'
 
+// If already logged in, redirect to the redirect URL
+if (Astro.locals.pb.authStore.isValid) {
+  return new Response(null, {
+    status: 302,
+    headers: {
+      Location: redirect,
+    },
+  })
+}
+
 const result = Astro.getActionResult(actions.login)
 if (!(result?.data instanceof ActionError) && result?.data) {
   const { cookie } = result?.data
