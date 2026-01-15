@@ -68,13 +68,33 @@ const success = Astro.url.searchParams.get('success')
     <Heading tag="h1" size="xl" class="mb-4">
       {t('profile.title')}
     </Heading>
-    <p class="text-body mb-4">
-      {t('profile.name')}:
-      {user.firstname}
-      {user.lastname}<br />
-      {t('profile.email')}: {user.email}<br />
-      {t('profile.team')}: {user.expand?.team?.name}<br />
+    <table class="[&_td]:px-2 [&_td:first-child]:pl-0 text-body mb-4">
+      <tr>
+        <td>{t('profile.name')}</td>
+        <td>{user.firstname} {user.lastname}</td>
+      </tr>
+      <tr>
+        <td>{t('profile.email')}</td>
+        <td>{user.email}</td>
+      </tr>
+    </table>
+    <p class="text-body">
+      <strong>{t('profile.team')}</strong><br />
     </p>
+    <table class="[&_td]:px-2 [&_td:first-child]:pl-0 text-body mb-4">
+      <tr>
+        <td>Name</td>
+        <td>{user.expand?.team?.name}</td>
+      </tr>
+      <tr>
+        <td>Art</td>
+        <td>{t(`team-type.${user.expand?.team?.type}`)}</td>
+      </tr>
+      <tr>
+        <td>Stadt</td>
+        <td>{user.expand?.team?.city}</td>
+      </tr>
+    </table>
     <p class="mb-18">
       <Button size="sm" href="/app/logout" label={t('profile.logout')} />
     </p>
