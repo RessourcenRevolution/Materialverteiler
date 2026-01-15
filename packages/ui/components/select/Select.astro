@@ -32,7 +32,7 @@ const {
   >
     <slot>{label || ""}</slot>
   </label>
-  <select id={id} name={name} value={value} required={required} class="w-full text-body border-(length:--border) text-base border-body rounded-xs px-3 py-3 appearance-none bg-(image:--chevron) bg-no-repeat bg-[right_0.75rem_center] bg-size-[2rem]">
+  <select id={id} name={name} value={value} required={required} class="w-full text-body [&:has(option[value='']:checked)]:font-bold border-(length:--border) text-base border-body rounded-xs px-3 py-3 appearance-none bg-(image:--chevron) bg-no-repeat bg-[right_0.75rem_center] bg-size-[2rem]">
     {options.map(option => <option value={option.value} selected={option.value === value}>{option.label}</option>)}
   </select>
   {error && <p class="text-red-800 text-sm">{error}</p>}

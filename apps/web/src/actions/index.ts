@@ -5,6 +5,7 @@ import { defaultLang, ui, useTranslations } from '~/i18n/ui'
 import { login } from '@rr/astro-pocketbase/actions'
 import { ListingSchema, type Listing } from '~/schemas/listing'
 import { UserSchema } from '~/schemas/user'
+import { TeamSchema, TeamTypeEnum } from '~/schemas/team'
 
 const required = {
   required_error:
@@ -30,6 +31,10 @@ export const server = {
         .trim()
         .min(1, 'forms.errors.required' satisfies keyof (typeof ui)[typeof defaultLang]),
       team: z.string(required)
+        .trim()
+        .min(1, 'forms.errors.required' satisfies keyof (typeof ui)[typeof defaultLang]),
+      team_type: TeamTypeEnum('forms.errors.required' satisfies keyof (typeof ui)[typeof defaultLang]),
+      team_city: z.string(required)
         .trim()
         .min(1, 'forms.errors.required' satisfies keyof (typeof ui)[typeof defaultLang]),
       email: z.string(required),
@@ -62,7 +67,11 @@ export const server = {
         // Create team
         const team = await locals.pb
           .collection('teams')
-          .create({ name: input.team })
+          .create({
+            name: input.team,
+            city: input.team_city,
+            type: input.team_type,
+          })
         console.log(`collection('teams').create took ${performance.now() - time} milliseconds`)
         time = performance.now()
         // Update user

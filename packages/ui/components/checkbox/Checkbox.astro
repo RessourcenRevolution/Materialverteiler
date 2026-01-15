@@ -35,7 +35,7 @@ const {
         "before:absolute before:top-[min(1.5%,3px)] before:left-0 before:w-6 before:h-6 before:block before:z-10 before:border-(length:--border) before:border-body before:rounded-xs",
         "before:cursor-pointer",
         "has-[+input:checked]:before:bg-(image:--checkbox)",
-        label ? "px-8" : "px-3",
+        label || Astro.slots.has('default') ? "px-8" : "px-3",
         background === 'white' ? 'before:bg-white' : ''
       ]}
     >

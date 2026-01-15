@@ -64,6 +64,8 @@ type NotifyUserSignupData struct {
 	UserLastname     string
 	UserEmail        string
 	TeamName         string
+	TeamType         string
+	TeamCity         string
 	Message          htmlTemplate.HTML
 }
 
@@ -139,7 +141,7 @@ var emailTemplates = map[any]EmailTemplate{
 		Template: emailVerifiedTemplate,
 	},
 	NotifyUserSignupData{}: {
-		Subject:  "Neue Anfrage zum Beitritt zum Materialverteiler",
+		Subject:  "Neue Anfrage zum Beitritt zum Materialverteiler: {{.UserFirstname}} von {{.TeamName}}",
 		Template: notifyUserSignupTemplate,
 	},
 	UserApprovedData{}: {

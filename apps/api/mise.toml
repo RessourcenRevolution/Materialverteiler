@@ -10,6 +10,18 @@ run = "go run . serve"
 description = "Start API"
 run = "./api serve"
 
+[tasks.migrate-up]
+description = "migrate up"
+run = "./api migrate up"
+
+[tasks.migrate-down]
+description = "migrate down"
+usage = '''
+arg "<number>" help="Number of migrations to rollback"
+'''
+run = "./api migrate down ${usage_number?}"
+
+
 [env]
 DEV_MODE = "true"
 PUBLIC_API_URL = "http://localhost:8090"

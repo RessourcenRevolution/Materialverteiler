@@ -1,6 +1,6 @@
 ---
 import Layout from '~/layouts/Layout.astro'
-import { Input, Button, Checkbox, Alert, Heading, Textarea } from '@rr/ui/components'
+import { Input, Button, Checkbox, Alert, Heading, Textarea, Select } from '@rr/ui/components'
 import { useTranslations } from '~/i18n/ui'
 import { actions } from 'astro:actions'
 import { ActionError } from 'astro:actions'
@@ -54,14 +54,6 @@ const data
         required
       />
       <Input
-        name="team"
-        type="text"
-        label={t('forms.team')}
-        value={data?.get('team') as string}
-        error={fieldError('team', result?.error)}
-        required
-      />
-      <Input
         name="email"
         type="email"
         label={t('forms.email')}
@@ -74,6 +66,35 @@ const data
         label={t('forms.password')}
         value={data?.get('password') as string}
         error={fieldError('password', result?.error, 'signup.errors.')}
+        required
+      />
+      <Input
+        name="team"
+        type="text"
+        label={t('forms.team')}
+        value={data?.get('team') as string}
+        error={fieldError('team', result?.error)}
+        required
+      />
+      <Select
+        id="team_type"
+        name="team_type"
+        value={(data?.get('team_type') || '') as string}
+        options={[
+          { value: '', label: t('forms.team-type') },
+          { value: 'public', label: t('team-type.public') },
+          { value: 'non-profit', label: t('team-type.non-profit') },
+          { value: 'commercial', label: t('team-type.commercial') },
+        ]}
+        error={fieldError('team_type', result?.error)}
+        required
+      />
+      <Input
+        name="team_city"
+        type="text"
+        label={t('forms.team-city')}
+        value={data?.get('team_city') as string}
+        error={fieldError('team_city', result?.error)}
         required
       />
       <Textarea

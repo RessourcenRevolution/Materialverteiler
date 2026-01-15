@@ -23,7 +23,9 @@ export const ui = {
     // Forms
     'forms.firstname': 'Firstname',
     'forms.lastname': 'Lastname',
-    'forms.team': 'Institution',
+    'forms.team': 'Business/organisation',
+    'forms.team-type': 'Type of business/organisation',
+    'forms.team-city': 'City of business/organisation',
     'forms.email': 'E-Mail',
     'forms.password': 'Password',
     'forms.images': 'Pictures',
@@ -42,6 +44,10 @@ export const ui = {
     'listing.status.long.reserved': 'Reserved',
     'listing.status.long.success': 'Matched',
     'listing.status.long.failure': 'Closed / withdrawn',
+    // Team
+    'team-type.public': 'Public',
+    'team-type.non-profit': 'Non-profit',
+    'team-type.commercial': 'Commercial',
     // Signup page
     'signup.title': 'Be part of our Materials Community!',
     'signup.text': `<p>By submitting the form, you create an account in our community. This automatically enrolls you in our Materials Distributor. Through this, we regularly send out material offers from the region.</p>
@@ -68,7 +74,7 @@ export const ui = {
     'profile.title': 'Your profile',
     'profile.name': 'Name',
     'profile.email': 'E-mail',
-    'profile.team': 'Institution',
+    'profile.team': 'Business/organisation',
     'profile.logout': 'Logout',
     'profile.active-listings': 'Active listings',
     'profile.active-listings.none': 'You currently don\'t have any active listings.',
@@ -194,7 +200,9 @@ export const ui = {
     // Forms
     'forms.firstname': 'Vorname',
     'forms.lastname': 'Nachname',
-    'forms.team': 'Welcher Institution gehörst du an?',
+    'forms.team': 'Welchem Betrieb / welcher Organisation gehörst du an?',
+    'forms.team-type': 'Art des Betriebs / der Organisation',
+    'forms.team-city': 'Stadt des Betriebs / der Organisation',
     'forms.email': 'Deine Mail-Adresse',
     'forms.password': 'Passwort',
     'forms.images': 'Bilder',
@@ -213,6 +221,10 @@ export const ui = {
     'listing.status.long.reserved': 'Reserviert',
     'listing.status.long.success': 'Vermittelt',
     'listing.status.long.failure': 'Abgeschloßen / zurückgezogen',
+    // Team
+    'team-type.public': 'Öffentlich',
+    'team-type.non-profit': 'Gemeinnützig',
+    'team-type.commercial': 'Gewerblich',
     // Signup page
     'signup.title': 'Sei Teil unserer Material-Community! ',
     'signup.text': `<p>Mit dem Absenden des Formulars erstellst Du einen Account in unserer Community. Dadurch trittst du automatisch unserem Materialverteiler bei. In diesen senden wir regelmäßig Materialangebote aus der Region.</p>
@@ -239,7 +251,7 @@ export const ui = {
     'profile.title': 'Dein Profil',
     'profile.name': 'Name',
     'profile.email': 'E-Mail',
-    'profile.team': 'Institution',
+    'profile.team': 'Betrieb / Organisation',
     'profile.logout': 'Ausloggen',
     'profile.active-listings': 'Aktive Angebote',
     'profile.active-listings.none': 'Du hast gerade keine aktive Angebote.',

@@ -118,6 +118,8 @@ func main() {
 					UserLastname:     user.GetString("lastname"),
 					UserEmail:        user.Email(),
 					TeamName:         team.GetString("name"),
+					TeamType:         team.GetString("type"),
+					TeamCity:         team.GetString("city"),
 					Message:          email.ConvertLinebreaksToHtml(body.Message),
 				}
 			})
