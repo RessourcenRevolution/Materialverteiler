@@ -43,13 +43,18 @@ const queryOnly = {
   },
 };
 
+const authOnly = {
+  operation: {
+    query: isAuthenticated,
+    create: isAuthenticated,
+    update: isAuthenticated,
+    delete: isAuthenticated,
+  },
+};
+
 export const lists = {
   User: list({
-    // WARNING
-    //   for this starter project, anyone can create, query, update and delete anything
-    //   if you want to prevent random people on the internet from accessing your data,
-    //   you can find out more at https://keystonejs.com/docs/guides/auth-and-access-control
-    access: allowAll,
+    access: authOnly,
 
     // this is the fields for our User list
     fields: {
@@ -74,7 +79,7 @@ export const lists = {
   }),
 
   Image: list({
-    access: queryOnly,
+    access: authOnly,
     fields: {
       name: text({
         validation: {
@@ -87,7 +92,7 @@ export const lists = {
   }),
 
   Page: list({
-    access: queryOnly,
+    access: authOnly,
     ui: {
       labelField: "title",
     },
@@ -171,7 +176,7 @@ export const lists = {
   }),
 
   NavigationItem: list({
-    access: queryOnly,
+    access: authOnly,
     ui: {
       isHidden: true,
       labelField: "title",
@@ -208,7 +213,7 @@ export const lists = {
   }),
 
   Navigation: list({
-    access: queryOnly,
+    access: authOnly,
     fields: {
       name: select({
         options: [
@@ -232,7 +237,7 @@ export const lists = {
   }),
 
   Footer: list({
-    access: queryOnly,
+    access: authOnly,
     isSingleton: true,
     fields: {
       content: document({

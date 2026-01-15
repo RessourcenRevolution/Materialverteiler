@@ -85,7 +85,20 @@ $ export MISE_EXPERIMENTAL=true
 
 # Run setup actions
 $ mise run //:setup
+
+# Run applications
+$ mise run //...:dev
 ```
+
+After initially starting all application:
+
+- Head to http://localhost:3002 to create a first Keystone admin user
+- Create an additional Keystone user with the folling credentials for local
+  usage:
+  - E-mail address: example@example.com
+  - Password: 123456abcdef
+- Create a homepage in the Keystone 'Pages' section
+- Create a main navigation in the Keystone 'Navigations' section
 
 ### Run
 

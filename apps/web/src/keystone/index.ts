@@ -2,13 +2,55 @@ import { FooterSchema } from '~/schemas/footer'
 import { NavigationSchema, type Navigation } from '~/schemas/navigation'
 import { PageSchema } from '~/schemas/page'
 
-async function fetchKeystone({ query, variables }: { query: string, variables?: Record<string, any> }) {
+const authState = {
+  sessionToken: '',
+}
+
+const KEYSTONE_API_USER_EMAIL = process.env.KEYSTONE_API_USER_EMAIL
+const KEYSTONE_API_USER_PASSWORD = process.env.KEYSTONE_API_USER_PASSWORD
+
+if (!KEYSTONE_API_USER_EMAIL) {
+  throw new Error('KEYSTONE_API_USER_EMAIL environment variable is not set')
+}
+if (!KEYSTONE_API_USER_PASSWORD) {
+  throw new Error('KEYSTONE_API_USER_PASSWORD environment variable is not set')
+}
+
+async function fetchKeystone({ query, variables, auth = true }: { query: string, variables?: Record<string, any>, auth?: boolean }) {
   if (!process.env.KEYSTONE_GRAPHQL_ENDPOINT) {
     throw new Error('KEYSTONE_GRAPHQL_ENDPOINT environment variable is not set')
   }
+  if (auth && !authState.sessionToken) {
+    const data = await fetchKeystone({
+      auth: false,
+      query: `
+        mutation {
+          authenticateUserWithPassword(
+            email: "${KEYSTONE_API_USER_EMAIL}",
+            password: "${KEYSTONE_API_USER_PASSWORD}"
+          ) {
+            ... on UserAuthenticationWithPasswordSuccess {
+              sessionToken
+            }
+            ... on UserAuthenticationWithPasswordFailure {
+              message
+            }
+          }
+        }
+      `,
+    })
+    if (data?.authenticateUserWithPassword?.message) {
+      console.error(`Error authenticating user: ${data.authenticateUserWithPassword.message}`)
+      throw new Error('Failed to authenticate with keystone')
+    }
+    if (!data?.authenticateUserWithPassword?.sessionToken) {
+      throw new Error('Failed to authenticate with keystone, no session token returned')
+    }
+    authState.sessionToken = data?.authenticateUserWithPassword?.sessionToken
+  }
   const response = await fetch(process.env.KEYSTONE_GRAPHQL_ENDPOINT, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'application/json', 'Cookie': `keystonejs-session=${authState.sessionToken}` },
     body: JSON.stringify({
       query: query,
       variables,
