@@ -2,10 +2,37 @@
 import { Container, Link } from '@rr/ui/components'
 import Layout from '~/layouts/Layout.astro'
 
-export const prerender = false;
+export const prerender = false
+
+if (!process.env.KEYSTONE_GRAPHQL_ENDPOINT) {
+  throw new Error('KEYSTONE_GRAPHQL_ENDPOINT environment variable is not set')
+}
+
+const response = await fetch(process.env.KEYSTONE_GRAPHQL_ENDPOINT, {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    query: `
+      query navigations {
+        navigations {
+          name
+          items {
+            icon
+            title   
+            path
+          }
+        }
+      }
+      `,
+  }),
+})
+
+const result = await response.json()
+const mainNavigation = (result?.data?.navigations || [])?.find(nav => nav.name === 'main')
+const metaNavigation = (result?.data?.navigations || []).find(nav => nav.name === 'meta')
 ---
 
-<Layout>
+<Layout mainNavigation={mainNavigation} metaNavigation={metaNavigation}>
   <Container size="lg" class="py-24">
     <h1 class="text-2xl font-bold text-heading mb-4">
       404 - Seite nicht gefunden

@@ -1,52 +1,18 @@
 ---
 import { Container } from '@rr/ui/components'
 import { DocumentRenderer } from 'astro-document-renderer'
+import { fetchPage } from '~/keystone'
 import Layout from '~/layouts/Layout.astro'
 import Columns from '~/components/keystone/Columns.astro'
 import Image from '~/components/keystone/Image.astro'
 import Text from '~/components/keystone/Text.astro'
 import Button from '~/components/keystone/Button.astro'
 
-interface Page {
-  title: string
-  path: string
-  access: 'public' | 'authenticated'
-  content: { document: any }
-}
-
 export const prerender = false
 
 const { path } = Astro.params
 
-if (!process.env.KEYSTONE_GRAPHQL_ENDPOINT) {
-  throw new Error('KEYSTONE_GRAPHQL_ENDPOINT environment variable is not set')
-}
-
-const response = await fetch(process.env.KEYSTONE_GRAPHQL_ENDPOINT, {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({
-    query: `
-      query Page($where: PageWhereUniqueInput!) {
-        page(where: $where) {
-          title
-          access
-          content {
-            document(hydrateRelationships: true)
-          }
-        }
-      }
-      `,
-    variables: {
-      where: {
-        path: `/${path || ''}`,
-      },
-    },
-  }),
-})
-
-const result = await response.json()
-const page = result?.data?.page as Page
+const { page } = await fetchPage(path)
 
 if (!page || page.access !== 'public') {
   return new Response(null, { status: 404 })

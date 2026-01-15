@@ -43,3 +43,17 @@ model Page {
 
   @@index([parentId])
 }
+
+model NavigationItem {
+  id                    String       @id @default(cuid())
+  icon                  String?
+  title                 String       @default("")
+  path                  String       @default("")
+  from_Navigation_items Navigation[] @relation("Navigation_items")
+}
+
+model Navigation {
+  id    String           @id @default(cuid())
+  name  String           @unique
+  items NavigationItem[] @relation("Navigation_items")
+}

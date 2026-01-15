@@ -4,26 +4,18 @@ import { useTranslations } from '~/i18n/ui'
 import Logo from '~/assets/logo.svg'
 import MenuIcon from 'iconoir/icons/menu.svg'
 import CloseIcon from 'iconoir/icons/xmark.svg'
-import ProfileCircle from 'iconoir/icons/profile-circle.svg'
-import type { AstroComponentFactory } from 'astro/runtime/server/index.js'
+import type { Navigation } from '~/schemas/navigation'
+import DynamicIcon from '../DynamicIcon.astro'
 
 interface Props {
+  mainNavigation: Navigation | null
+  metaNavigation: Navigation | null
   class?: string
 }
 
-const { class: className } = Astro.props
+const { mainNavigation, metaNavigation, class: className } = Astro.props
 
 const t = useTranslations()
-
-const items: Record<string, { href: string, label: string, icon?: AstroComponentFactory }[]> = {
-  main: [
-    { href: '/app/listings', label: t('header.dashboard') },
-    { href: '/ueber-uns', label: t('header.about') },
-  ],
-  meta: [
-    { href: '/app/profile', label: t('header.profile'), icon: ProfileCircle },
-  ],
-};
 ---
 
 <header
@@ -37,22 +29,23 @@ const items: Record<string, { href: string, label: string, icon?: AstroComponent
     <div class="flex items-center gap-6">
       <a href="/" class="font-bold mr-8">
         <Logo class="w-55 max-w-[50vw]" />
+        <span class="sr-only">{t('header.home')}</span>
       </a>
       {
-        items.main.map(({ href, icon: Icon, label }) => (
-          <NavigationItem href={href} class="hidden lg:block">
-            {Icon && <Icon width={30} height={30} />}
-            {label}
+        mainNavigation && mainNavigation.items.map(({ path, icon, title }) => (
+          <NavigationItem href={path} class="hidden lg:block">
+            <DynamicIcon icon={icon} />
+            { icon ? <span class="sr-only">{title}</span> : title}
           </NavigationItem>
         ))
       }
     </div>
     <div class="hidden lg:flex gap-6 pr-4">
       {
-        items.meta.map(({ href, icon: Icon, label }) => (
-          <NavigationItem href={href}>
-            {Icon && <Icon width={30} height={30} />}
-            {label}
+        metaNavigation && metaNavigation.items.map(({ path, icon, title }) => (
+          <NavigationItem href={path} class="hidden lg:block">
+            <DynamicIcon icon={icon} />
+            { icon ? <span class="sr-only">{title}</span> : title}
           </NavigationItem>
         ))
       }
@@ -89,11 +82,11 @@ const items: Record<string, { href: string, label: string, icon?: AstroComponent
               </NavigationItem>
             </li>
             {
-              items.main.map(({ href, label, icon: Icon }) => (
+              mainNavigation && mainNavigation.items.map(({ path, icon, title }) => (
                 <li>
-                  <NavigationItem href={href} class="text-lg">
-                    {Icon && <Icon width={30} height={30} />}
-                    {label}
+                  <NavigationItem href={path} class="text-lg">
+                    <DynamicIcon icon={icon} />
+                    { title}
                   </NavigationItem>
                 </li>
               ))
@@ -101,11 +94,11 @@ const items: Record<string, { href: string, label: string, icon?: AstroComponent
           </ul>
           <ul class="flex flex-col gap-4">
             {
-              items.meta.map(({ href, label, icon: Icon }) => (
+              metaNavigation && metaNavigation.items.map(({ path, icon, title }) => (
                 <li>
-                  <NavigationItem href={href} class="text-lg">
-                    {Icon && <Icon width={30} height={30} />}
-                    {label}
+                  <NavigationItem href={path} class="text-lg">
+                    <DynamicIcon icon={icon} />
+                    { title}
                   </NavigationItem>
                 </li>
               ))

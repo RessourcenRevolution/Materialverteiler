@@ -1,0 +1,28 @@
+---
+import ProfileCircle from 'iconoir/icons/profile-circle.svg'
+import HelpCircle from 'iconoir/icons/help-circle.svg'
+import InfoCircle from 'iconoir/icons/info-circle.svg'
+import Message from 'iconoir/icons/message.svg'
+import Cart from 'iconoir/icons/cart.svg'
+import List from 'iconoir/icons/list.svg'
+
+interface Props {
+  icon: keyof typeof icons
+}
+
+const { icon } = Astro.props
+
+const icons = {
+  'profile-circle': ProfileCircle,
+  'help-circle': HelpCircle,
+  'info-circle': InfoCircle,
+  'message': Message,
+  'cart': Cart,
+  'list': List,
+}
+
+const Icon = icons[icon]
+
+---
+
+{Icon && <Icon width={30} height={30} />}

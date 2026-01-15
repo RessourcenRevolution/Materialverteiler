@@ -165,4 +165,52 @@ export const lists = {
       },
     },
   }),
+
+  NavigationItem: list({
+    access: queryOnly,
+    ui: {
+      isHidden: true,
+      labelField: "title",
+    },
+    fields: {
+      icon: select({
+        options: [
+          {label: 'None', value: ''},
+          {label: 'Profile Circle', value: 'profile-circle'},
+          {label: 'Help Circle', value: 'help-circle'},
+          {label: 'Info Circle', value: 'info-circle'},
+          {label: 'Message', value: 'message'},
+          {label: 'Cart', value: 'cart'},
+          {label: 'List', value: 'list'},
+        ],
+        validation: { isRequired: false }
+      }),
+      title: text({ validation: { isRequired: true } }),
+      path: text({ validation: { isRequired: true } }),
+    },
+  }),
+
+  Navigation: list({
+    access: queryOnly,
+    fields: {
+      name: select({
+        options: [
+          { value: "main", label: "Main Navigation" },
+          { value: "meta", label: "Meta Navigation" },
+        ],
+        isIndexed: "unique",
+        validation: { isRequired: true },
+      }),
+      items: relationship({
+        ref: "NavigationItem",
+        many: true,
+        ui: {
+          displayMode: "cards",
+          cardFields: ["icon", "title", "path"],
+          inlineCreate: { fields: ["icon", "title", "path"] },
+          inlineEdit: { fields: ["icon", "title", "path"] },
+        },
+      }),
+    },
+  }),
 } satisfies Lists;
