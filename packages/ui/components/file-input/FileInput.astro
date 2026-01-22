@@ -1,0 +1,21 @@
+---
+export interface Props {
+  name: string;
+  accept?: string;
+  label?: string;
+  error?: string;
+}
+const { label, accept, name, error } = Astro.props;
+---
+
+<div>
+  {
+    label && (
+      <label for={name} class="block w-full mb-2 font-bold text-body text-base">
+        {label}
+      </label>
+    )
+  }
+  <input type="file" name={name} accept={accept} class="inline-block cursor-pointer text-body file:font-bold file:mr-4 hover:file:text-white hover:file:bg-body file:border-(length:--border) text-base file:border-body file:rounded-xs file:px-[0.75em] file:py-[0.5em]"/>
+  {error && <p class="text-red-800 text-sm">{error}</p>}
+</div>
