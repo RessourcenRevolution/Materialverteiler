@@ -26,7 +26,9 @@ const user = Astro.locals.pb.authStore.record?.id
 if (!user) {
   return new Response(null, { status: 403 })
 }
-const item = await Astro.locals.pb.collection('listings').getOne(id)
+const item = await Astro.locals.pb.collection('listings').getOne(id, {
+  expand: 'accounting_via_listing',
+})
 if (!item) {
   return new Response(null, { status: 404 })
 }

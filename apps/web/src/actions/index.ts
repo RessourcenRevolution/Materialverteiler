@@ -180,10 +180,12 @@ export const server = {
       ListingSchema.omit({ id: true, user: true, team: true, images: true, status: true }).extend({
         'type': z.literal('create'),
         'images+': z.array(z.instanceof(File)).optional(),
+        'accounting_file': z.instanceof(File).optional(),
       }),
       ListingSchema.omit({ user: true, team: true }).extend({
         'type': z.literal('update'),
         'images+': z.array(z.instanceof(File)).optional(),
+        'accounting_file': z.instanceof(File).optional(),
       }),
     ]),
     handler: async (input, { locals }) => {
@@ -192,6 +194,7 @@ export const server = {
         let listing
         let status
 
+        // Create/update listing
         if (input.type === 'create') {
           status = 'created'
           listing = await locals.pb.collection('listings').create({
@@ -207,6 +210,30 @@ export const server = {
           listing = await locals.pb.collection('listings').update(input.id, {
             ...data,
           }) as Listing
+        }
+
+        // Create/update CO2 accounting
+        if (input.accounting_file) {
+          let accounting
+          try {
+            accounting = await locals.pb.collection('accounting').getFirstListItem(
+              locals.pb.filter('listing = {:listing}', { listing: listing.id }),
+            )
+          }
+          catch (e) {
+            console.log(e)
+          }
+          if (accounting) {
+            await locals.pb.collection('accounting').update(accounting.id, {
+              excel_file: input.accounting_file,
+            })
+          }
+          else {
+            await locals.pb.collection('accounting').create({
+              listing: listing.id,
+              excel_file: input.accounting_file,
+            })
+          }
         }
         return { listing, status }
       }
@@ -227,6 +254,7 @@ export const server = {
           })
         }
         else {
+          console.log(error)
           throw new ActionError({
             code: 'INTERNAL_SERVER_ERROR',
             message: t('create-listing.errors.unknown'),

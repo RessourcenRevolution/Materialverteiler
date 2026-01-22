@@ -6,6 +6,7 @@ import {
   Alert,
   Textarea,
   ImageInput,
+  FileInput,
   Heading,
   Select,
 } from '@rr/ui/components'
@@ -15,6 +16,7 @@ import { isInputError } from 'astro:actions'
 import type { Listing } from '~/schemas/listing'
 import { asIsoDate } from '~/lib/date'
 import EditImageInput from './EditImageInput.astro'
+import DownloadIcon from 'iconoir/icons/download.svg'
 
 interface Props {
   update?: boolean
@@ -54,7 +56,9 @@ const postedListing = formData
     } satisfies Omit<Listing, 'id' | 'team' | 'user' | 'created' | 'updated'>)
   : null
 
-const data = postedListing ? postedListing : listing;
+const data = postedListing ? postedListing : listing
+
+const accounting = listing?.expand?.accounting_via_listing?.[0];
 ---
 
 {
@@ -189,6 +193,39 @@ const data = postedListing ? postedListing : listing;
     value={data?.end_date ? asIsoDate(data?.end_date) : ''}
     error={fieldError('end_date', result?.error)}
   />
+
+  {/* Bilanzierung */}
+  <Heading tag="h2" size="md" class="mt-6">
+    {t('listing-form.accounting.title')}
+  </Heading>
+  {(accounting?.co2 || 0) === 0 && <p class="text-body text-base prose" set:html={t('listing-form.accounting.text')} />}
+  {(accounting?.co2 || 0) > 0 && <p class="text-body text-base prose" set:html={t('listing-form.accounting.completed')} />}
+  {accounting
+    && <Alert variant="info" class="">
+      <p>
+        {(accounting?.co2 || 0) === 0 && <strong class="inline-block mb-1">{t('listing-form.accounting.existing')}</strong>}
+        {(accounting?.co2 || 0) > 0 && <strong class="inline-block mb-1">{t('listing-form.accounting.existing_completed')}</strong>}
+        <br />
+        <span class="flex gap-2">
+          <DownloadIcon />
+          <a
+            href={`${process.env.PUBLIC_API_URL}/api/files/accounting/${accounting.id}/${accounting.excel_file}`}
+            class="underline"
+          >
+            {accounting.excel_file}
+          </a>
+        </span>
+      </p>
+    </Alert>
+  }
+  {(accounting?.co2 || 0) === 0
+    && <FileInput
+      name="accounting_file"
+      label={t('listing-form.accounting_file.label')}
+      error={fieldError('accounting_file', result?.error)}
+    />
+  }
+
   {
     result?.error && !isInputError(result.error) && (
       <Alert variant="error" text={result.error.message} />
@@ -199,6 +236,6 @@ const data = postedListing ? postedListing : listing;
     label={update
       ? t('listing-form.update.submit')
       : t('listing-form.create.submit')}
-    class="self-start"
+    class="self-start mt-4"
   />
 </form>
