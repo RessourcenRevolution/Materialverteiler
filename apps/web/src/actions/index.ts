@@ -51,7 +51,7 @@ export const server = {
         const user = await locals.pb.collection('users').create({
           firstname: input.firstname,
           lastname: input.lastname,
-          email: input.email,
+          email: input.email.toLowerCase(),
           password: input.password,
           passwordConfirm: input.password,
           terms: input.terms,
@@ -61,7 +61,7 @@ export const server = {
         // Login
         await locals.pb
           .collection('users')
-          .authWithPassword(input.email, input.password)
+          .authWithPassword(input.email.toLowerCase(), input.password)
         console.log(`authWithPassword() took ${performance.now() - time} milliseconds`)
         time = performance.now()
         // Create team
@@ -213,7 +213,7 @@ export const server = {
         }
 
         // Create/update CO2 accounting
-        if (input.accounting_file) {
+        if (input.accounting_file && input.accounting_file.size > 0) {
           let accounting
           try {
             accounting = await locals.pb.collection('accounting').getFirstListItem(
@@ -221,7 +221,7 @@ export const server = {
             )
           }
           catch (e) {
-            console.log(e)
+
           }
           if (accounting) {
             await locals.pb.collection('accounting').update(accounting.id, {

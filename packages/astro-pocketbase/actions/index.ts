@@ -17,7 +17,7 @@ export const login = defineAction({
     try {
       await locals.pb
         .collection("users")
-        .authWithPassword(input.email, input.password);
+        .authWithPassword(input.email.toLowerCase(), input.password);
       return {
         cookie: locals.pb.authStore.exportToCookie({
           secure: import.meta.env.DEV ? false : true,
