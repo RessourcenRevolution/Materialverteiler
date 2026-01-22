@@ -7,6 +7,7 @@ import Columns from '~/components/keystone/Columns.astro'
 import Image from '~/components/keystone/Image.astro'
 import Text from '~/components/keystone/Text.astro'
 import Button from '~/components/keystone/Button.astro'
+import Listings from '~/components/keystone/Listings.astro'
 
 export const prerender = false
 
@@ -36,6 +37,7 @@ if (!page || page.access !== 'public') {
         image: Image,
         text: Text,
         button: Button,
+        listings: Listings,
       }}
     />
   </Container>

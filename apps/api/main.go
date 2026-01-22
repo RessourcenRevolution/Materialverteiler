@@ -18,6 +18,12 @@ import (
 	_ "api/migrations"
 )
 
+type RecentListingData struct {
+	Id     string   `json:"id"`
+	Title  string   `json:"title"`
+	Images []string `json:"images"`
+}
+
 func main() {
 	app := pocketbase.New()
 
@@ -188,6 +194,25 @@ func main() {
 
 			return e.JSON(http.StatusOK, map[string]bool{"success": true})
 		}).Bind(apis.RequireAuth())
+
+		// Get recent listings
+		se.Router.GET("/api/listings/recent", func(e *core.RequestEvent) error {
+			// Get listing
+			listings, err := app.FindRecordsByFilter("listings", "images:length > 0 && status = 'success'", "created", 4, 0)
+			if err != nil {
+				return e.Error(http.StatusInternalServerError, "error getting listing", nil)
+			}
+			// map over listings, and only pick some fields
+			listingsData := make([]RecentListingData, len(listings))
+			for i, listing := range listings {
+				listingsData[i] = RecentListingData{
+					Id:     listing.GetString("id"),
+					Title:  listing.GetString("title"),
+					Images: listing.GetStringSlice("images"),
+				}
+			}
+			return e.JSON(http.StatusOK, listingsData)
+		})
 
 		return se.Next()
 	})

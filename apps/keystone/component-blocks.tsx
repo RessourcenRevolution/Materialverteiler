@@ -2,6 +2,7 @@ import React from "react";
 import {
   component,
   fields,
+  NotEditable,
 } from "@keystone-6/fields-document/component-blocks";
 
 // naming the export componentBlocks is important because the Admin UI
@@ -118,6 +119,76 @@ export const componentBlocks = {
             {props.fields.content.element}
           </span>
         </p>
+      );
+    },
+  }),
+  listings: component({
+    label: "Listings",
+    schema: {
+      type: fields.select({
+        label: "Type",
+        options: [{ label: "Recently completed", value: "recent" }],
+        defaultValue: "recent",
+      }),
+      title: fields.text({ label: "Title" }),
+      link: fields.url({
+        label: "Link",
+      }),
+      linkText: fields.text({
+        label: "Link Text",
+      }),
+    },
+    preview: (props) => {
+      const title = props.fields.title.value;
+      const link = props.fields.link.value;
+      const linkText = props.fields.linkText.value;
+      return (
+        <NotEditable style={{ width: "100%" }}>
+          <div
+            style={{
+              width: "100%",
+              display: "flex",
+              gap: "1rem",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            {title && <h2>{title}</h2>}
+            {link && linkText && <a href="#">{linkText}</a>}
+          </div>
+          <div style={{ display: "flex", gap: "0.5rem", width: "100%" }}>
+            <div style={{ width: "100%" }}>
+              <div
+                style={{
+                  width: "100%",
+                  aspectRatio: "4/3",
+                  backgroundColor: "#eee",
+                }}
+              ></div>
+              <p>Listing 1...</p>
+            </div>
+            <div style={{ width: "100%" }}>
+              <div
+                style={{
+                  width: "100%",
+                  aspectRatio: "4/3",
+                  backgroundColor: "#eee",
+                }}
+              ></div>
+              <p>Listing 2...</p>
+            </div>
+            <div style={{ width: "100%" }}>
+              <div
+                style={{
+                  width: "100%",
+                  aspectRatio: "4/3",
+                  backgroundColor: "#eee",
+                }}
+              ></div>
+              <p>Listing 3...</p>
+            </div>
+          </div>
+        </NotEditable>
       );
     },
   }),

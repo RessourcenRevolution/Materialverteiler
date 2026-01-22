@@ -1,0 +1,49 @@
+---
+import { Heading } from '@rr/ui/components'
+import { ListingSchema } from '~/schemas/listing'
+import ArrowRight from 'iconoir/icons/arrow-right.svg'
+
+interface Props {
+  type: 'recent'
+  title?: string
+  link?: string
+  linkText?: string
+}
+
+const { title, link, linkText } = Astro.props
+
+const result = await Astro.locals.pb.send('/api/listings/recent', { method: 'GET' })
+const listings = ListingSchema
+  .pick({ id: true, title: true, images: true })
+  .required({ images: true })
+  .array()
+  .parse(result)
+---
+
+<section
+  data-module
+  class:list={[
+    'not-prose',
+  ]}
+>
+  <div class="flex items-center justify-between mb-4">
+    {title && <Heading tag="h2" size="md">{title}</Heading>}
+    {link && <a href={link} class="group flex items-center gap-2 font-bold">
+      <span class="group-hover:underline decoration-2 underline-offset-4">{linkText}</span>
+      <ArrowRight stroke-width="2.5" />
+    </a>}
+  </div>
+  <div class="flex gap-8">
+    {listings.map(listing => (
+      <div class="max-w-1/2 lg:max-w-1/3 flex flex-col">
+        <img
+          src={`${process.env.PUBLIC_API_URL}/api/files/listings/${listing.id}/${listing.images[0]}`}
+          class="aspect-4/3 object-cover mb-2 rounded-xs"
+        />
+        <p class="text-base text-body font-bold">
+          {listing.title}
+        </p>
+      </div>
+    ))}
+  </div>
+</section>
