@@ -4,6 +4,12 @@ experimental_monorepo_root = true
 go = "1.25.3"
 node = "22.21.0"
 
+[monorepo]
+config_roots = [
+    "apps/*",
+    "packages/*"
+]
+
 [tasks.setup]
 description = "Setup"
 env = { INSTALL_PATH = "{{cwd}}/bin" }
