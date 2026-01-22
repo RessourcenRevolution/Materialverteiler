@@ -85,7 +85,7 @@ func AfterListingUpdate(e *core.RecordEvent) error {
 		email.SendEmail(e.App, mail.Address{Address: user.Email()}, data, nil)
 
 		// Notify other users of new listing
-		users, err := e.App.FindRecordsByFilter("users", "verified = true && roles ~ 'user' && notifications ~ 'new-listing'", "", 100, 0, dbx.Params{})
+		users, err := e.App.FindRecordsByFilter("users", "verified = true && roles ~ 'user' && notifications ~ 'new-listing' && id != '"+user.Id+"'", "", 100, 0, dbx.Params{})
 		if err != nil {
 			e.App.Logger().Error("Error fetching users")
 		}
