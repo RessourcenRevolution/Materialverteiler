@@ -58,7 +58,13 @@ const postedListing = formData
 
 const data = postedListing ? postedListing : listing
 
-const accounting = listing?.expand?.accounting_via_listing?.[0];
+const accounting = listing?.expand?.accounting_via_listing?.[0]
+let accounting_file_url
+if (accounting && accounting.excel_file) {
+  const record = await Astro.locals.pb.collection('accounting').getOne(accounting.id)
+  const fileToken = await Astro.locals.pb.files.getToken()
+  accounting_file_url = Astro.locals.pb.files.getURL(record, record.excel_file, { token: fileToken })
+}
 ---
 
 {
@@ -209,7 +215,7 @@ const accounting = listing?.expand?.accounting_via_listing?.[0];
         <span class="flex gap-2">
           <DownloadIcon />
           <a
-            href={`${process.env.PUBLIC_API_URL}/api/files/accounting/${accounting.id}/${accounting.excel_file}`}
+            href={accounting_file_url}
             class="underline"
           >
             {accounting.excel_file}
