@@ -258,4 +258,13 @@ export const lists = {
       }),
     },
   }),
+
+  Person: list({
+    access: authOnly,
+    fields: {
+      name: text({ validation: { isRequired: true } }),
+      description: text({ validation: { isRequired: true } }),
+      photo: image({ storage: "images" }),
+    },
+  }),
 } satisfies Lists;

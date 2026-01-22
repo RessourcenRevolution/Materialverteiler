@@ -8,6 +8,7 @@ import Image from '~/components/keystone/Image.astro'
 import Text from '~/components/keystone/Text.astro'
 import Button from '~/components/keystone/Button.astro'
 import Listings from '~/components/keystone/Listings.astro'
+import People from '~/components/keystone/People.astro'
 
 export const prerender = false
 
@@ -21,11 +22,15 @@ if (!page || page.access !== 'public') {
 ---
 
 <Layout>
-  <Container
-    size="xl"
+  <div
     class:list={[
       'prose page-animation',
+      'w-full',
+      'max-w-full',
       '[&>[data-module]]:my-12 md:[&>[data-module]]:my-24 [&>[data-module]:first-child]:mt-0',
+      '[&>*]:max-w-5xl',
+      '[&>*]:mx-auto',
+      '[&>*]:w-full',
     ]}
   >
     <DocumentRenderer
@@ -38,7 +43,8 @@ if (!page || page.access !== 'public') {
         text: Text,
         button: Button,
         listings: Listings,
+        people: People,
       }}
     />
-  </Container>
+  </div>
 </Layout>

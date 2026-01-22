@@ -64,3 +64,14 @@ model Footer {
   content String           @default("[{\"type\":\"paragraph\",\"children\":[{\"text\":\"\"}]}]")
   links   NavigationItem[] @relation("Footer_links")
 }
+
+model Person {
+  id              String  @id @default(cuid())
+  name            String  @default("")
+  description     String  @default("")
+  photo_id        String?
+  photo_filesize  Int?
+  photo_width     Int?
+  photo_height    Int?
+  photo_extension String?
+}

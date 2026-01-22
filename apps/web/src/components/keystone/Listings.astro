@@ -12,7 +12,7 @@ interface Props {
 
 const { title, link, linkText } = Astro.props
 
-const result = await Astro.locals.pb.send('/api/listings/recent', { method: 'GET' })
+const result = await Astro.locals.pb.send('/api/listings/recent', { method: 'GET', requestKey: null })
 const listings = ListingSchema
   .pick({ id: true, title: true, images: true })
   .required({ images: true })

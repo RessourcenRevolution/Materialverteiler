@@ -192,4 +192,39 @@ export const componentBlocks = {
       );
     },
   }),
+  people: component({
+    label: "People",
+    schema: {
+      title: fields.text({ label: "Title" }),
+    },
+    preview: (props) => {
+      const title = props.fields.title.value;
+      return (
+        <NotEditable style={{ width: "100%" }}>
+          {title && <h2>{title}</h2>}
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(3, 1fr)",
+              gap: "1.5rem",
+              width: "100%",
+            }}
+          >
+            {new Array(6).fill(undefined).map((_, index) => (
+              <div style={{ width: "100%" }} key={index}>
+                <div
+                  style={{
+                    width: "100%",
+                    aspectRatio: "3/4",
+                    backgroundColor: "#eee",
+                  }}
+                ></div>
+                <p style={{ fontWeight: "bold" }}>Person {index + 1}...</p>
+              </div>
+            ))}
+          </div>
+        </NotEditable>
+      );
+    },
+  }),
 };

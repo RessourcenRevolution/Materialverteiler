@@ -20,7 +20,7 @@ const { mainNavigation, metaNavigation, footer } = await fetchLayout()
   </head>
   <body class="h-auto! min-h-full grid grid-rows-[auto_1fr_auto] bg-background">
     <Header mainNavigation={mainNavigation} metaNavigation={metaNavigation} class="max-w-[1600px] mx-auto" />
-    <main class="w-full max-w-[1600px] mx-auto px-(--body-inline-padding)">
+    <main class="w-full mx-auto px-(--body-inline-padding)">
       <slot />
     </main>
     <Footer footer={footer} class="max-w-6xl mx-auto" />

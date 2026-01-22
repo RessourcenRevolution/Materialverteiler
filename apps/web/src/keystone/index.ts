@@ -16,7 +16,7 @@ if (!KEYSTONE_API_USER_PASSWORD) {
   throw new Error('KEYSTONE_API_USER_PASSWORD environment variable is not set')
 }
 
-async function fetchKeystone({ query, variables, auth = true }: { query: string, variables?: Record<string, any>, auth?: boolean }) {
+export async function fetchKeystone({ query, variables, auth = true }: { query: string, variables?: Record<string, any>, auth?: boolean }) {
   if (!process.env.KEYSTONE_GRAPHQL_ENDPOINT) {
     throw new Error('KEYSTONE_GRAPHQL_ENDPOINT environment variable is not set')
   }

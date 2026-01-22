@@ -410,6 +410,49 @@ input FooterCreateInput {
   links: NavigationItemRelateToManyForCreateInput
 }
 
+type Person {
+  id: ID!
+  name: String
+  description: String
+  photo: ImageFieldOutput
+}
+
+input PersonWhereUniqueInput {
+  id: ID
+}
+
+input PersonWhereInput {
+  AND: [PersonWhereInput!]
+  OR: [PersonWhereInput!]
+  NOT: [PersonWhereInput!]
+  id: IDFilter
+  name: StringFilter
+  description: StringFilter
+}
+
+input PersonOrderByInput {
+  id: OrderDirection
+  name: OrderDirection
+  description: OrderDirection
+}
+
+input PersonUpdateInput {
+  name: String
+  description: String
+  photo: ImageFieldInput
+}
+
+input PersonUpdateArgs {
+  where: PersonWhereUniqueInput!
+  data: PersonUpdateInput!
+}
+
+input PersonCreateInput {
+  name: String
+  description: String
+  photo: ImageFieldInput
+}
+
 """
 The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 """
@@ -452,6 +495,12 @@ type Mutation {
   updateFooters(data: [FooterUpdateArgs!]!): [Footer]
   deleteFooter(where: FooterWhereUniqueInput! = {id: 1}): Footer
   deleteFooters(where: [FooterWhereUniqueInput!]!): [Footer]
+  createPerson(data: PersonCreateInput!): Person
+  createPeople(data: [PersonCreateInput!]!): [Person]
+  updatePerson(where: PersonWhereUniqueInput!, data: PersonUpdateInput!): Person
+  updatePeople(data: [PersonUpdateArgs!]!): [Person]
+  deletePerson(where: PersonWhereUniqueInput!): Person
+  deletePeople(where: [PersonWhereUniqueInput!]!): [Person]
   endSession: Boolean!
   authenticateUserWithPassword(email: String!, password: String!): UserAuthenticationWithPasswordResult
   createInitialUser(data: CreateInitialUserInput!): UserAuthenticationWithPasswordSuccess!
@@ -493,6 +542,9 @@ type Query {
   footer(where: FooterWhereUniqueInput! = {id: 1}): Footer
   footers(where: FooterWhereInput! = {id: {equals: 1}}, orderBy: [FooterOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FooterWhereUniqueInput): [Footer!]
   footersCount(where: FooterWhereInput! = {id: {equals: 1}}): Int
+  person(where: PersonWhereUniqueInput!): Person
+  people(where: PersonWhereInput! = {}, orderBy: [PersonOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PersonWhereUniqueInput): [Person!]
+  peopleCount(where: PersonWhereInput! = {}): Int
   keystone: KeystoneMeta!
   authenticatedItem: AuthenticatedItem
 }

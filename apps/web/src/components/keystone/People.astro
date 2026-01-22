@@ -1,0 +1,67 @@
+---
+import { Heading } from '@rr/ui/components'
+import { fetchKeystone } from '~/keystone'
+import { PersonSchema } from '~/schemas/person'
+
+interface Props {
+  title?: string
+}
+
+const { title } = Astro.props
+
+const result = await fetchKeystone({
+  query: `
+    query People {
+      people {
+        id
+        name
+        description
+        photo {
+          url
+          width
+          height
+        }
+      }
+    }
+  `,
+})
+const people = PersonSchema.array().parse(result.people);
+---
+
+<section
+  data-module
+  class:list={[
+    'not-prose',
+    'bg-[#998fc7]',
+    'max-w-[calc(100%+(var(--body-inline-padding)*2))]!',
+    'w-[calc(100%+(var(--body-inline-padding)*2))]!',
+    '-mx-(--body-inline-padding)!',
+    'px-(--body-inline-padding)',
+    'py-6 lg:py-8',
+  ]}
+>
+  <div class="max-w-5xl mx-auto">
+    {title && <Heading tag="h2" size="md" class="mb-6 text-white">{title}</Heading>}
+    <div class="grid grid-cols-3 lg:grid-cols-6 gap-3 md:gap-8">
+      {people.map(person => (
+        <div class="flex flex-col">
+          {person?.photo?.url
+            ? <img
+                src={person.photo.url}
+                class="aspect-3/4 object-cover mb-2 rounded-xs"
+              />
+            : <div class="w-full aspect-3/4 bg-gray-200/30 mb-2 rounded-xs"></div>
+          }
+          <p class="text-white font-bold leading-[1.15] md:text-lg mb-1">
+            {person.name}
+          </p>
+          {person.description
+            && <p class="text-white text-sm md:text-base">
+              {person.description}
+            </p>
+          }
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
