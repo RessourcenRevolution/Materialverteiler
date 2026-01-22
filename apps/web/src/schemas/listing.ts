@@ -2,6 +2,7 @@ import { z } from 'zod'
 import { UserSchema } from './user'
 import { TeamSchema } from './team'
 import type { defaultLang, ui } from '~/i18n/ui'
+import { AccountingSchema } from './accounting'
 
 export const ListingSchema = z.object({
   id: z.string(),
@@ -43,6 +44,7 @@ export const ListingSchema = z.object({
     .object({
       user: UserSchema.optional(),
       team: TeamSchema.optional(),
+      accounting_via_listing: z.array(AccountingSchema).optional(),
     })
     .optional(),
 })
