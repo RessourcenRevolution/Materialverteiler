@@ -5,7 +5,7 @@ WORKDIR /app
 # build astro
 FROM base AS build
 
-COPY package.json package-lock.json .
+COPY package.json package-lock.json ./
 COPY apps/web /app/apps/web
 COPY packages /app/packages
 RUN NODE_ENV=development npm ci --workspace=apps/web
