@@ -179,6 +179,7 @@ export const ui = {
     'listing-page.pickup_description': 'Pickup Info',
     'listing-page.address': 'Address',
     'listing-page.contact.title': 'Contact',
+    'listing-page.contact.text': '<p>Interested in this listing? You can use this form to contact the organization providing it. Important: Your data will be forwarded to them—rest assured, only organizations with verified accounts will receive it. They may then respond to your inquiry via email or phone (optional). Please handle any contact details you receive with care. All further communication will be between you and the organization, and at your own responsibility. If you have any questions or issues, you can always reach us by email: <a href="mailto:info@ressourcenrevolution.org">info@ressourcenrevolution.org</a>.</p><p>Tip: Feel free to include a few words about your organization. It might also be helpful to mention how you plan to reuse the material.</p>',
     // Contact form
     'contact-form.name.label': 'Your name',
     'contact-form.email.label': 'Your e-mail',
@@ -186,7 +187,7 @@ export const ui = {
     'contact-form.team_type.label': 'Type of business/organisation',
     'contact-form.message.label': 'Your message',
     'contact-form.submit': 'Send',
-    'contact-form.deactivated': 'Currently, it is not possible to contact this listijng as it is already reserved or matched.',
+    'contact-form.deactivated': 'Currently, it is not possible to contact this listing as it is already reserved or matched.',
     // Listing user status
     'listing-user-status.new': 'This Materialangebot is currently being reviewed. You will receive a message once it is unlocked.',
     'listing-user-status.open': 'This Materialangebot is currently active.',
@@ -282,13 +283,13 @@ export const ui = {
     // Dashboard page
     'dashboard.title': 'Materialangebote',
     'dashboard.new-listing': 'Angebot anlegen',
-    'dashboard.user-approval.title': 'Wilkommen',
+    'dashboard.user-approval.title': 'Willkommen',
     'dashboard.user-approval.text':
-      'Dein Konto wird derzeit geprüft und bald freigeschaltet. Sobald es aktiviert ist, erhältst du eine E-Mail von uns.',
+      'Willkommen. Dein Konto wird derzeit geprüft. Sobald es freigeschaltet wird, erhältst du von uns eine E-Mail.',
     'dashboard.no-listing.title': 'Keine aktive Materialangebote',
     'dashboard.no-listing.text': 'Hier findest du Materialangebote, die von Instituten auf der Plattform angeboten werden. Aktuell gibt es keine aktive Materialangebote. Du erhältst eine E-Mail, sobald ein neues Materialangebot hinzugefügt wurde.',
     'confirm-email.warning.text':
-      'Deine E-Mail-Adresse wurde noch nicht bestätigt. Überprüfe deinen Posteingang nach dem Bestätigungslink.',
+      'Vielen Dank für deine Anmeldung. Bitte bestätige diese mit dem Bestätigungslink, den wir dir per E-Mail zugeschickt haben. Link nicht erhalten?',
     'confirm-email.warning.button': 'Erneut senden',
     'confirm-email.resend.error':
       'Beim erneuten Senden der Bestätigungs-E-Mail ist ein Fehler aufgetreten. Bitte versuche es erneut.',
@@ -367,15 +368,16 @@ export const ui = {
     'listing-page.condition': 'Zustand',
     'listing-page.pickup_description': 'Infos zur Abholung',
     'listing-page.address': 'Addresse',
-    'listing-page.contact.title': 'Kontakt Aufnehmen',
+    'listing-page.contact.title': 'Kontakt aufnehmen',
+    'listing-page.contact.text': '<p>Du hast Interesse an diesem Angebot? Über dieses Formular kannst du Kontakt zur abgebenden Organisation aufnehmen. Wichtig: Deine Daten werden an diese weitergegeben – dabei handelt es sich selbstverständlich nur um Organisationen mit geprüftem Konto. Sie können dann auf deine Anfrage per E-Mail oder Anruf (optional) reagieren. Bitte geh sensibel mit den dann erhaltenen Kontaktdaten um. Der weitere Austausch erfolgt nur noch unter euch und auf eure Verantwortung. Bei Fragen oder Problemen sind wir selbstverständlich per E-Mail erreichbar: <a href="mailto:info@ressourcenrevolution.org">info@ressourcenrevolution.org</a>.</p><p>Tipp: Schreib gerne ein paar Worte zu deiner Organisation. Interessant könnte z.B. auch sein, wie du das Material wiederverwenden möchtest.</p>',
     // Contact form
-    'contact-form.name.label': 'Deine Name',
+    'contact-form.name.label': 'Dein Name',
     'contact-form.email.label': 'Deine Mail-Addresse',
-    'contact-form.phonenumber.label': 'Deine Telefonnummer',
+    'contact-form.phonenumber.label': 'Deine Telefonnummer (optional)',
     'contact-form.team_type.label': 'Art des Betriebs / der Organisation',
     'contact-form.message.label': 'Deine Nachricht',
     'contact-form.submit': 'Absenden',
-    'contact-form.deactivated': 'Aktuell ist es nicht möglich, zu diesem Materialangebot Kontakt aufzunehmen, da das Angebot bereits reserviert oder vermittelt ist.',
+    'contact-form.deactivated': 'Aktuell ist es nicht möglich, zu diesem Materialangebot Kontakt aufzunehmen, da es gerade reserviert ist.',
     // Listing user status
     'listing-user-status.new': 'Dieses Materialangebot wird derzeit geprüft. Du erhältst eine Nachricht, sobald es freigeschaltet ist.',
     'listing-user-status.open': 'Dieses Materialangebot ist gerade aktiv.',

@@ -34,19 +34,26 @@ const data
           Vielen Dank für deine Anfrage!
         </Heading>
         <p class="text-heading font-bold mb-4">
-          Deine Anfrage ist eingegangen und wurde übermittelt.
-          Der*die Abgebende kann sich direkt bei dir melden.
-          Bitte habe etwas Geduld und Verständnis, wenn das
-          Angebot schon vergeben ist.
+          Deine Kontaktaufnahme ist eingegangen und wurde
+          übermittelt. Die abgebende Organisation kann sich
+          nun direkt bei dir melden. Bitte hab etwas Geduld
+          - und Verständnis, falls es mehrere Anfragen
+          gleichzeitig gab und das Angebot schon vergeben
+          sein sollte. Bei Fragen oder Problemen schreib
+          uns gerne eine E-Mail an
+          <a href="mailto:info@ressourcenrevolution.org">info@ressourcenrevolution.org</a>.
         </p>
         <p class="text-heading">
-          Dein Team der Ressourcen Revolution
+          Danke, dass du Teil der Ressourcen Revolution Community  bist, Material
+          wiederverwenden möchtest und damit nachhaltige Lösungen förderst
         </p>
       </Alert>
     : <>
         <Heading tag="h2" size="md" class="mb-6">
           {t('listing-page.contact.title')}
         </Heading>
+
+        <div class="prose mb-6" set:html={t('listing-page.contact.text')} />
 
         {listing.status === 'reserved'
           ? <Alert variant="info">

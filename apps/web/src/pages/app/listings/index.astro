@@ -6,6 +6,7 @@ import EmailVerificationWarning from '~/components/EmailVerificationWarning/Emai
 import { useTranslations } from '~/i18n/ui'
 import ListingList from '~/components/ListingList.astro'
 import BackgroundRect from '~/components/BackgroundRect.astro'
+import { UserSchema } from '~/schemas/user'
 
 export const prerender = false
 
@@ -16,6 +17,7 @@ const items = await Astro.locals.pb
   .getFullList({ expand: 'user,team', filter: 'status = "open" || status = "reserved"' })
 const listings = ListingSchema.array().parse(items) as Listing[]
 
+const user = UserSchema.parse(Astro.locals.pb.authStore.record!)
 const isNewUser = !Astro.locals.pb.authStore.record!.roles.includes('user');
 ---
 
@@ -26,32 +28,36 @@ const isNewUser = !Astro.locals.pb.authStore.record!.roles.includes('user');
       && <BackgroundRect variant="page" color="purple" class="h-[55%]! animate-delay-300" />
     }
     <EmailVerificationWarning class="animate-slide-in" />
-    <div class="flex justify-between items-center flex-wrap gap-4 mb-12 animate-slide-in">
-      <Heading tag="h1" size="xl">
-        {t('dashboard.title')}
-      </Heading>
-      {!isNewUser && <Button label={t('dashboard.new-listing')} href="/app/listings/new" />}
-    </div>
+    {!isNewUser
+      && <div class="flex justify-between items-center flex-wrap gap-4 mb-12 animate-slide-in">
+        <Heading tag="h1" size="xl">
+          {t('dashboard.title')}
+        </Heading>
+        <Button label={t('dashboard.new-listing')} href="/app/listings/new" />
+      </div>
+    }
     {
-      isNewUser
-        ? (
-            <div class="animate-slide-in animate-delay-150">
-              <h2 class="text-xl font-bold mb-3">
-                {t('dashboard.user-approval.title')}
-              </h2>
-              <p>{t('dashboard.user-approval.text')}</p>
-            </div>
-          )
-        : listings && listings.length > 0
-          ? <ListingList listings={listings} class="animate-slide-in animate-delay-150" />
-          : <Alert variant="neutral" spacing="md">
-              <Heading tag="h2" size="md" class="mb-4">
-                {t('dashboard.no-listing.title')}
-              </Heading>
-              <p>
-                {t('dashboard.no-listing.text')}
-              </p>
-            </Alert>
+      user.verified && (
+        isNewUser
+          ? (
+              <div class="animate-slide-in animate-delay-150">
+                <h2 class="text-xl font-bold mb-3">
+                  {t('dashboard.user-approval.title')}
+                </h2>
+                <p>{t('dashboard.user-approval.text')}</p>
+              </div>
+            )
+          : listings && listings.length > 0
+            ? <ListingList listings={listings} class="animate-slide-in animate-delay-150" />
+            : <Alert variant="neutral" spacing="md">
+                <Heading tag="h2" size="md" class="mb-4">
+                  {t('dashboard.no-listing.title')}
+                </Heading>
+                <p>
+                  {t('dashboard.no-listing.text')}
+                </p>
+              </Alert>
+      )
     }
   </Container>
 </Layout>
