@@ -13,6 +13,7 @@ export const ui = {
   en: {
     'next': 'Next',
     'previous': 'Previous',
+    'select_images': 'Select Images',
     // Header
     'header.home': 'Home',
     'header.dashboard': 'Listings',
@@ -198,6 +199,7 @@ export const ui = {
   de: {
     'next': 'Nächstes',
     'previous': 'Vorheriges',
+    'select_images': 'Bilder auswählen',
     // Header
     'header.home': 'Startseite',
     'header.dashboard': 'Materialangebote',
@@ -299,9 +301,9 @@ export const ui = {
     'create-listing.create-team.text':
       'Bitte gib Informationen zu deinem Institut, deiner Organisation oder deinem Verein an.',
     'create-listing.title': 'Angebot anlegen',
-    'create-listing.text': `<p>Hier kannst du ein neues Angebot anlegen. Bitte nutze die Eintragungsfelder, um so viele Informationen wie möglich weiterzugeben.</p>
-      <p>Je genauer die Informationen sind, desto einfacher können wir eine geeignete Abnahme vermitteln.</p>
-      <p>Solltest du Fragen bezüglich unserer Plattform haben, schreib uns gerne eine Mail.</p>`,
+    'create-listing.text': `<p>Du hast Material abzugeben? Toll! Hier kannst du ein neues Angebot anlegen. Bitte fülle die folgenden Felder aus, um so viele Informationen wie möglich weiterzugeben.</p>
+      <p>Deine Organisation musst du zu diesem Zeitpunkt noch nicht nennen. Je genauer die Informationen sind, desto leichter können wir eine Abnahme vermitteln. Bei Fragen dazu schreib uns gerne eine E-Mail (<a href="mailto:info@ressourcenrevolution.org">info@ressourcenrevolution.org</a>)</p>
+      <p>Wichtig: Nur Organisationen mit geprüftem Konto können dein Materialangebot und deine Angaben dazu sehen! Bei Interesse füllen sie das Kontaktformular aus, das wir per E-Mail an dich weiterleiten. Dann entscheidest du, ob du dich zurückmelden möchtest.</p>`,
     'create-listing.button': 'Anlegen',
     'create-listing.errors.forbidden':
       'Du bist nicht berechtigt, neue Angebote zu erstellen',
@@ -327,17 +329,16 @@ export const ui = {
     // Listing form
     'listing-form.general.title': 'Informationen zum Material',
     'listing-form.general.text':
-      'Bitte mache hier ausführliche Angaben zum Material, das du abzugeben hast. Genaues Wissen zu Maßen, Gewicht und Zustand erleichtern die Abholung. Lade auch geeignete Fotos in verschiedenen Ansichten hoch, die das Material im aktuellen Zustand zeigen.',
+      'Bitte mach hier ausführliche Angaben zu dem Material, das du abzugeben hast. Genaues Wissen zu Maßen, Gewicht, Zustand etc. erleichtert Interessierten die Entscheidung und schließlich auch die Abholung. Lade auch geeignetes Bildmaterial hoch, das das Material im aktuellen Zustand und in verschiedenen Ansichten zeigt.',
     'listing-form.pickup.title': 'Informationen zur Abholung',
     'listing-form.pickup.text':
       'Bitte trage hier präzise Infos zur Abholung ein. Gibt es etwas bei der Anfahrt zu beachten? Kann vor Ort beim einladen geholfen werden? Sind Werkzeuge / Strom zum auseinandernehmen vorhanden?',
     'listing-form.status.label': 'Status',
     'listing-form.title.label': 'Angebotstitel',
-    'listing-form.description.label': 'Beschreibungstext',
+    'listing-form.description.label': 'Beschreibung',
     'listing-form.material.label': 'Material',
     'listing-form.measurements.label': 'Maße und Gewicht',
-    'listing-form.condition.label':
-      'Zustand (zB zusammengebaut / in Teile zerlegt)',
+    'listing-form.condition.label': 'Zustand (z.B. wie neu, zusammengebaut, (in Teile zerlegt))',
     'listing-form.address.label': 'Straße und Hausnummer des Abholungsortes',
     'listing-form.postalcode.label': 'PLZ des Abholungsortes',
     'listing-form.city.label': 'Stadt des Abholungsortes',

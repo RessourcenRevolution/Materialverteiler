@@ -9,6 +9,9 @@ export class ImageUploader extends LitElement {
   @property({ type: String })
   name = '';
 
+  @property({ type: String, attribute: 'button-text' })
+  buttonText = 'Select Images';
+
   static styles = css`
     :host {
       display: block;
@@ -78,11 +81,11 @@ export class ImageUploader extends LitElement {
         @change=${this.handleFileSelect}
       />
       <button type="button" part="button" @click=${this.triggerFileInput}>
-        Select Images
+        ${this.buttonText}
       </button>
       <div class="preview-container">
         ${this.selectedFiles.map(
-          (file, index) => html`
+      (file, index) => html`
             <div class="preview-item">
               <img src=${URL.createObjectURL(file)} alt=${file.name} />
               <button
@@ -93,7 +96,7 @@ export class ImageUploader extends LitElement {
               </button>
             </div>
           `
-        )}
+    )}
       </div>
     `;
   }
@@ -123,11 +126,11 @@ export class ImageUploader extends LitElement {
     const form = e.target as HTMLFormElement;
 
     // Create a hidden file input for each selected file
-      const input = document.createElement('input');
-      input.type = 'file';
-      input.name = `${this.name}`;
-      input.style.display = 'none';
-      form.appendChild(input);
+    const input = document.createElement('input');
+    input.type = 'file';
+    input.name = `${this.name}`;
+    input.style.display = 'none';
+    form.appendChild(input);
 
     // Now let's create a DataTransfer to get a FileList
     const dataTransfer = new DataTransfer();

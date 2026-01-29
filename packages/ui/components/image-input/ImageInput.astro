@@ -2,9 +2,10 @@
 export interface Props {
   name: string;
   label?: string;
+  buttonText?: string;
   error?: string;
 }
-const { label, name, error } = Astro.props;
+const { label, buttonText, name, error } = Astro.props;
 ---
 
 <div>
@@ -15,7 +16,7 @@ const { label, name, error } = Astro.props;
       </label>
     )
   }
-  <image-uploader name={name}></image-uploader>
+  <image-uploader name={name} button-text={buttonText}></image-uploader>
   {error && <p class="text-red-800 text-sm">{error}</p>}
 </div>
 
