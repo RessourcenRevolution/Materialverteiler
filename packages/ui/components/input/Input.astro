@@ -5,10 +5,12 @@ export interface Props {
   value?: string;
   type?: astroHTML.JSX.HTMLInputTypeAttribute;
   required?: boolean;
+  disabled?: boolean;
+  readonly?: boolean;
   error?: string;
   class?:string
 }
-const { label, value, name, type, required, error, class: className } = Astro.props;
+const { label, value, name, type, required, disabled, readonly, error, class: className } = Astro.props;
 ---
 
 <div class:list={["relative", className]}>
@@ -23,6 +25,8 @@ const { label, value, name, type, required, error, class: className } = Astro.pr
           "has-[+input:focus]:scale-75! has-[+input:focus]:top-[0.85em]!",
           "has-[+input:placeholder-shown]:scale-100 has-[+input:placeholder-shown]:top-[1.65em]",
           "has-[+input:placeholder-shown]:pointer-events-none",
+          "has-[+input:disabled]:text-body/75",
+          "has-[+input:read-only]:text-body/75"
         ]}
       >
         {label}
@@ -35,8 +39,12 @@ const { label, value, name, type, required, error, class: className } = Astro.pr
     value={value}
     placeholder={" "}
     required={required}
+    disabled={disabled}
+    readonly={readonly}
     class:list={[
       "w-full text-body border-(length:--border) text-base border-body rounded-xs px-[0.75em] pb-[0.5em] pt-[1em]",
+      "disabled:text-body/75 disabled:border-body/75",
+      "read-only:text-body/75 read-only:border-body/75",
       error && "border-red-800!",
     ]}
   />
