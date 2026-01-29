@@ -5,15 +5,19 @@ import { actions } from 'astro:actions'
 import { useTranslations } from '~/i18n/ui'
 import { fieldError } from '~/forms'
 import type { Listing } from '~/schemas/listing'
+import type { Team } from '~/schemas/team'
+import type { ui } from '~/i18n/ui'
+import type { defaultLang } from '~/i18n/ui'
 
 export const prerender = false
 
 interface Props {
   listing: Listing
+  userTeam: Team
   class?: string
 }
 
-const { listing, class: className } = Astro.props
+const { listing, userTeam, class: className } = Astro.props
 
 const t = useTranslations()
 
@@ -71,6 +75,13 @@ const data
                 label={t('contact-form.phonenumber.label')}
                 value={data?.get('phonenumber') as string}
                 error={fieldError('phonenumber', result?.error)}
+              />
+              <Input
+                name="team_type"
+                label={t('contact-form.team_type.label')}
+                value={t(`team-type.${userTeam.type}` as keyof (typeof ui)[typeof defaultLang])}
+                error={fieldError('team_type', result?.error)}
+                readonly
               />
               <Textarea
                 name="message"

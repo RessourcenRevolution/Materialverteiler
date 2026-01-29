@@ -1,6 +1,5 @@
 ---
 import Layout from '~/layouts/Layout.astro'
-import { type Listing, ListingSchema } from '~/schemas/listing'
 import { Container, Heading } from '@rr/ui/components'
 import { useTranslations } from '~/i18n/ui'
 import DateText from '~/components/DateText.astro'
@@ -10,6 +9,9 @@ import BackgroundRect from '~/components/BackgroundRect.astro'
 import ListingUserStatus from '~/components/ListingUserStatus.astro'
 import ImageGallery from '~/components/ImageGallery.astro'
 import { ClientResponseError } from 'pocketbase'
+import { getUserTeam } from '~/lib/team'
+import { getListing } from '~/lib/listing'
+import { UserSchema } from '~/schemas/user'
 
 export const prerender = false
 
@@ -20,14 +22,10 @@ if (!id) {
   return new Response(null, { status: 404 })
 }
 
-const user = Astro.locals.pb.authStore.record!
-
-// Get listing
-let item
+const user = UserSchema.parse(Astro.locals.pb.authStore.record!)
+let result
 try {
-  item = await Astro.locals.pb
-    .collection('listings')
-    .getOne(id)
+  result = await Promise.all([getUserTeam(Astro.locals.pb, user), getListing(Astro.locals.pb, id)])
 }
 catch (err) {
   if (err instanceof ClientResponseError && err.status === 404) {
@@ -35,12 +33,11 @@ catch (err) {
   }
   return Astro.rewrite('/404')
 }
+const [team, listing] = result
 
-if (!item) {
+if (!listing) {
   return Astro.rewrite('/app/listings/404')
 }
-
-const listing = ListingSchema.parse(item) as Listing
 
 ---
 
@@ -123,7 +120,7 @@ const listing = ListingSchema.parse(item) as Listing
 
       <!-- Contact form -->
       {(listing.status === 'open' || listing.status === 'reserved')
-        && <ContactForm listing={listing} class="mt-12" />
+        && <ContactForm userTeam={team} listing={listing} class="mt-12" />
       }
     </div>
 

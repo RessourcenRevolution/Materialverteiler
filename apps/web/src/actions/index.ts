@@ -5,7 +5,7 @@ import { defaultLang, ui, useTranslations } from '~/i18n/ui'
 import { login } from '@rr/astro-pocketbase/actions'
 import { ListingSchema, type Listing } from '~/schemas/listing'
 import { UserSchema } from '~/schemas/user'
-import { TeamSchema, TeamTypeEnum } from '~/schemas/team'
+import { TeamTypeEnum } from '~/schemas/team'
 
 const required = {
   required_error:
@@ -335,6 +335,7 @@ export const server = {
       name: z.string(required),
       email: z.string(required),
       phonenumber: z.string(required).optional(),
+      team_type: z.string(required),
       message: z.string(required),
     }),
     handler: async (input, { locals }) => {
@@ -349,6 +350,7 @@ export const server = {
               name: input.name,
               email: input.email,
               phonenumber: input.phonenumber,
+              team_type: input.team_type,
               message: input.message,
             }),
           })
