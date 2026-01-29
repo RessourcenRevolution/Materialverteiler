@@ -2,7 +2,7 @@
 import { Alert, Button, Checkbox, Container, Heading } from '@rr/ui/components'
 import { actions } from 'astro:actions'
 import ListingList from '~/components/ListingList.astro'
-import { useTranslations } from '~/i18n/ui'
+import { defaultLang, ui, useTranslations } from '~/i18n/ui'
 import Layout from '~/layouts/Layout.astro'
 import { ListingSchema, type Listing } from '~/schemas/listing'
 import { UserSchema, type User } from '~/schemas/user'
@@ -88,7 +88,7 @@ const success = Astro.url.searchParams.get('success')
       </tr>
       <tr>
         <td>Art</td>
-        <td>{t(`team-type.${user.expand?.team?.type}`)}</td>
+        <td>{t(`team-type.${user.expand?.team?.type}` as keyof (typeof ui)[typeof defaultLang])}</td>
       </tr>
       <tr>
         <td>Stadt</td>
