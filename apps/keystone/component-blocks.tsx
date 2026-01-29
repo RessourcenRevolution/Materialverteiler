@@ -227,4 +227,42 @@ export const componentBlocks = {
       );
     },
   }),
+  gallery: component({
+    label: "Gallery",
+    schema: {
+      gallery: fields.relationship({
+        label: 'Gallery',
+        listKey: 'Gallery',
+        selection: 'id name title items { title image { url width height } link }',
+        many: false,
+      })
+    },
+    preview: (props) => {
+      const gallery = props.fields.gallery.value?.data;
+      return (
+        <NotEditable style={{ width: "100%" }}>
+          <pre>{JSON.stringify(props, null, 2)}</pre>
+          <h2>{gallery?.title || '...'}</h2>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
+              justifyItems: 'center',
+              alignItems: 'center',
+              gap: "1.5rem",
+              width: "100%",
+            }}
+          >
+            {gallery && gallery.items.map((item, index) => (
+              <div style={{ width: "100%", maxWidth: '250px' }} key={index}>
+                <a href={item.link} target="_blank" title={item.title}>
+                  <img src={item.image.url} style={{ maxWidth: '100%' }} />
+                </a>
+              </div>
+            ))}
+          </div>
+        </NotEditable >
+      );
+    },
+  }),
 };

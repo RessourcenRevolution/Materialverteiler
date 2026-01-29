@@ -184,13 +184,13 @@ export const lists = {
     fields: {
       icon: select({
         options: [
-          {label: 'None', value: ''},
-          {label: 'Profile Circle', value: 'profile-circle'},
-          {label: 'Help Circle', value: 'help-circle'},
-          {label: 'Info Circle', value: 'info-circle'},
-          {label: 'Message', value: 'message'},
-          {label: 'Cart', value: 'cart'},
-          {label: 'List', value: 'list'},
+          { label: 'None', value: '' },
+          { label: 'Profile Circle', value: 'profile-circle' },
+          { label: 'Help Circle', value: 'help-circle' },
+          { label: 'Info Circle', value: 'info-circle' },
+          { label: 'Message', value: 'message' },
+          { label: 'Cart', value: 'cart' },
+          { label: 'List', value: 'list' },
         ],
         validation: { isRequired: false }
       }),
@@ -201,7 +201,7 @@ export const lists = {
       resolveInput: async ({ inputData, resolvedData }) => {
         let path = inputData?.path || ''
         // Remove web app url, if path is prefixed with it
-        if(process.env.WEB_APP_BASE_URL && path.startsWith(process.env.WEB_APP_BASE_URL)) {
+        if (process.env.WEB_APP_BASE_URL && path.startsWith(process.env.WEB_APP_BASE_URL)) {
           path = path.replace(process.env.WEB_APP_BASE_URL, '');
         }
         return {
@@ -265,6 +265,37 @@ export const lists = {
       name: text({ validation: { isRequired: true } }),
       description: text({ validation: { isRequired: true } }),
       photo: image({ storage: "images" }),
+    },
+  }),
+
+  GalleryItem: list({
+    access: authOnly,
+    ui: {
+      isHidden: true,
+      labelField: "title",
+    },
+    fields: {
+      title: text({ validation: { isRequired: true } }),
+      link: text({ label: "Link" }),
+      image: image({ storage: "images" }),
+    },
+  }),
+
+  Gallery: list({
+    access: authOnly,
+    fields: {
+      name: text({ validation: { isRequired: true } }),
+      title: text({}),
+      items: relationship({
+        ref: "GalleryItem",
+        many: true,
+        ui: {
+          displayMode: "cards",
+          cardFields: ["title", "image", "link"],
+          inlineCreate: { fields: ["title", "image", "link"] },
+          inlineEdit: { fields: ["title", "image", "link"] },
+        },
+      }),
     },
   }),
 } satisfies Lists;

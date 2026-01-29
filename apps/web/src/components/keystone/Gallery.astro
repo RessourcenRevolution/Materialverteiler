@@ -1,0 +1,37 @@
+---
+import { Heading } from '@rr/ui/components'
+import { GallerySchema, type Gallery } from '~/schemas/gallery'
+
+interface Props {
+  gallery: {
+    data: Gallery
+  }
+}
+
+const { gallery: module } = Astro.props
+const gallery = GallerySchema.parse(module.data)
+---
+
+<section
+  data-module
+  class:list={[
+    'not-prose',
+    'py-6 lg:py-8',
+  ]}
+>
+  <div class="max-w-5xl mx-auto [--column-size:150px] md:[--column-size:200px]">
+    {gallery && gallery.title && <Heading tag="h2" size="md" class="mb-6">{gallery.title}</Heading>}
+    <div class="grid grid-cols-[repeat(auto-fill,minmax(var(--column-size),1fr))] justify-items-center items-center gap-4 md:gap-10">
+      {gallery && gallery.items && gallery.items.map(item => (
+        item.image?.url
+        && <a href={item.link} class="w-full">
+          <img
+            src={item.image.url}
+            class="w-full mb-2 rounded-xs"
+          />
+        </a>
+
+      ))}
+    </div>
+  </div>
+</section>

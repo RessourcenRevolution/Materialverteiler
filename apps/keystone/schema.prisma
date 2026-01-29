@@ -75,3 +75,22 @@ model Person {
   photo_height    Int?
   photo_extension String?
 }
+
+model GalleryItem {
+  id                 String    @id @default(cuid())
+  title              String    @default("")
+  link               String    @default("")
+  image_id           String?
+  image_filesize     Int?
+  image_width        Int?
+  image_height       Int?
+  image_extension    String?
+  from_Gallery_items Gallery[] @relation("Gallery_items")
+}
+
+model Gallery {
+  id    String        @id @default(cuid())
+  name  String        @default("")
+  title String        @default("")
+  items GalleryItem[] @relation("Gallery_items")
+}

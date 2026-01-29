@@ -1,5 +1,4 @@
 ---
-import { Container } from '@rr/ui/components'
 import { DocumentRenderer } from 'astro-document-renderer'
 import { fetchPage } from '~/keystone'
 import Layout from '~/layouts/Layout.astro'
@@ -9,6 +8,7 @@ import Text from '~/components/keystone/Text.astro'
 import Button from '~/components/keystone/Button.astro'
 import Listings from '~/components/keystone/Listings.astro'
 import People from '~/components/keystone/People.astro'
+import Gallery from '~/components/keystone/Gallery.astro'
 
 export const prerender = false
 
@@ -44,6 +44,7 @@ if (!page || page.access !== 'public') {
         button: Button,
         listings: Listings,
         people: People,
+        gallery: Gallery,
       }}
     />
   </div>

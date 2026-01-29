@@ -453,6 +453,112 @@ input PersonCreateInput {
   photo: ImageFieldInput
 }
 
+type GalleryItem {
+  id: ID!
+  title: String
+  link: String
+  image: ImageFieldOutput
+}
+
+input GalleryItemWhereUniqueInput {
+  id: ID
+}
+
+input GalleryItemWhereInput {
+  AND: [GalleryItemWhereInput!]
+  OR: [GalleryItemWhereInput!]
+  NOT: [GalleryItemWhereInput!]
+  id: IDFilter
+  title: StringFilter
+  link: StringFilter
+}
+
+input GalleryItemOrderByInput {
+  id: OrderDirection
+  title: OrderDirection
+  link: OrderDirection
+}
+
+input GalleryItemUpdateInput {
+  title: String
+  link: String
+  image: ImageFieldInput
+}
+
+input GalleryItemUpdateArgs {
+  where: GalleryItemWhereUniqueInput!
+  data: GalleryItemUpdateInput!
+}
+
+input GalleryItemCreateInput {
+  title: String
+  link: String
+  image: ImageFieldInput
+}
+
+type Gallery {
+  id: ID!
+  name: String
+  title: String
+  items(where: GalleryItemWhereInput! = {}, orderBy: [GalleryItemOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: GalleryItemWhereUniqueInput): [GalleryItem!]
+  itemsCount(where: GalleryItemWhereInput! = {}): Int
+}
+
+input GalleryWhereUniqueInput {
+  id: ID
+}
+
+input GalleryWhereInput {
+  AND: [GalleryWhereInput!]
+  OR: [GalleryWhereInput!]
+  NOT: [GalleryWhereInput!]
+  id: IDFilter
+  name: StringFilter
+  title: StringFilter
+  items: GalleryItemManyRelationFilter
+}
+
+input GalleryItemManyRelationFilter {
+  every: GalleryItemWhereInput
+  some: GalleryItemWhereInput
+  none: GalleryItemWhereInput
+}
+
+input GalleryOrderByInput {
+  id: OrderDirection
+  name: OrderDirection
+  title: OrderDirection
+}
+
+input GalleryUpdateInput {
+  name: String
+  title: String
+  items: GalleryItemRelateToManyForUpdateInput
+}
+
+input GalleryItemRelateToManyForUpdateInput {
+  disconnect: [GalleryItemWhereUniqueInput!]
+  set: [GalleryItemWhereUniqueInput!]
+  create: [GalleryItemCreateInput!]
+  connect: [GalleryItemWhereUniqueInput!]
+}
+
+input GalleryUpdateArgs {
+  where: GalleryWhereUniqueInput!
+  data: GalleryUpdateInput!
+}
+
+input GalleryCreateInput {
+  name: String
+  title: String
+  items: GalleryItemRelateToManyForCreateInput
+}
+
+input GalleryItemRelateToManyForCreateInput {
+  create: [GalleryItemCreateInput!]
+  connect: [GalleryItemWhereUniqueInput!]
+}
+
 """
 The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 """
@@ -501,6 +607,18 @@ type Mutation {
   updatePeople(data: [PersonUpdateArgs!]!): [Person]
   deletePerson(where: PersonWhereUniqueInput!): Person
   deletePeople(where: [PersonWhereUniqueInput!]!): [Person]
+  createGalleryItem(data: GalleryItemCreateInput!): GalleryItem
+  createGalleryItems(data: [GalleryItemCreateInput!]!): [GalleryItem]
+  updateGalleryItem(where: GalleryItemWhereUniqueInput!, data: GalleryItemUpdateInput!): GalleryItem
+  updateGalleryItems(data: [GalleryItemUpdateArgs!]!): [GalleryItem]
+  deleteGalleryItem(where: GalleryItemWhereUniqueInput!): GalleryItem
+  deleteGalleryItems(where: [GalleryItemWhereUniqueInput!]!): [GalleryItem]
+  createGallery(data: GalleryCreateInput!): Gallery
+  createGalleries(data: [GalleryCreateInput!]!): [Gallery]
+  updateGallery(where: GalleryWhereUniqueInput!, data: GalleryUpdateInput!): Gallery
+  updateGalleries(data: [GalleryUpdateArgs!]!): [Gallery]
+  deleteGallery(where: GalleryWhereUniqueInput!): Gallery
+  deleteGalleries(where: [GalleryWhereUniqueInput!]!): [Gallery]
   endSession: Boolean!
   authenticateUserWithPassword(email: String!, password: String!): UserAuthenticationWithPasswordResult
   createInitialUser(data: CreateInitialUserInput!): UserAuthenticationWithPasswordSuccess!
@@ -545,6 +663,12 @@ type Query {
   person(where: PersonWhereUniqueInput!): Person
   people(where: PersonWhereInput! = {}, orderBy: [PersonOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PersonWhereUniqueInput): [Person!]
   peopleCount(where: PersonWhereInput! = {}): Int
+  galleryItem(where: GalleryItemWhereUniqueInput!): GalleryItem
+  galleryItems(where: GalleryItemWhereInput! = {}, orderBy: [GalleryItemOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: GalleryItemWhereUniqueInput): [GalleryItem!]
+  galleryItemsCount(where: GalleryItemWhereInput! = {}): Int
+  gallery(where: GalleryWhereUniqueInput!): Gallery
+  galleries(where: GalleryWhereInput! = {}, orderBy: [GalleryOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: GalleryWhereUniqueInput): [Gallery!]
+  galleriesCount(where: GalleryWhereInput! = {}): Int
   keystone: KeystoneMeta!
   authenticatedItem: AuthenticatedItem
 }
