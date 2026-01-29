@@ -1,9 +1,10 @@
 {{define "body"}}
 <p>Hallo {{.Firstname}},</p>
 <p>
-  danke für deine Anfrage über den Materialverteiler von Ressourcen Revolution!
-  Wir haben deine Nachricht erfolgreich an den Anbieter weitergeleitet.
+  danke für deine Anfrage auf <a href="{{ .AppURL }}">{{ .AppName }}</a>.
+  Wir haben deine Nachricht erfolgreich weitergeleitet.
 </p>
+
 <p>
   <strong>Deine Anfrage im Überblick:</strong><br />
   Material: <a href="{{print .AppURL "/app/listings/" .ListingId}}">{{ .ListingTitle }}</a><br />
@@ -19,10 +20,11 @@
 
 <p>
   <strong>Was passiert jetzt?</strong><br />
-  Der Anbieter meldet sich bei Interesse direkt bei dir.<br />
-  Falls du noch Fragen hast, antworte einfach auf diese E-Mail oder schreib uns an [Kontakt-E-Mail].
+  Die abgebende Organisation kann sich nun direkt bei dir melden. Bitte hab etwas Geduld - und Verständnis,
+  falls es mehrere Anfragen gleichzeitig gab und das Angebot schon vergeben sein sollte. Bei Fragen oder
+  Problemen schreib uns gerne eine E-Mail an <a href="mailto:info@ressourcenrevolution.org">info@ressourcenrevolution.org</a>.
 </p>
 <p>
-  Danke, dass du Teil der Ressourcen Revolution bist und nachhaltige Lösungen förderst!
+  Danke, dass du Teil der RessourcenRevolution-Community  bist, Material wiederverwenden möchtest und damit nachhaltige Lösungen förderst.
 </p>
 {{end}}

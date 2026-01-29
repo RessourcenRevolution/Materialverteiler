@@ -172,6 +172,7 @@ func main() {
 			data := email.ListingContactData{
 				DefaultFields: email.GetDefaultFields(e.App),
 				ListingId:     listing.Id,
+				ListingTitle:  listing.GetString("title"),
 				Firstname:     listingUser.GetString("firstname"),
 				OtherName:     body.Name,
 				Email:         body.Email,
@@ -186,7 +187,7 @@ func main() {
 				DefaultFields: email.GetDefaultFields(e.App),
 				ListingId:     listing.Id,
 				ListingTitle:  listing.GetString("title"),
-				Firstname:     listingUser.GetString("firstname"),
+				Firstname:     requestUser.GetString("firstname"),
 				Name:          body.Name,
 				Email:         body.Email,
 				Phonenumber:   body.Phonenumber,

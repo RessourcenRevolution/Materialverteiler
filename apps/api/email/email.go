@@ -46,8 +46,9 @@ var listingContactConfirmationTemplate string
 
 // DefaultFields contains fields that are common to all email types
 type DefaultFields struct {
-	AppURL string
-	ApiURL string
+	AppName string
+	AppURL  string
+	ApiURL  string
 }
 
 // Email data structs - now embedding CommonEmailFields
@@ -100,17 +101,19 @@ type NewListingData struct {
 	ListingMeasurements string
 	ListingCondition    string
 	ListingDescription  string
+	ListingPickupInfo   string
 }
 
 type ListingContactData struct {
 	DefaultFields
-	ListingId   string
-	Firstname   string
-	OtherName   string
-	Email       string
-	Phonenumber string
-	TeamType    string
-	Message     htmlTemplate.HTML
+	ListingId    string
+	ListingTitle string
+	Firstname    string
+	OtherName    string
+	Email        string
+	Phonenumber  string
+	TeamType     string
+	Message      htmlTemplate.HTML
 }
 
 type ListingContactConfirmationData struct {
@@ -139,7 +142,7 @@ type EmailTemplate struct {
 // emailTemplates maps email data types to their templates and subjects
 var emailTemplates = map[any]EmailTemplate{
 	EmailVerifiedData{}: {
-		Subject:  "Wilkommen im Materialverteiler",
+		Subject:  "Danke für deine Registrierung",
 		Template: emailVerifiedTemplate,
 	},
 	NotifyUserSignupData{}: {
@@ -155,7 +158,7 @@ var emailTemplates = map[any]EmailTemplate{
 		Template: notifyNewListingTemplate,
 	},
 	ListingApprovedData{}: {
-		Subject:  "Dein Angebot ist freigeschaltet: {{.ListingTitle}}",
+		Subject:  "Dein Angebot wurde freigeschaltet",
 		Template: listingApprovedTemplate,
 	},
 	NewListingData{}: {
@@ -163,11 +166,11 @@ var emailTemplates = map[any]EmailTemplate{
 		Template: newListingTemplate,
 	},
 	ListingContactData{}: {
-		Subject:  "Neue Anfrage zu Ihrem Materialangebot",
+		Subject:  "Neue Anfrage zu deinem Materialangebot: {{.ListingTitle}}",
 		Template: listingContactTemplate,
 	},
 	ListingContactConfirmationData{}: {
-		Subject:  "Bestätigung zu deine Materialangebot Anfrage",
+		Subject:  "Bestätigung deiner Anfrage: {{.ListingTitle}}",
 		Template: listingContactConfirmationTemplate,
 	},
 }
@@ -191,8 +194,9 @@ func newEmailTemplate() *template.Registry {
 // getDefaultFields creates CommonEmailFields from app settings
 func GetDefaultFields(app core.App) DefaultFields {
 	return DefaultFields{
-		AppURL: app.Settings().Meta.AppURL,
-		ApiURL: os.Getenv("PUBLIC_API_URL"),
+		AppName: app.Settings().Meta.AppName,
+		AppURL:  app.Settings().Meta.AppURL,
+		ApiURL:  os.Getenv("PUBLIC_API_URL"),
 	}
 }
 

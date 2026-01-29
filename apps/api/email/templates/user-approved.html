@@ -1,19 +1,30 @@
 {{define "body"}}
 <p>Hallo {{.Firstname}},</p>
 <p>
-  Willkommen in der Ressourcen Revolution Community! Dein Account ist jetzt
-  freigeschaltet.
+  willkommen in der RessourcenRevolution-Community! Dein Konto ist jetzt freigeschaltet. 
 </p>
 <p>
-  Besuche jetzt den Materialverteiler, um zu sehen, was aktuell verfügbar ist.
+  Besuche unsere Website, um die aktuellen Materialangebote zu sehen. 
 </p>
 <p>
-  {{ template "button" (dict "text" "Zum Materialverteiler" "href" (print
-  .AppURL "/app/listings") )}}
+  {{
+    template "button" (dict
+      "text" "Zu den Materialangeboten"
+      "href" (print .AppURL "/app/listings")
+    )
+  }}
 </p>
-<p>Oder lege ein neues Angebot an:</p>
+<p>Oder lege ein neues Angebot an.</p>
 <p>
-  {{ template "button" (dict "text" "Jetzt Angebot anlegen" "href" (print
-  .AppURL "/app/listings/new") )}}
+  {{
+    template "button" (dict
+      "text" "Angebot anlegen"
+      "href" (print .AppURL "/app/listings/new")
+    )
+  }}
+</p>
+<p>
+  Du bekommst ab jetzt eine E-Mail bei jedem neuen Materialangebot. Dies kannst du
+  jederzeit in deinen <a href="{{.AppURL }}/app/profile">Konto-Einstellungen</a> widerrufen.
 </p>
 {{end}}

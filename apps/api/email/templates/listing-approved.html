@@ -1,12 +1,12 @@
 {{define "body"}}
 <p>Hallo {{.Firstname}},</p>
-<p>dein Materialangebot ist jetzt freigeschaltet.</p>
 <p>
-  Mitglieder der Materialverteiler erhalten in Kürze eine E-Mail und können dich
-  über das Kontaktformular erreichen.
+  dein Materialangebot
+  "<a href="{{ .AppURL }}/app/listings/{{ .ListingId }}">{{ .ListingTitle }}</a>"
+  ist jetzt freigeschaltet.
 </p>
 <p>
-  {{ template "button" (dict "text" "Zum Angebot" "href" (print .AppURL
-  "/app/listings/" .ListingId) )}}
+  Mitglieder der Community erhalten in Kürze eine E-Mail und können dich
+  über das Kontaktformular erreichen.
 </p>
 {{end}}

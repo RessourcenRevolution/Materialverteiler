@@ -58,6 +58,7 @@ func AfterListingCreate(e *core.RecordEvent) error {
 
 	return e.Next()
 }
+
 func AfterListingUpdate(e *core.RecordEvent) error {
 	original := e.Record.Original()
 	listing := e.Record
@@ -99,6 +100,7 @@ func AfterListingUpdate(e *core.RecordEvent) error {
 				ListingMeasurements: listing.GetString("measurements"),
 				ListingCondition:    listing.GetString("condition"),
 				ListingDescription:  listing.GetString("description"),
+				ListingPickupInfo:   listing.GetString("pickup_description"),
 			}
 			email.QueueEmail(e.App, mail.Address{Address: other.Email()}, data, nil)
 		}

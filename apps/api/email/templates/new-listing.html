@@ -1,17 +1,23 @@
 {{define "body"}}
 <p>Hallo {{ .Firstname }},</p>
 
-<p>Ein neues Materialangebot '{{ .ListingTitle }}' steht verfügbar.</p>
+<p>es gibt ein neues Materialangebot.</p>
 
 <p>
-  <strong>Materialangebot Details:</strong><br />
+  <strong>Details:</strong><br />
   Name: {{.ListingTitle }}<br />
-  {{ if .ListingMaterial }}Material: {{.ListingMaterial}}<br />{{ end }} {{ if
-  .ListingMeasurements }}Große: {{.ListingMeasurements}}<br />{{ end }} {{ if
-  .ListingCondition }}Zustand: {{.ListingCondition}}<br />{{ end }}
+  {{ if .ListingMaterial }}Material: {{.ListingMaterial}}<br />{{ end }}
+  {{ if .ListingMeasurements }}Maße und Gewicht: {{.ListingMeasurements}}<br />{{ end }}
+  {{ if .ListingCondition }}Zustand: {{.ListingCondition}}<br />{{ end }}
 </p>
 
 {{ template "message" (dict "message" .ListingDescription) }}
+
+<p>
+  <strong>Infos zur Abholung</strong>
+</p>
+
+{{ template "message" (dict "message" .ListingPickupInfo) }}
 
 <p>
   {{ template "button" (dict "text" "Materialangebot anzeigen" "href" (print
@@ -19,7 +25,7 @@
 </p>
 
 <p>
-  <a href="{{ .AppURL }}/profile">
+  <a href="{{ .AppURL }}/app/profile">
     Klicke hier, um deine E-Mail-Einstellungen zu verwalten.
   </a>
 </p>
