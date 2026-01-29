@@ -81,7 +81,6 @@ func main() {
 	app.OnRecordAfterUpdateSuccess("listings").BindFunc(hooks.AfterListingUpdate)
 
 	app.OnServe().BindFunc(func(se *core.ServeEvent) error {
-
 		// Notify managers of user signup
 		se.Router.POST("/api/users/{id}/notify-managers", func(e *core.RequestEvent) error {
 			// User id
@@ -165,32 +164,33 @@ func main() {
 
 			log.Printf("Contact form submitted for listing %s by %s\n", body.Name, body.Email)
 
-			user := listing.ExpandedOne("user")
+			requestUser := e.Auth
+			listingUser := listing.ExpandedOne("user")
 
 			// Listing contact email
 			data := email.ListingContactData{
 				DefaultFields: email.GetDefaultFields(e.App),
 				ListingId:     listing.Id,
-				Firstname:     user.GetString("firstname"),
+				Firstname:     listingUser.GetString("firstname"),
 				OtherName:     body.Name,
 				Email:         body.Email,
 				Phonenumber:   body.Phonenumber,
 				Message:       email.ConvertLinebreaksToHtml(body.Message),
 			}
-			email.SendEmail(e.App, mail.Address{Address: user.Email()}, data, nil)
+			email.SendEmail(e.App, mail.Address{Address: listingUser.Email()}, data, nil)
 
 			// Listing contact confirmation email
 			confirmation := email.ListingContactConfirmationData{
 				DefaultFields: email.GetDefaultFields(e.App),
 				ListingId:     listing.Id,
 				ListingTitle:  listing.GetString("title"),
-				Firstname:     user.GetString("firstname"),
+				Firstname:     listingUser.GetString("firstname"),
 				Name:          body.Name,
 				Email:         body.Email,
 				Phonenumber:   body.Phonenumber,
 				Message:       email.ConvertLinebreaksToHtml(body.Message),
 			}
-			email.SendEmail(e.App, mail.Address{Address: user.Email()}, confirmation, nil)
+			email.SendEmail(e.App, mail.Address{Address: requestUser.Email()}, confirmation, nil)
 
 			return e.JSON(http.StatusOK, map[string]bool{"success": true})
 		}).Bind(apis.RequireAuth())
