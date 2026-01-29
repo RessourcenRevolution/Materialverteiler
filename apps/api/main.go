@@ -156,6 +156,7 @@ func main() {
 				Name        string `json:"name"`
 				Email       string `json:"email"`
 				Phonenumber string `json:"phonenumber"`
+				TeamType    string `json:"team_type"`
 				Message     string `json:"message"`
 			}{}
 			if err := e.BindBody(&body); err != nil {
@@ -175,6 +176,7 @@ func main() {
 				OtherName:     body.Name,
 				Email:         body.Email,
 				Phonenumber:   body.Phonenumber,
+				TeamType:      body.TeamType,
 				Message:       email.ConvertLinebreaksToHtml(body.Message),
 			}
 			email.SendEmail(e.App, mail.Address{Address: listingUser.Email()}, data, nil)
@@ -188,6 +190,7 @@ func main() {
 				Name:          body.Name,
 				Email:         body.Email,
 				Phonenumber:   body.Phonenumber,
+				TeamType:      body.TeamType,
 				Message:       email.ConvertLinebreaksToHtml(body.Message),
 			}
 			email.SendEmail(e.App, mail.Address{Address: requestUser.Email()}, confirmation, nil)

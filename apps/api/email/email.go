@@ -109,6 +109,7 @@ type ListingContactData struct {
 	OtherName   string
 	Email       string
 	Phonenumber string
+	TeamType    string
 	Message     htmlTemplate.HTML
 }
 
@@ -120,6 +121,7 @@ type ListingContactConfirmationData struct {
 	Name         string
 	Email        string
 	Phonenumber  string
+	TeamType     string
 	Message      htmlTemplate.HTML
 }
 
