@@ -241,7 +241,6 @@ export const componentBlocks = {
       const gallery = props.fields.gallery.value?.data;
       return (
         <NotEditable style={{ width: "100%" }}>
-          <pre>{JSON.stringify(props, null, 2)}</pre>
           <h2>{gallery?.title || '...'}</h2>
           <div
             style={{
