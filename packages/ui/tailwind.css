@@ -73,8 +73,8 @@
   line-height: 1.66;
 
   :where(p):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
-    margin-top: 1em;
-    margin-bottom: 1em;
+    margin-top: 0.666em;
+    margin-bottom: 0.666em;
   }
 
   :where(a):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
