@@ -280,7 +280,7 @@ export const ui = {
     'email-confirmation.missing-token': 'Token fehlt',
     'email-confirmation.error':
       'Beim bestätigen dine E-Mail-Adresse ist eine Fehler augetreten. Bitte versuche es erneut.',
-    'email-confirmation.success': 'E-Mail Addresse ist bestätigt!',
+    'email-confirmation.success': 'E-Mail Adresse ist bestätigt!',
     'email-confirmation.button': 'Zum Dashboard',
     // Dashboard page
     'dashboard.title': 'Materialangebote',
@@ -318,7 +318,7 @@ export const ui = {
     // Team form
     'team-form.name.label': 'Name',
     'team-form.name.placeholder': 'z.B. Oper Köln',
-    'team-form.address.label': 'Addresse',
+    'team-form.address.label': 'Adresse',
     'team-form.postalcode.label': 'PLZ',
     'team-form.city.label': 'Stadt',
     'team-form.city.required': 'Bitte gib eine Stadt ein.',
@@ -367,12 +367,12 @@ export const ui = {
     'listing-page.measurements': 'Maße und Gewicht',
     'listing-page.condition': 'Zustand',
     'listing-page.pickup_description': 'Infos zur Abholung',
-    'listing-page.address': 'Addresse',
+    'listing-page.address': 'Adresse',
     'listing-page.contact.title': 'Kontakt aufnehmen',
     'listing-page.contact.text': '<p>Du hast Interesse an diesem Angebot? Über dieses Formular kannst du Kontakt zur abgebenden Organisation aufnehmen. Wichtig: Deine Daten werden an diese weitergegeben – dabei handelt es sich selbstverständlich nur um Organisationen mit geprüftem Konto. Sie können dann auf deine Anfrage per E-Mail oder Anruf (optional) reagieren. Bitte geh sensibel mit den dann erhaltenen Kontaktdaten um. Der weitere Austausch erfolgt nur noch unter euch und auf eure Verantwortung. Bei Fragen oder Problemen sind wir selbstverständlich per E-Mail erreichbar: <a href="mailto:info@ressourcenrevolution.org">info@ressourcenrevolution.org</a>.</p><p>Tipp: Schreib gerne ein paar Worte zu deiner Organisation. Interessant könnte z.B. auch sein, wie du das Material wiederverwenden möchtest.</p>',
     // Contact form
     'contact-form.name.label': 'Dein Name',
-    'contact-form.email.label': 'Deine Mail-Addresse',
+    'contact-form.email.label': 'Deine Mail-Adresse',
     'contact-form.phonenumber.label': 'Deine Telefonnummer (optional)',
     'contact-form.team_type.label': 'Art des Betriebs / der Organisation',
     'contact-form.message.label': 'Deine Nachricht',
