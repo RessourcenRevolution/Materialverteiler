@@ -28,8 +28,7 @@ export const ListingSchema = z.object({
     .trim()
     .min(1, 'forms.errors.required' satisfies keyof (typeof ui)[typeof defaultLang]),
   address: z.string()
-    .trim()
-    .min(1, 'forms.errors.required' satisfies keyof (typeof ui)[typeof defaultLang]),
+    .optional(),
   postalcode: z.string()
     .trim()
     .min(1, 'forms.errors.required' satisfies keyof (typeof ui)[typeof defaultLang])
