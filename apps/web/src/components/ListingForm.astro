@@ -88,7 +88,6 @@ if (accounting && accounting.excel_file) {
       name="status"
       value={data?.status || ''}
       options={[
-        { value: '', label: 'Status' },
         { value: 'open', label: t('listing.status.long.open') },
         { value: 'reserved', label: t('listing.status.long.reserved') },
         { value: 'success', label: t('listing.status.long.success') },
@@ -157,7 +156,7 @@ if (accounting && accounting.excel_file) {
   <Heading tag="h2" size="md">
     {t('listing-form.pickup.title')}
   </Heading>
-  <p class="text-body text-base">{t('listing-form.pickup.text')}</p>
+  <div class="prose" set:html={t('listing-form.pickup.text')} />
   <Input
     name="address"
     label={t('listing-form.address.label')}
