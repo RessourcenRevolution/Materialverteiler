@@ -1,7 +1,7 @@
-# Resource Revolution
+# Materialverteiler
 
-Resource Revolution offers a ready to go solution to start a material exchange
-platform.
+Materialverteiler (material distributor) offers a ready to go solution to start
+a material distribution platform.
 
 The platform connects institutions, allowing them to pass on items and materials
 to give them a second life, instead of discarding them.
@@ -10,21 +10,21 @@ to give them a second life, instead of discarding them.
 
 - **📦 Material listings**: Create, browse, and view materials
 - **✉️ Transaction emails**: Automatic emails for new listings and interactions
-- **👤 User Management**: Signup, login, email verification and password reset
-- **🔒 Signup approval**: Grant access to users/institutions only after admin
+- **👤 User Management**: Sign up, login, email verification and password reset
+- **🔒 Sign up approval**: Grant access to users/institutions only after admin
   approval
-- **📩 Admin email workflow**: Automated email notifications for new signups and
+- **📩 Admin email workflow**: Automated email notifications for new sign ups and
   listing activities
 - **🔧 Keystone integration**: CMS for content management
 
 ## Architecture
 
-This project is a monorepo containing several applications that work together to
+This project is a mono repo containing several applications that work together to
 form the platform.
 
 ### Pocketbase (API Backend)
 
-The core backend is a [Pocketbase](https://pocketbase.io/) application. It
+The core back-end is a [Pocketbase](https://pocketbase.io/) application. It
 serves as the primary API, handling:
 
 - User authentication and management
@@ -36,7 +36,7 @@ serves as the primary API, handling:
 
 A [Keystone](https://keystonejs.com) instance functions as the Headless Content
 Management System (CMS). It is used for managing structured content that is
-displayed on the frontend.
+displayed on the front-end.
 
 ### Astro (Frontend)
 
@@ -62,8 +62,8 @@ application is responsible for:
 ## Deployment
 
 ```sh
-$ docker compose build
-$ docker compose up
+docker compose build
+docker compose up
 ```
 
 ## Development
@@ -92,10 +92,10 @@ $ mise run //...:dev
 
 After initially starting all application:
 
-- Head to http://localhost:3002 to create a first Keystone admin user
-- Create an additional Keystone user with the folling credentials for local
+- Head to <http://localhost:3002> to create a first Keystone admin user
+- Create an additional Keystone user with the following credentials for local
   usage:
-  - E-mail address: example@example.com
+  - E-mail address: <example@example.com>
   - Password: 123456abcdef
 - Create a homepage in the Keystone 'Pages' section
 - Create a main navigation in the Keystone 'Navigations' section
@@ -115,8 +115,8 @@ $ mise run //...:dev
 
 The following services will be available:
 
-- Front-end: https://localhost:3000
-- Astrobook: https://localhost:3001
-- Keystone: https://localhost:3002
-- Pocketbase: https://localhost:8090
-- Mailpit: https://localhost:8025
+- Front-end: <https://localhost:3000>
+- Astrobook: <https://localhost:3001>
+- Keystone: <https://localhost:3002>
+- Pocketbase: <https://localhost:8090>
+- Mailpit: <https://localhost:8025>
