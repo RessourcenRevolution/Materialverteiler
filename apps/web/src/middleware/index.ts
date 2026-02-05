@@ -10,6 +10,8 @@ const APP_ROUTE = /^\/app($|\/.*)/
 
 const UNAUTHENTICATED_APP_ROUTES = [
   /^\/app\/login($|\/.*)/,
+  /^\/app\/password-reset($|\/.*)/,
+  /^\/app\/password-reset-confirm($|\/.*)/,
   /^\/app\/signup($|\/.*)/,
 ]
 

@@ -172,6 +172,77 @@ export const server = {
   }),
 
   /**
+   * Request a password reset email
+   */
+  requestPasswordReset: defineAction({
+    accept: 'form',
+    input: z.object({
+      email: z.string(required),
+    }),
+    handler: async (input, { locals }) => {
+      try {
+        await locals.pb.collection('users').requestPasswordReset(input.email.toLowerCase())
+        return { success: true }
+      }
+      catch (e) {
+        console.error(e)
+        if (e instanceof ClientResponseError && e?.response?.status) {
+          throw new ActionError({
+            code: 'BAD_REQUEST',
+            message: 'password_reset_error',
+          })
+        }
+        else {
+          throw new ActionError({
+            code: 'INTERNAL_SERVER_ERROR',
+            message: 'unknown_error',
+          })
+        }
+      }
+    },
+  }),
+
+  /**
+   * Confirm password reset with token
+   */
+  confirmPasswordReset: defineAction({
+    accept: 'form',
+    input: z.object({
+      token: z.string(required),
+      password: z.string(required).min(8, 'password_too_short'),
+      passwordConfirm: z.string(required),
+    }).refine(data => data.password === data.passwordConfirm, {
+      message: 'password_mismatch',
+      path: ['passwordConfirm'],
+    }),
+    handler: async (input, { locals }) => {
+      try {
+        await locals.pb.collection('users').confirmPasswordReset(
+          input.token,
+          input.password,
+          input.passwordConfirm,
+        )
+        return { success: true }
+      }
+      catch (e) {
+        console.error(e)
+        if (e instanceof ClientResponseError && e?.response?.status === 400) {
+          throw new ActionError({
+            code: 'BAD_REQUEST',
+            message: 'invalid_token',
+          })
+        }
+        else {
+          throw new ActionError({
+            code: 'INTERNAL_SERVER_ERROR',
+            message: 'unknown_error',
+          })
+        }
+      }
+    },
+  }),
+
+  /**
    * Create a new listing
    */
   listing: defineAction({
@@ -237,16 +308,16 @@ export const server = {
         }
         return { listing, status }
       }
-      catch (error) {
-        if (error instanceof ClientResponseError && error?.status === 403) {
+      catch (e) {
+        if (e instanceof ClientResponseError && e?.status === 403) {
           throw new ActionError({
             code: 'FORBIDDEN',
             message: t('create-listing.errors.forbidden'),
           })
         }
         else if (
-          error instanceof ClientResponseError
-          && error?.response?.data?.images?.code === 'validation_file_size_limit'
+          e instanceof ClientResponseError
+          && e?.response?.data?.images?.code === 'validation_file_size_limit'
         ) {
           throw new ActionError({
             code: 'FORBIDDEN',
@@ -254,7 +325,7 @@ export const server = {
           })
         }
         else {
-          console.log(error)
+          console.error(e)
           throw new ActionError({
             code: 'INTERNAL_SERVER_ERROR',
             message: t('create-listing.errors.unknown'),
@@ -278,8 +349,8 @@ export const server = {
         await locals.pb.collection('listings').update(input.id, { deleted: new Date() })
         return { success: true }
       }
-      catch (error) {
-        console.error(error)
+      catch (e) {
+        console.error(e)
         throw new ActionError({
           code: 'INTERNAL_SERVER_ERROR',
           message: t('forms.errors.unknown'),
@@ -311,8 +382,8 @@ export const server = {
           .update(locals.pb.authStore.record!.id, { team: team.id })
         return team
       }
-      catch (error) {
-        if (error instanceof ClientResponseError && error?.status === 403) {
+      catch (e) {
+        if (e instanceof ClientResponseError && e?.status === 403) {
           throw new ActionError({
             code: 'FORBIDDEN',
             message: t('create-listing.errors.forbidden'),

@@ -1,6 +1,6 @@
 ---
 import Layout from '~/layouts/Layout.astro'
-import { Input, Button, Alert, Heading } from '@rr/ui/components'
+import { Input, Button, Alert, Heading, Link } from '@rr/ui/components'
 import { useTranslations, type TranslationKey } from '~/i18n/ui'
 import { actions } from 'astro:actions'
 import { isInputError } from 'astro:actions'
@@ -75,13 +75,16 @@ const data
           />
         )
       }
-      <div class="flex gap-4 animate-slide-in animate-delay-300">
+      <div class="flex gap-4 items-center animate-slide-in animate-delay-300">
         <Button
           label={t('login.button')}
           variant="primary"
           class="self-start"
         />
         <Button label={t('login.signup')} href="/app/signup" class="self-start" />
+        <Link href="/app/password-reset" class="ml-auto">
+          {t('login.forgot-password')}
+        </Link>
       </div>
     </form>
   </div>

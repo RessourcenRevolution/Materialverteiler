@@ -67,10 +67,31 @@ export const ui = {
     'login.title': 'Login',
     'login.button': 'Login',
     'login.signup': 'Create account',
+    'login.forgot-password': 'Forgot password?',
     'login.errors.unauthorized':
       'Wrong e-mail or password, please try again.',
     'login.errors.unknown':
       'An unknown error occurred while logging in, please try again.',
+    // Password reset page
+    'password-reset.title': 'Reset Password',
+    'password-reset.description': 'Enter your email address and we will send you a link to reset your password.',
+    'password-reset.button': 'Send reset link',
+    'password-reset.login': 'Login',
+    'password-reset.success': 'Password reset email sent! Check your inbox.',
+    'password-reset.errors.password_reset_error': 'Failed to send password reset email. Please try again.',
+    'password-reset.errors.unknown_error': 'An unknown error occurred. Please try again.',
+    'password-reset.errors.invalid_token': 'Invalid or expired password reset token. Please request a new password reset.',
+    // Password reset confirmation page
+    'password-reset-confirm.title': 'Set New Password',
+    'password-reset-confirm.description': 'Enter your new password below.',
+    'password-reset-confirm.password': 'New Password',
+    'password-reset-confirm.password-confirm': 'Confirm New Password',
+    'password-reset-confirm.button': 'Reset Password',
+    'password-reset-confirm.success': 'Password has been reset successfully! You can now login with your new password.',
+    'password-reset-confirm.errors.password_mismatch': 'Passwords do not match.',
+    'password-reset-confirm.errors.password_too_short': 'Password should be at least 8 characters long.',
+    'password-reset-confirm.errors.invalid_token': 'Invalid or expired password reset token.',
+    'password-reset-confirm.errors.unknown_error': 'An unknown error occurred while resetting your password.',
     // Profile page
     'profile.title': 'Your profile',
     'profile.name': 'Name',
@@ -253,10 +274,31 @@ export const ui = {
     'login.title': 'Einloggen',
     'login.button': 'Einloggen',
     'login.signup': 'Konto anlegen',
+    'login.forgot-password': 'Passwort vergessen?',
     'login.errors.unauthorized':
       'Falsche E-Mail oder Passwort, versuch es bitte nochmal.',
     'login.errors.unknown':
       'Beim Einloggen ist ein unbekannter Fehler aufgetreten, probier es bitte nochmal.',
+    // Password reset page
+    'password-reset.title': 'Passwort zurücksetzen',
+    'password-reset.description': 'Gib deine E-Mail-Adresse ein und wir senden dir einen Link zum Zurücksetzen deines Passworts.',
+    'password-reset.button': 'Reset-Link senden',
+    'password-reset.login': 'Einloggen',
+    'password-reset.success': 'Passwort-Reset-E-Mail gesendet! Überprüfe dein Postfach.',
+    'password-reset.errors.password_reset_error': 'Fehler beim Senden der Passwort-Reset-E-Mail. Bitte versuche es erneut.',
+    'password-reset.errors.unknown_error': 'Ein unbekannter Fehler ist aufgetreten. Bitte versuche es erneut.',
+    'password-reset.errors.invalid_token': 'Ungültiger oder abgelaufener Passwort-Reset-Token. Bitte fordere einen neuen Passwort-Reset an.',
+    // Password reset confirmation page
+    'password-reset-confirm.title': 'Neues Passwort festlegen',
+    'password-reset-confirm.description': 'Gib dein neues Passwort unten ein.',
+    'password-reset-confirm.password': 'Neues Passwort',
+    'password-reset-confirm.password-confirm': 'Passwort bestätigen',
+    'password-reset-confirm.button': 'Passwort zurücksetzen',
+    'password-reset-confirm.success': 'Passwort wurde erfolgreich zurückgesetzt! Du kannst dich jetzt mit deinem neuen Passwort einloggen.',
+    'password-reset-confirm.errors.password_mismatch': 'Passwörter stimmen nicht überein.',
+    'password-reset-confirm.errors.password_too_short': 'Passwort sollte mindestens 8 Zeichen lang sein.',
+    'password-reset-confirm.errors.invalid_token': 'Ungültiger oder abgelaufener Passwort-Reset-Token.',
+    'password-reset-confirm.errors.unknown_error': 'Beim Zurücksetzen des Passworts ist ein unbekannter Fehler aufgetreten.',
     // Profile page
     'profile.title': 'Konto',
     'profile.name': 'Name',
