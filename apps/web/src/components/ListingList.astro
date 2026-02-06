@@ -21,7 +21,12 @@ const { listings, edit = false, class: className } = Astro.props;
 ---
 
 <div
-  class:list={['grid grid-cols-1 md:grid-cols-1 gap-12 md:gap-6 -mx-(--body-inline-padding) md:mx-0', className]}
+  class:list={[
+    '[--image-max-w:250px]',
+    'grid grid-cols-1 md:grid-cols-1 gap-12 md:gap-6',
+    '-mx-(--body-inline-padding) md:mx-0',
+    className,
+  ]}
 >
   {
     listings.map(listing => (
@@ -31,8 +36,8 @@ const { listings, edit = false, class: className } = Astro.props;
             ? `${process.env.PUBLIC_API_URL}/api/files/listings/${listing.id}/${listing.images[0]}`
             : undefined
         }
-        class="md:flex-row md:gap-4"
-        imageClass="rounded-none! md:rounded-xs! md:max-w-[250px] shrink-0"
+        class="relative md:flex-row md:gap-4"
+        imageClass="rounded-none! md:rounded-xs! md:max-w-(--image-max-w) shrink-0"
         contentClass="md:px-0"
       >
         { edit
@@ -59,7 +64,7 @@ const { listings, edit = false, class: className } = Astro.props;
             variant="primary"
             size="sm"
             label={t('listing-card.open')}
-            class="self-start"
+            class="self-start after:absolute after:left-0 after:top-0 after:w-full after:md:max-w-(--image-max-w) after:aspect-4/3"
           />
           {/* Edit listing */}
           {edit && (
