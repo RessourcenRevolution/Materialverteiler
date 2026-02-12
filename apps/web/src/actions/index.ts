@@ -248,16 +248,21 @@ export const server = {
   listing: defineAction({
     accept: 'form',
     input: z.discriminatedUnion('type', [
-      ListingSchema.omit({ id: true, user: true, team: true, images: true, status: true }).extend({
-        'type': z.literal('create'),
-        'images+': z.array(z.instanceof(File)).optional(),
-        'accounting_file': z.instanceof(File).optional(),
-      }),
-      ListingSchema.omit({ user: true, team: true }).extend({
-        'type': z.literal('update'),
-        'images+': z.array(z.instanceof(File)).optional(),
-        'accounting_file': z.instanceof(File).optional(),
-      }),
+      ListingSchema
+        .omit({ id: true, user: true, team: true, images: true, status: true })
+        .extend({
+          'type': z.literal('create'),
+          'images+': z.array(z.instanceof(File)).optional(),
+          'accounting_file': z.instanceof(File).optional(),
+        }),
+      ListingSchema
+        .omit({ user: true, team: true })
+        .partial({ status: true })
+        .extend({
+          'type': z.literal('update'),
+          'images+': z.array(z.instanceof(File)).optional(),
+          'accounting_file': z.instanceof(File).optional(),
+        }),
     ]),
     handler: async (input, { locals }) => {
       const t = useTranslations()
@@ -280,6 +285,7 @@ export const server = {
           const { id: _id, ...data } = input
           listing = await locals.pb.collection('listings').update(input.id, {
             ...data,
+            status: data.status || 'new',
           }) as Listing
         }
 
