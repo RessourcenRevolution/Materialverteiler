@@ -6,6 +6,7 @@ import { defaultLang, ui, useTranslations } from '~/i18n/ui'
 import Layout from '~/layouts/Layout.astro'
 import { ListingSchema, type Listing } from '~/schemas/listing'
 import { UserSchema, type User } from '~/schemas/user'
+import Lock from 'iconoir/icons/lock.svg'
 
 export const prerender = false
 
@@ -65,9 +66,13 @@ const success = Astro.url.searchParams.get('success')
         {t('profile.error.remove')}
       </Alert>
     }
-    <Heading tag="h1" size="xl" class="mb-4">
-      {t('profile.title')}
-    </Heading>
+    <div class="flex gap-6 items-center mb-4">
+      <Heading tag="h1" size="xl" class="">
+        {t('profile.title')}
+        {user.roles.includes('manager') && <span> (Manager)</span>}
+      </Heading>
+      {user.roles.includes('manager') && <Button size="sm" href="/app/manage" label={t('profile.management_settings')} icon={Lock} />}
+    </div>
     <table class="[&_td]:px-2 [&_td:first-child]:pl-0 text-body mb-4">
       <tr>
         <td>{t('profile.name')}</td>

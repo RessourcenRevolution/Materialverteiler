@@ -11,6 +11,7 @@ export const UserSchema = z.object({
   lastname: z.string(),
   verified: z.boolean(),
   team: z.string(),
+  roles: z.string().array(),
   notifications: z.string().array(),
   // TODO: roles
   expand: z.object({ team: TeamSchema.optional() }).optional(),
