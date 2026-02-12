@@ -1,14 +1,13 @@
 # Materialverteiler
 
-Materialverteiler (material distributor) offers a ready to go solution to start
-a material distribution platform.
-
-The platform connects institutions, allowing them to pass on items and materials
-to give them a second life, instead of discarding them.
+Materialverteiler (material distributor) is a material distribution platform,
+allowing institutions to pass on items and materials to give them a second life,
+instead of discarding them. Built using [Pocketbase](https://pocketbase.io/),
+[Keystone](https://keystonejs.com) and [Astro](https://astro.build).
 
 ## Features
 
-- **📦 Material listings**: Create, browse, and view materials
+- **📦 Listings**: Create, browse, and view items/materials
 - **✉️ Transaction emails**: Automatic emails for new listings and interactions
 - **👤 User Management**: Sign up, login, email verification and password reset
 - **🔒 Sign up approval**: Grant access to users/institutions only after admin
