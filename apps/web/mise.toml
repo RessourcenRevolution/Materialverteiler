@@ -18,6 +18,7 @@ run = "npm run typecheck"
 [env]
 API_URL = "http://localhost:8090"
 PUBLIC_API_URL = "http://localhost:8090"
+KEYSTONE_BASE_URL = "http://localhost:3002"
 KEYSTONE_GRAPHQL_ENDPOINT = "http://localhost:3002/api/graphql"
 KEYSTONE_API_USER_EMAIL = "example@example.com"
 KEYSTONE_API_USER_PASSWORD = "123456abcdef"

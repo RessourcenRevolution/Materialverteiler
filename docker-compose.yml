@@ -18,6 +18,7 @@ services:
     environment:
       API_URL: ${API_URL:-http://api:8080}
       PUBLIC_API_URL: ${PUBLIC_API_URL:-http://localhost:8080}
+      KEYSTONE_BASE_URL: ${KEYSTONE_BASE_URL:-http://localhost:3002}
       KEYSTONE_GRAPHQL_ENDPOINT: ${KEYSTONE_GRAPHQL_ENDPOINT:-http://localhost:3002/api/graphql}
       KEYSTONE_API_USER_EMAIL: ${KEYSTONE_API_USER_EMAIL}
       KEYSTONE_API_USER_PASSWORD: ${KEYSTONE_API_USER_PASSWORD}
@@ -36,3 +37,4 @@ services:
     volumes:
       - ../files/keystone-data:/app/apps/keystone/data
       - ../files/keystone-assets:/app/apps/keystone/assets
+

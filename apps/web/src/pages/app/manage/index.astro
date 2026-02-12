@@ -35,7 +35,7 @@ const t = useTranslations();
       <li>
         <Link
           target="_blank"
-          href={(process.env.KEYSTONE_GRAPHQL_ENDPOINT || '').replace('/api/graphql', '')}
+          href={process.env.KEYSTONE_BASE_URL}
           class="inline-flex gap-2 items-center"
         >
           <LinkIcon width="16" class="inline" />
