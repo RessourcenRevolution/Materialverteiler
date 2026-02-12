@@ -5,9 +5,13 @@ import {
   initPocketbase,
 } from '@rr/astro-pocketbase/middleware'
 
-// Routes a visitor can visit without being authenticated
+// Route where the dynamic application lives, where by default only users with the role 'user' are allowed
 const APP_ROUTE = /^\/app($|\/.*)/
 
+// Route where the management pages live, where only users with the role 'manager' are allowed
+const MANAGE_ROUTE = /^\/app\/manage($|\/.*)/
+
+// Routes a visitor can visit without being authenticated
 const UNAUTHENTICATED_APP_ROUTES = [
   /^\/app\/login($|\/.*)/,
   /^\/app\/password-reset($|\/.*)/,
@@ -55,11 +59,26 @@ const routeGuard = defineMiddleware(async ({ url, locals, redirect, isPrerendere
     return next()
   }
 
+  const isVerified = locals.pb.authStore.record!.verified
+  const hasUserRole = locals.pb.authStore.record!.roles.includes('user')
+  const hasManagerRole = locals.pb.authStore.record!.roles.includes('manager')
+
   // Otherwise expect user to be verified, and have the 'user' role to access the route
-  if (!locals.pb.authStore.record!.verified || !locals.pb.authStore.record!.roles.includes('user')) {
+  if (!isVerified || !hasUserRole) {
     return redirect('/app/listings')
   }
 
+  // All non-manage routes are now accessible for verified and approved users
+  if (!pathName.match(MANAGE_ROUTE)) {
+    return next()
+  }
+
+  // Otherwise, when not a manager, return to listing overview
+  if (!hasManagerRole) {
+    return redirect('/app/listings')
+  }
+
+  // Continue to manager-only pages
   return next()
 })
 

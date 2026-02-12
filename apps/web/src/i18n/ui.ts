@@ -219,6 +219,8 @@ export const ui = {
     'listing-user-status.reserved': 'This Materialangebot is reserved, the contact form is disabled.',
     'listing-user-status.success': 'This Materialangebot is closed.',
     'listing-user-status.failure': 'This Materialangebot is closed.',
+    // Manage
+    'manage.manual': 'Manual',
   },
   de: {
     'next': 'Nächstes',
@@ -432,6 +434,8 @@ export const ui = {
     'listing-user-status.reserved': 'Dieses Materialangebot ist reserviert, das Kontaktformular ist deaktiviert.',
     'listing-user-status.success': 'Dieses Materialangebot ist vermittelt.',
     'listing-user-status.failure': 'Dieses Materialangebot ist abgeschlossen.',
+    // Manage
+    'manage.manual': 'Handbuch',
   },
 }
 

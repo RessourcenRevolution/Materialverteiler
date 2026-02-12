@@ -5,7 +5,7 @@ export type Props = HTMLAttributes<'a'> & {
   class?: string
 }
 
-const { href, class: className } = Astro.props;
+const { href, class: className, ...props } = Astro.props;
 ---
 
 <a
@@ -14,6 +14,7 @@ const { href, class: className } = Astro.props;
     'text-body text-base font-bold underline decoration-2 underline-offset-4 hover:no-underline',
     className,
   ]}
+  {...props}
 >
   <slot />
 </a>

@@ -1,0 +1,33 @@
+---
+import { Container, Link } from '@rr/ui/components'
+import Layout from '~/layouts/Layout.astro'
+import { getCollection, getEntry, render } from 'astro:content'
+import { defaultLang } from '~/i18n/ui'
+
+export const prerender = false
+
+// Get all pages
+const pages = await getCollection('manual')
+
+// Get current page
+const entry = await getEntry('manual', `${Astro.params.slug || 'index'}${defaultLang}`)
+const { Content } = await render(entry)
+---
+
+<Layout>
+  <Container size="lg" class="relative">
+
+    { /* 'Menu', list of pages */ }
+    <ul class="mb-12">
+      {pages.filter(page => page.id.endsWith(defaultLang)).map((page) => {
+        const slug = page.id.slice(0, -2)
+        return <li class={slug === 'index' ? '' : 'pl-4'}><Link href={`/app/manage/manual/${slug === 'index' ? '' : slug}`}>{page.data.title}</Link></li>
+      })}
+    </ul>
+
+    { /* Content */ }
+    <div class="prose">
+      <Content />
+    </div>
+  </Container>
+</Layout>

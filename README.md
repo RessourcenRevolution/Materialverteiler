@@ -128,7 +128,7 @@ APP_PORT=3000
 
 # API
 API_URL=https://<pocketbase_public_or_internal_url>
-PUBLIC_API_URL=https://<pocketbase_puiblic_url>
+PUBLIC_API_URL=https://<pocketbase_public_url>
 
 # Keystone
 KEYSTONE_BASE_URL=https://<keystone_public_url>
