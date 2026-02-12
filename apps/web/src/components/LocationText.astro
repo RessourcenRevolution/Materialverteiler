@@ -1,13 +1,15 @@
 ---
 import PinIcon from 'iconoir/icons/map-pin.svg'
 interface Props {
-  text?: string
+  text: string
+  ariaLabel: string
   class?: string
 }
-const { text, class: className } = Astro.props;
+const { text, ariaLabel, class: className } = Astro.props;
 ---
 
 <p class:list={['flex items-center gap-2 text-body', className]}>
   <PinIcon width="1em" class="inline" />
+  <span class="sr-only">{ariaLabel}</span>
   {text}
 </p>

@@ -291,8 +291,8 @@ export const server = {
               locals.pb.filter('listing = {:listing}', { listing: listing.id }),
             )
           }
-          catch (e) {
-
+          catch (_e) {
+            accounting = null
           }
           if (accounting) {
             await locals.pb.collection('accounting').update(accounting.id, {
@@ -430,7 +430,7 @@ export const server = {
           success: true,
         }
       }
-      catch (e) {
+      catch (_e) {
         throw new ActionError({
           code: 'INTERNAL_SERVER_ERROR',
           message: 'error',

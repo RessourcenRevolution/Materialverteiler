@@ -28,4 +28,4 @@ const statuses: Record<Listing['status'], string> = {
 }
 ---
 
-<Badge variant={variants[status]} label={statuses[status]} />
+<Badge variant={variants[status]} label={statuses[status]} ariaLabel={t('listing.status.aria_label')} />

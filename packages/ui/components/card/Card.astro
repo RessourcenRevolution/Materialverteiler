@@ -2,6 +2,7 @@
 export interface Props {
   content?: string
   image?: string
+  imageAlt?: string
   class?: string
   imageClass?: string
   contentClass?: string
@@ -10,6 +11,7 @@ export interface Props {
 const {
   content,
   image,
+  imageAlt,
   class: className,
   imageClass,
   contentClass,
@@ -22,6 +24,7 @@ const {
       ? (
           <img
             src={image}
+            alt={imageAlt}
             class:list={['w-full aspect-4/3 object-cover rounded-xs', imageClass]}
           />
         )

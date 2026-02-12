@@ -14,6 +14,8 @@ export const ui = {
     'next': 'Next',
     'previous': 'Previous',
     'select_images': 'Select Images',
+    'location': 'location',
+    'available_from': 'Available from',
     // Header
     'header.home': 'Home',
     'header.dashboard': 'Listings',
@@ -35,6 +37,7 @@ export const ui = {
     'forms.errors.postalcode': 'This is not a valid postalcode',
     'forms.errors.unknown': 'An unknown error occurred.',
     // Listing
+    'listing.status.aria_label': 'Status',
     'listing.status.short.new': 'Pending',
     'listing.status.short.open': 'Open',
     'listing.status.short.reserved': 'Reserved',
@@ -221,6 +224,8 @@ export const ui = {
     'next': 'Nächstes',
     'previous': 'Vorheriges',
     'select_images': 'Bilder auswählen',
+    'location': 'Standort',
+    'available_from': 'Verfügbar ab',
     // Header
     'header.home': 'Startseite',
     'header.dashboard': 'Materialangebote',
@@ -242,6 +247,7 @@ export const ui = {
     'forms.errors.postalcode': 'Das ist keine gültige Postleitzahl',
     'forms.errors.unknown': 'Ein unbekannter Fehler ist aufgetreten.',
     // Listing
+    'listing.status.aria_label': 'Status',
     'listing.status.short.new': 'In Prüfung',
     'listing.status.short.open': 'Offen',
     'listing.status.short.reserved': 'Reserviert',

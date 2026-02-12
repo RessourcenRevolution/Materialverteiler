@@ -1,9 +1,10 @@
 ---
 export interface Props {
   label: string
+  ariaLabel: string
   variant?: 'info' | 'neutral' | 'success' | 'warning' | 'error'
 }
-const { label, variant = 'neutral' } = Astro.props
+const { label, ariaLabel, variant = 'neutral' } = Astro.props
 const variants = {
   info: 'bg-blue-200 text-blue-950',
   neutral: 'bg-gray-200 text-gray-900',
@@ -13,6 +14,6 @@ const variants = {
 };
 ---
 <span class:list={['text-body text-sm font-bold px-2.5 py-0.5 rounded-full', variants[variant]]}>
+  <span class="sr-only">{ariaLabel}</span>
   {label}
 </span>
-

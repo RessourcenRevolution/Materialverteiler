@@ -36,21 +36,22 @@ const { listings, edit = false, class: className } = Astro.props;
             ? `${process.env.PUBLIC_API_URL}/api/files/listings/${listing.id}/${listing.images[0]}`
             : undefined
         }
+        imageAlt={listing.title}
         class="relative md:flex-row md:gap-4"
         imageClass="rounded-none! md:rounded-xs! md:max-w-(--image-max-w) shrink-0"
         contentClass="md:px-0"
       >
         { edit
           ? <div class="flex flex-wrap gap-3 items-center">
-              <h2 class:list={['text-xl text-heading font-bold']}>{listing.title}</h2>
+              <h3 class:list={['text-xl text-heading font-bold']}>{listing.title}</h3>
               <ListingStatusBadge status={listing.status} />
             </div>
-          : <h2 class:list={['text-xl text-heading font-bold']}>{listing.title}</h2>
+          : <h3 class:list={['text-xl text-heading font-bold']}>{listing.title}</h3>
         }
         <div class="flex gap-6">
-          <LocationText text={listing.postalcode + ' ' + listing.city} />
+          <LocationText text={listing.postalcode + ' ' + listing.city} ariaLabel={t('location')} />
           <DateText
-            text="Verfügbar ab"
+            text={t('available_from')}
             from={listing.start_date}
           />
         </div>

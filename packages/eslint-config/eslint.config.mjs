@@ -20,6 +20,17 @@ export default defineConfig(
       },
     },
     tseslint.configs.recommended,
+    {
+      rules: {
+        '@typescript-eslint/no-unused-vars': [
+          'warn',
+          {
+            argsIgnorePattern: '^_',
+            varsIgnorePattern: '^_',
+          },
+        ],
+      },
+    },
   ],
   stylistic.configs.customize({
     indent: 2,
