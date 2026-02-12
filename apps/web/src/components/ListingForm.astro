@@ -73,6 +73,7 @@ if (accounting && accounting.excel_file) {
   )
 }
 <form
+  id="listing-form"
   class="flex flex-col gap-6"
   method="post"
   action={actions.listing}
@@ -101,6 +102,7 @@ if (accounting && accounting.excel_file) {
   </Heading>
   <p class="text-body text-base">{t('listing-form.general.text')}</p>
   <Input
+    id="title"
     name="title"
     label={t('listing-form.title.label')}
     value={data?.title}
@@ -108,6 +110,7 @@ if (accounting && accounting.excel_file) {
     required
   />
   <Input
+    id="material"
     name="material"
     label={t('listing-form.material.label')}
     value={data?.material}
@@ -115,6 +118,7 @@ if (accounting && accounting.excel_file) {
     required
   />
   <Input
+    id="measurements"
     name="measurements"
     label={t('listing-form.measurements.label')}
     value={data?.measurements}
@@ -122,6 +126,7 @@ if (accounting && accounting.excel_file) {
     required
   />
   <Input
+    id="condition"
     name="condition"
     label={t('listing-form.condition.label')}
     value={data?.condition}
@@ -129,6 +134,7 @@ if (accounting && accounting.excel_file) {
     required
   />
   <Textarea
+    id="description"
     name="description"
     label={t('listing-form.description.label')}
     value={data?.description}
@@ -158,12 +164,14 @@ if (accounting && accounting.excel_file) {
   </Heading>
   <div class="prose" set:html={t('listing-form.pickup.text')} />
   <Input
+    id="address"
     name="address"
     label={t('listing-form.address.label')}
     value={data?.address}
     error={fieldError('address', result?.error)}
   />
   <Input
+    id="postalcode"
     name="postalcode"
     label={t('listing-form.postalcode.label')}
     value={data?.postalcode}
@@ -171,6 +179,7 @@ if (accounting && accounting.excel_file) {
     required
   />
   <Input
+    id="city"
     name="city"
     label={t('listing-form.city.label')}
     value={data?.city}
@@ -178,12 +187,14 @@ if (accounting && accounting.excel_file) {
     required
   />
   <Textarea
+    id="pickup_description"
     name="pickup_description"
     label={t('listing-form.pickup_description.label')}
     value={data?.pickup_description}
     error={fieldError('pickup_description', result?.error)}
   />
   <Input
+    id="start_date"
     name="start_date"
     type="date"
     label={t('listing-form.start_date.label')}
@@ -192,6 +203,7 @@ if (accounting && accounting.excel_file) {
     required
   />
   <Input
+    id="end_date"
     name="end_date"
     type="date"
     label={t('listing-form.end_date.label')}

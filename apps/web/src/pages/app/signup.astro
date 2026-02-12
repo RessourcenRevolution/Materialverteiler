@@ -48,8 +48,9 @@ const data
       {t('signup.title')}
     </Heading>
     <div class="prose font-bold animate-slide-in animate-delay-100" set:html={t('signup.text')} />
-    <form class="flex flex-col gap-6 animate-slide-in animate-delay-200" method="post" action={actions.signup}>
+    <form id="signup-form" class="flex flex-col gap-6 animate-slide-in animate-delay-200" method="post" action={actions.signup}>
       <Input
+        id="firstname"
         name="firstname"
         type="text"
         label={t('forms.firstname')}
@@ -58,6 +59,7 @@ const data
         required
       />
       <Input
+        id="lastname"
         name="lastname"
         type="text"
         label={t('forms.lastname')}
@@ -66,6 +68,7 @@ const data
         required
       />
       <Input
+        id="email"
         name="email"
         type="email"
         label={t('forms.email')}
@@ -73,6 +76,7 @@ const data
         error={fieldError('email', result?.error, 'signup.errors.')}
       />
       <Input
+        id="password"
         name="password"
         type="password"
         label={t('forms.password')}
@@ -81,6 +85,7 @@ const data
         required
       />
       <Input
+        id="team"
         name="team"
         type="text"
         label={t('forms.team')}
@@ -102,6 +107,7 @@ const data
         required
       />
       <Input
+        id="team_city"
         name="team_city"
         type="text"
         label={t('forms.team-city')}
@@ -110,6 +116,7 @@ const data
         required
       />
       <Textarea
+        id="message"
         name="message"
         label={t('signup.fields.message')}
         value={data?.get('message') as string}
