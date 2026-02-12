@@ -12,8 +12,9 @@ export const GET: APIRoute = async ({ locals, redirect }) => {
   // Append new empty cookie
   const authCookie = locals.pb.authStore.exportToCookie({
     sameSite: 'lax',
+    secure: import.meta.env.MODE !== 'development',
   })
-  response.headers.append('set-cookie', authCookie)
+  response.headers.append('Set-Cookie', authCookie)
 
   return response
 }

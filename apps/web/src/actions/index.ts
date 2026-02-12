@@ -97,7 +97,7 @@ export const server = {
         time = performance.now()
         return {
           cookie: locals.pb.authStore.exportToCookie({
-            secure: import.meta.env.DEV ? false : true,
+            secure: import.meta.env.MODE !== 'development',
           }),
         }
       }

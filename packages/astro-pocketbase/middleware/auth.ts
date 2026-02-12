@@ -23,6 +23,7 @@ export const authPocketbase = defineMiddleware(
     if (locals.pb.authStore.isValid) {
       const authCookie = locals.pb.authStore.exportToCookie({
         sameSite: "lax",
+        secure: import.meta.env.MODE !== 'development',
       });
       response.headers.append("set-cookie", authCookie);
     }

@@ -20,7 +20,7 @@ export const login = defineAction({
         .authWithPassword(input.email.toLowerCase(), input.password);
       return {
         cookie: locals.pb.authStore.exportToCookie({
-          secure: import.meta.env.DEV ? false : true,
+          secure: import.meta.env.MODE !== 'development',
         }),
       };
     } catch (e) {
@@ -65,7 +65,7 @@ export const signup = defineAction({
         .authWithPassword(input.email, input.password);
       return {
         cookie: locals.pb.authStore.exportToCookie({
-          secure: import.meta.env.DEV ? false : true,
+          secure: import.meta.env.MODE !== 'development',
         }),
       };
     } catch (e) {
