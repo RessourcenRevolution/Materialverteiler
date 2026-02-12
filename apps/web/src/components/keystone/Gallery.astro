@@ -24,7 +24,7 @@ const gallery = GallerySchema.parse(module.data)
     <div class="grid grid-cols-[repeat(auto-fill,minmax(var(--column-size),1fr))] justify-items-center items-center gap-4 md:gap-10">
       {gallery && gallery.items && gallery.items.map(item => (
         item.image?.url
-        && <a href={item.link} target="_blank" class="w-full">
+        && <a href={item.link} title={item.title} target="_blank" class="w-full">
           <img
             src={item.image.url}
             class="w-full mb-2 rounded-xs"
