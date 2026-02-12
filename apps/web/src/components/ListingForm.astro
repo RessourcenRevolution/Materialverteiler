@@ -218,7 +218,7 @@ if (accounting && accounting.excel_file) {
   {(accounting?.co2 || 0) === 0 && <p class="text-body text-base prose" set:html={t('listing-form.accounting.text')} />}
   {(accounting?.co2 || 0) > 0 && <p class="text-body text-base prose" set:html={t('listing-form.accounting.completed')} />}
   {accounting
-    && <Alert variant="info" class="">
+    && <Alert variant="info">
       <p>
         {(accounting?.co2 || 0) === 0 && <strong class="inline-block mb-1">{t('listing-form.accounting.existing')}</strong>}
         {(accounting?.co2 || 0) > 0 && <strong class="inline-block mb-1">{t('listing-form.accounting.existing_completed')}</strong>}
@@ -245,7 +245,12 @@ if (accounting && accounting.excel_file) {
 
   {
     result?.error && !isInputError(result.error) && (
-      <Alert variant="error" text={result.error.message} />
+      <Alert
+        variant="error"
+        text={result.error.message}
+        data-autofocus
+        tabindex="-1"
+      />
     )
   }
   <Button

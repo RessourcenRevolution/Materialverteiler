@@ -56,7 +56,6 @@ const data
         label={t('forms.firstname')}
         value={data?.get('firstname') as string}
         error={fieldError('firstname', result?.error)}
-        required
       />
       <Input
         id="lastname"
@@ -141,6 +140,8 @@ const data
             text={t(
               ('signup.errors.' + result.error.message) as TranslationKey,
             )}
+            data-autofocus
+            tabindex="-1"
           />
         )
       }

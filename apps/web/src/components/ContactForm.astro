@@ -104,7 +104,12 @@ const data
               />
               {
                 result?.error && !isInputError(result.error) && (
-                  <Alert variant="error" text={result.error.message} />
+                  <Alert
+                    variant="error"
+                    text={result.error.message}
+                    data-autofocus
+                    tabindex="-1"
+                  />
                 )
               }
               <Button type="submit" label={t('contact-form.submit')} class="self-start" />
