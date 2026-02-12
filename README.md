@@ -63,7 +63,6 @@ documentation and development. It provides:
 
 - Interactive component documentation
 - Development environment for UI components
-- Visual testing and preview capabilities
 
 ## Project Structure
 
@@ -80,7 +79,7 @@ documentation and development. It provides:
 │   ├── drawer-menu/       # Drawer menu component
 │   ├── image-gallery/     # Image gallery component
 │   ├── image-uploader/    # Image uploader component
-│   └── eslint-config/      # Shared ESLint configuration
+│   └── eslint-config/     # Shared ESLint configuration
 ├── docker-compose.yml     # Docker configuration
 ├── mise.toml              # Development environment configuration
 └── package.json           # Monorepo root configuration
@@ -88,15 +87,18 @@ documentation and development. It provides:
 
 ## Deployment
 
-```sh
-docker compose build
-docker compose up
-
-```
+Materialverteiler is best deployed using [Docker](https://www.docker.com/). This
+repository contains a [docker-compose.yaml](./docker-compose.yml) which, when
+provided with the correct [environment variables](#environment-variables)
+as described below, leads to a successful deployment.
 
 ## Environment Variables
 
-The project requires several environment variables for proper configuration:
+For development purposes the local setup gets provided with correct defaults
+using mise.
+
+Configuring the environment variables is in general only required when deploying
+the services somewhere using docker.
 
 ### Web Application (apps/web)
 
