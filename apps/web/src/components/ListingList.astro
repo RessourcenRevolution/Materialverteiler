@@ -33,7 +33,7 @@ const { listings, edit = false, class: className } = Astro.props;
       <Card
         image={
           listing.images && listing.images.length > 0
-            ? `${process.env.PUBLIC_API_URL}/api/files/listings/${listing.id}/${listing.images[0]}`
+            ? `${process.env.PUBLIC_API_URL}/api/files/listings/${listing.id}/${listing.images[0]}?thumb=512x512f`
             : undefined
         }
         imageAlt={listing.title}
