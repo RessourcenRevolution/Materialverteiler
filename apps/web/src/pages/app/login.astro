@@ -50,6 +50,7 @@ const data
     </Heading>
     <form class="flex flex-col gap-6" method="post" action={`${actions.login}&redirect=${redirect}`}>
       <Input
+        id="email"
         name="email"
         type="email"
         label={t('forms.email')}
@@ -59,6 +60,7 @@ const data
         required
       />
       <Input
+        id="password"
         name="password"
         type="password"
         label={t('forms.password')}
@@ -71,9 +73,12 @@ const data
         result?.error && !isInputError(result.error) && (
           <Alert
             variant="error"
+            role="alert"
             text={t(
               ('login.errors.' + result.error.message) as TranslationKey,
             )}
+            data-autofocus
+            tabindex="-1"
           />
         )
       }
