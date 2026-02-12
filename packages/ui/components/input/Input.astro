@@ -1,32 +1,33 @@
 ---
 export interface Props {
-  name: string;
-  label?: string;
-  value?: string;
-  type?: astroHTML.JSX.HTMLInputTypeAttribute;
-  required?: boolean;
-  disabled?: boolean;
-  readonly?: boolean;
-  error?: string;
-  class?:string
+  id: string
+  name: string
+  label?: string
+  value?: string
+  type?: astroHTML.JSX.HTMLInputTypeAttribute
+  required?: boolean
+  disabled?: boolean
+  readonly?: boolean
+  error?: string
+  class?: string
 }
-const { label, value, name, type, required, disabled, readonly, error, class: className } = Astro.props;
+const { id, name, label, value, type, required, disabled, readonly, error, class: className } = Astro.props;
 ---
 
-<div class:list={["relative", className]}>
+<div class:list={['relative', className]}>
   {
     label && (
       <label
-        for={name}
+        for={id}
         class:list={[
-          "absolute font-bold text-body text-base leading-none start-[0.9em] pr-1",
-          "transform scale-75 top-[0.85em] -translate-y-[0.5em] z-10 origin-left duration-200",
+          'absolute font-bold text-body text-base leading-none start-[0.9em] pr-1',
+          'transform scale-75 top-[0.85em] -translate-y-[0.5em] z-10 origin-left duration-200',
           'line-clamp-1',
-          "has-[+input:focus]:scale-75! has-[+input:focus]:top-[0.85em]!",
-          "has-[+input:placeholder-shown]:scale-100 has-[+input:placeholder-shown]:top-[1.65em]",
-          "has-[+input:placeholder-shown]:pointer-events-none",
-          "has-[+input:disabled]:text-body/75",
-          "has-[+input:read-only]:text-body/75"
+          'has-[+input:focus]:scale-75! has-[+input:focus]:top-[0.85em]!',
+          'has-[+input:placeholder-shown]:scale-100 has-[+input:placeholder-shown]:top-[1.65em]',
+          'has-[+input:placeholder-shown]:pointer-events-none',
+          'has-[+input:disabled]:text-body/75',
+          'has-[+input:read-only]:text-body/75',
         ]}
       >
         {label}
@@ -34,19 +35,30 @@ const { label, value, name, type, required, disabled, readonly, error, class: cl
     )
   }
   <input
+    id={id}
     name={name}
     type={type}
     value={value}
-    placeholder={" "}
+    placeholder={' '}
     required={required}
     disabled={disabled}
     readonly={readonly}
+    aria-invalid={!!error}
+    aria-describedby={error ? `${id}-error` : undefined}
     class:list={[
-      "w-full text-body border-(length:--border) text-base border-body rounded-xs px-[0.75em] pb-[0.5em] pt-[1em]",
-      "disabled:text-body/75 disabled:border-body/75",
-      "read-only:text-body/75 read-only:border-body/75",
-      error && "border-red-800!",
+      'w-full text-body border-(length:--border) text-base border-body rounded-xs px-[0.75em] pb-[0.5em] pt-[1em]',
+      'disabled:text-body/75 disabled:border-body/75',
+      'read-only:text-body/75 read-only:border-body/75',
+      error && 'border-red-800!',
     ]}
   />
-  {error && <p class="text-red-800 text-sm">{error}</p>}
+  {
+    error && (
+      <p
+        id={`${id}-error`}
+        class="text-red-800 text-sm">
+        {error}
+      </p>
+    )
+  }
 </div>

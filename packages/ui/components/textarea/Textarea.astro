@@ -1,20 +1,20 @@
 ---
 export interface Props {
-  name: string;
-  label?: string;
-  value?: string;
-  placeholder?: string;
-  required?: boolean;
-  rows?: number;
-  error?: string;
+  id: string
+  name: string
+  label?: string
+  value?: string
+  required?: boolean
+  rows?: number
+  error?: string
 }
 const {
+  id,
   label,
   value,
   name,
-  placeholder,
   required,
-  rows = "4",
+  rows = '4',
   error,
 } = Astro.props;
 ---
@@ -23,14 +23,14 @@ const {
   {
     label && (
       <label
-        for={name}
+        for={id}
         class:list={[
-          "absolute font-bold text-body text-base leading-none start-[0.9em] pr-1",
-          "transform scale-75 top-[0.85em] -translate-y-[0.5em] z-10 origin-left duration-200",
+          'absolute font-bold text-body text-base leading-none start-[0.9em] pr-1',
+          'transform scale-75 top-[0.85em] -translate-y-[0.5em] z-10 origin-left duration-200',
           'line-clamp-1',
-          "has-[+textarea:focus]:scale-75! has-[+textarea:focus]:top-[0.85em]!",
-          "has-[+textarea:placeholder-shown]:scale-100 has-[+textarea:placeholder-shown]:top-[1.65em]",
-          "has-[+textarea:placeholder-shown]:pointer-events-none",
+          'has-[+textarea:focus]:scale-75! has-[+textarea:focus]:top-[0.85em]!',
+          'has-[+textarea:placeholder-shown]:scale-100 has-[+textarea:placeholder-shown]:top-[1.65em]',
+          'has-[+textarea:placeholder-shown]:pointer-events-none',
         ]}
       >
         {label}
@@ -38,14 +38,26 @@ const {
     )
   }
   <textarea
+    id={id}
     name={name}
     placeholder=" "
     required={required}
+    rows={rows}
+    aria-invalid={!!error}
+    aria-describedby={error ? `${id}-error` : undefined}
     class:list={[
-      "w-full text-body border-(length:--border) text-base border-body rounded-xs px-[0.75em] pb-[0.5em] pt-[1em]",
-      error && "border-red-800!",
-    ]}
-    rows={rows}>{value}</textarea
+      'w-full px-[0.75em] pb-[0.5em] pt-[1em]',
+      'text-body text-base border-(length:--border) border-body rounded-xs',
+      error && 'border-red-800!',
+    ]}>{value}</textarea
   >
-  {error && <p class="text-red-800 text-sm">{error}</p>}
+  {
+    error && (
+      <p
+        id={`${id}-error`}
+        class="text-red-800 text-sm">
+        {error}
+      </p>
+    )
+  }
 </div>

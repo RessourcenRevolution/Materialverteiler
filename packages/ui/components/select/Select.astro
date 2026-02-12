@@ -1,13 +1,12 @@
 ---
-
 export interface Props {
-  id: string;
-  name: string;
-  options: Array<{ label: string; value: string }>;
-  label?: string;
-  value?: string;
-  required?: boolean;
-  error?: string;
+  id: string
+  name: string
+  options: Array<{ label: string, value: string }>
+  label?: string
+  value?: string
+  required?: boolean
+  error?: string
 }
 const {
   id,
@@ -26,14 +25,30 @@ const {
 >
   <label
     for={id}
-    class:list={[
-      "block font-bold text-body text-base mb-1",
-    ]}
+    class="block font-bold text-body text-base mb-1"
   >
-    <slot>{label || ""}</slot>
+    <slot>{label || ''}</slot>
   </label>
-  <select id={id} name={name} value={value} required={required} class="w-full text-body [&:has(option[value='']:checked)]:font-bold border-(length:--border) text-base border-body rounded-xs px-3 py-3 appearance-none bg-(image:--chevron) bg-no-repeat bg-[right_0.75rem_center] bg-size-[2rem]">
-    {options.map(option => <option value={option.value} selected={option.value === value}>{option.label}</option>)}
+  <select
+    id={id}
+    name={name}
+    value={value}
+    required={required}
+    aria-invalid={!!error}
+    aria-describedby={error ? `${id}-error` : undefined}
+    class="w-full text-body [&:has(option[value='']:checked)]:font-bold border-(length:--border) text-base border-body rounded-xs px-3 py-3 appearance-none bg-(image:--chevron) bg-no-repeat bg-[right_0.75rem_center] bg-size-[2rem]">
+    {options.map(option =>
+      <option value={option.value} selected={option.value === value}>
+        {option.label}
+      </option>)}
   </select>
-  {error && <p class="text-red-800 text-sm">{error}</p>}
+  {
+    error && (
+      <p
+        id={`${id}-error`}
+        class="text-red-800 text-sm">
+        {error}
+      </p>
+    )
+  }
 </div>

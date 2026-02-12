@@ -1,36 +1,37 @@
 ---
-import type { HTMLAttributes } from "astro/types";
-import type { Props as ButtonProps } from "../button/Button.astro";
-import Button from "../button/Button.astro";
+import type { HTMLAttributes } from 'astro/types'
+import type { Props as ButtonProps } from '../button/Button.astro'
+import Button from '../button/Button.astro'
 
-export interface Props extends HTMLAttributes<"div"> {
-  variant: "error" | "warning" | "info" | "success" | "neutral";
-  spacing?: "sm" | "md";
-  text?: string;
-  button?: ButtonProps;
+export interface Props extends HTMLAttributes<'div'> {
+  variant: 'error' | 'warning' | 'info' | 'success' | 'neutral'
+  spacing?: 'sm' | 'md'
+  text?: string
+  button?: ButtonProps
 }
 
-const { variant = "neutral", spacing = "sm", text, class: className, button, ...props } = Astro.props;
+const { variant = 'neutral', spacing = 'sm', text, class: className, button, ...props } = Astro.props
 
 const variants = {
-  info: "bg-blue-200 text-blue-950",
-  success: "bg-success text-heading",
-  warning: "bg-orange-200 text-orange-950",
-  error: "bg-red-200 text-red-950",
-  neutral: "bg-gray-200 text-gray-900"
-};
+  info: 'bg-blue-200 text-blue-950',
+  success: 'bg-success text-heading',
+  warning: 'bg-orange-200 text-orange-950',
+  error: 'bg-red-200 text-red-950',
+  neutral: 'bg-gray-200 text-gray-900',
+}
 
 const spacings = {
-  sm: "px-5 py-4",
-  md: "p-8"
+  sm: 'px-5 py-4',
+  md: 'p-8',
 }
 ---
 
 <div
   class:list={[
-    "rounded-xs",
+    'rounded-xs',
+    'focus:outline-0',
     spacings[spacing],
-    text && button && "flex justify-between items-center gap-4",
+    text && button && 'flex justify-between items-center gap-4',
     variants[variant],
     className,
   ]}

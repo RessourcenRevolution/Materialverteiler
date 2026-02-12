@@ -1,30 +1,29 @@
 ---
-import type { AstroComponentFactory } from "astro/runtime/server/index.js";
-import type { HTMLAttributes } from "astro/types";
+import type { HTMLAttributes } from 'astro/types'
 
-export type Props = HTMLAttributes<"title"> & {
-  tag: "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
-  size?: "xl" | "lg" | "md" | "sm";
-  text?: string;
-};
+export type Props = HTMLAttributes<'title'> & {
+  tag: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6'
+  size?: 'xl' | 'lg' | 'md' | 'sm'
+  text?: string
+}
 
 const {
-  tag = "h1",
-  size = "md",
+  tag = 'h1',
+  size = 'md',
   text,
   class: className,
   ...props
-} = Astro.props;
+} = Astro.props
 const Element = tag;
 ---
 
 <Element
   class:list={[
-    "text-heading font-bold",
-    size === "xl" && "text-4xl",
-    size === "lg" && "text-3xl",
-    size === "md" && "text-2xl",
-    size === "sm" && "text-xl",
+    'text-heading font-bold',
+    size === 'xl' && 'text-4xl',
+    size === 'lg' && 'text-3xl',
+    size === 'md' && 'text-2xl',
+    size === 'sm' && 'text-xl',
     className,
   ]}
   {...props}
