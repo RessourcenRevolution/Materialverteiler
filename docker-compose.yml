@@ -3,6 +3,8 @@ services:
     build:
       context: ./apps/api
       dockerfile: ./Dockerfile
+    environment:
+      PUBLIC_API_URL: ${PUBLIC_API_URL:-http://localhost:8080}
     volumes:
       - ../files/pb_data:/app/pb_data
 
@@ -37,4 +39,3 @@ services:
     volumes:
       - ../files/keystone-data:/app/apps/keystone/data
       - ../files/keystone-assets:/app/apps/keystone/assets
-
