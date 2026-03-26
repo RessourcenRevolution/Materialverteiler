@@ -5,7 +5,7 @@
 publiccodeYmlVersion: "0.2"
 name: Materialverteiler
 url: >-
-  https://gitlab.opencode.de/unbox-cologne/ressourcenrevolution/materialverteiler
+  https://github.com/RessourcenRevolution/Materialverteiler
 releaseDate: "2026-02-05"
 developmentStatus: beta
 softwareType: standalone/web

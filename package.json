@@ -1,5 +1,5 @@
 {
-  "name": "rr",
+  "name": "@rr/materialverteiler",
   "workspaces": [
     "apps/keystone",
     "apps/web",
