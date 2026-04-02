@@ -16,6 +16,10 @@ instead of discarding them. Built using [Pocketbase](https://pocketbase.io/),
   listing activities
 - **🔧 Keystone integration**: CMS for content management
 
+## Screenshots
+
+<img width="24%" alt="Screenshot of Materialverteiler overview page" src="./screenshots/overview.png" /> <img width="24%" alt="Screenshot of Materialverteiler new listing page" src="./screenshots/new-listing.png" /> <img width="24%" alt="Screenshot of Materialverteiler listing detail page" src="./screenshots/listing-detail.png" /> <img width="24%" alt="Screenshot of Materialverteiler profile page" src="./screenshots/profile.png" />
+
 ## Architecture
 
 This project is a mono repo containing several applications that work together to
