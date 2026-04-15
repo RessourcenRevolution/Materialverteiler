@@ -16,6 +16,7 @@ services:
         APP_NAME: ${APP_NAME:-App Name}
         APP_LANGUAGE: ${APP_LANGUAGE:-en}
         APP_PORT: ${APP_PORT:-3000}
+        APP_HOST: ${APP_HOST:-localhost}
         KEYSTONE_GRAPHQL_ENDPOINT: ${PUBLIC_KEYSTONE_GRAPHQL_ENDPOINT:-http://localhost:3002/api/graphql}
     environment:
       API_URL: ${API_URL:-http://api:8080}

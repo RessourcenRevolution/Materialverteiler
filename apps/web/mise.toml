@@ -16,6 +16,7 @@ description = "Typecheck"
 run = "npm run typecheck"
 
 [env]
+APP_HOST = "localhost"
 API_URL = "http://localhost:8090"
 PUBLIC_API_URL = "http://localhost:8090"
 KEYSTONE_BASE_URL = "http://localhost:3002"
