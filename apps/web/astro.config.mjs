@@ -14,6 +14,7 @@ export default defineConfig({
   security: {
     checkOrigin: true,
     allowedDomains: [{ hostname: process.env.APP_HOST }],
+    actionBodySizeLimit: 30 * 1024 * 1024, // 30 MB
   },
 
   adapter: node({
