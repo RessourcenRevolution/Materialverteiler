@@ -4,6 +4,7 @@ import (
 	"api/email"
 	"log"
 	"net/mail"
+	"os"
 
 	"github.com/pocketbase/dbx"
 	"github.com/pocketbase/pocketbase/core"
@@ -14,6 +15,10 @@ func ProcessEmailQueue(app core.App) {
 	records, err := app.FindRecordsByFilter("emailQueue", "", "created", 2, 0, dbx.Params{})
 	if err != nil {
 		app.Logger().Error("Error fetching email queue", err)
+		return
+	}
+
+	if os.Getenv("DISABLE_EMAILS_CRONJOB") == "true" {
 		return
 	}
 

@@ -24,4 +24,5 @@ run = "./api migrate down ${usage_number?}"
 
 [env]
 DEV_MODE = "true"
+DISABLE_EMAILS_CRONJOB = "false"
 PUBLIC_API_URL = "http://localhost:8090"
