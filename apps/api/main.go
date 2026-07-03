@@ -202,7 +202,7 @@ func main() {
 		// Get recent listings
 		se.Router.GET("/api/listings/recent", func(e *core.RequestEvent) error {
 			// Get listing
-			listings, err := app.FindRecordsByFilter("listings", "images:length > 0 && status = 'success'", "created", 4, 0)
+			listings, err := app.FindRecordsByFilter("listings", "images:length > 0 && status = 'success'", "-start_date", 4, 0)
 			if err != nil {
 				return e.Error(http.StatusInternalServerError, "error getting listing", nil)
 			}
