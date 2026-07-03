@@ -1,6 +1,6 @@
 FROM node:24.4.0-alpine3.22 AS base 
 
-RUN apk add --no-cache openssl
+RUN apk add --no-cache openssl curl
 
 WORKDIR /app
 

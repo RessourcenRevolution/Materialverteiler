@@ -7,6 +7,12 @@ services:
       PUBLIC_API_URL: ${PUBLIC_API_URL:-http://localhost:8080}
     volumes:
       - ../files/pb_data:/app/pb_data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "-s", "-o", "/dev/null", "http://localhost:8080/_/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 5s
 
   web:
     build:
@@ -17,14 +23,22 @@ services:
         APP_LANGUAGE: ${APP_LANGUAGE:-en}
         APP_PORT: ${APP_PORT:-3000}
         APP_HOST: ${APP_HOST:-localhost}
-        KEYSTONE_GRAPHQL_ENDPOINT: ${PUBLIC_KEYSTONE_GRAPHQL_ENDPOINT:-http://localhost:3002/api/graphql}
+        KEYSTONE_GRAPHQL_ENDPOINT: ${PUBLIC_KEYSTONE_GRAPHQL_ENDPOINT:-http://keystone:3002/api/graphql}
+    # ports:
+    #   - "3000:3000"
     environment:
       API_URL: ${API_URL:-http://api:8080}
-      PUBLIC_API_URL: ${PUBLIC_API_URL:-http://localhost:8080}
-      KEYSTONE_BASE_URL: ${KEYSTONE_BASE_URL:-http://localhost:3002}
-      KEYSTONE_GRAPHQL_ENDPOINT: ${KEYSTONE_GRAPHQL_ENDPOINT:-http://localhost:3002/api/graphql}
-      KEYSTONE_API_USER_EMAIL: ${KEYSTONE_API_USER_EMAIL}
-      KEYSTONE_API_USER_PASSWORD: ${KEYSTONE_API_USER_PASSWORD}
+      PUBLIC_API_URL: ${PUBLIC_API_URL:-http://api:8080}
+      KEYSTONE_BASE_URL: ${KEYSTONE_BASE_URL:-http://keystone:3002}
+      KEYSTONE_GRAPHQL_ENDPOINT: ${KEYSTONE_GRAPHQL_ENDPOINT:-http://keystone:3002/api/graphql}
+      KEYSTONE_API_USER_EMAIL: ${KEYSTONE_API_USER_EMAIL:-example@example.com}
+      KEYSTONE_API_USER_PASSWORD: ${KEYSTONE_API_USER_PASSWORD:-123456abcdef}
+    healthcheck:
+      test: ["CMD", "curl", "-f", "-s", "-o", "/dev/null", "http://localhost:${APP_PORT:-3000}"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 5s
 
   keystone:
     build:
@@ -32,11 +46,17 @@ services:
       dockerfile: ./apps/keystone/Dockerfile
       args:
         WEB_APP_BASE_URL: ${WEB_APP_BASE_URL:-http://localhost:3000}
-    ports:
-      - "3002:3002"
+    # ports:
+    #   - "3002:3002"
     environment:
       KEYSTONE_BASE_URL: ${KEYSTONE_BASE_URL:-http://localhost:3002}
       WEB_APP_BASE_URL: ${WEB_APP_BASE_URL:-http://localhost:3000}
     volumes:
       - ../files/keystone-data:/app/apps/keystone/data
       - ../files/keystone-assets:/app/apps/keystone/assets
+    healthcheck:
+      test: ["CMD", "curl", "-f", "-s", "-o", "/dev/null", "http://localhost:3002"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 5s

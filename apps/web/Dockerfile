@@ -1,5 +1,7 @@
 FROM node:24.4.0-alpine3.22 AS base
 
+RUN apk add --no-cache curl
+
 WORKDIR /app
 
 # build astro
