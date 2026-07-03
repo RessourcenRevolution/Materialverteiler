@@ -12,10 +12,13 @@ export const prerender = false
 
 const t = useTranslations()
 
-const items = await Astro.locals.pb
+const future = await Astro.locals.pb
   .collection('listings')
-  .getFullList({ expand: 'user,team', filter: 'status = "open" || status = "reserved"' })
-const listings = ListingSchema.array().parse(items) as Listing[]
+  .getFullList({ expand: 'user,team', filter: 'start_date > @yesterday && (status = "open" || status = "reserved")', sort: 'start_date' })
+const past = await Astro.locals.pb
+  .collection('listings')
+  .getFullList({ expand: 'user,team', filter: 'start_date < @yesterday && (status = "open" || status = "reserved")', sort: '-start_date' })
+const listings = ListingSchema.array().parse([...future, ...past]) as Listing[]
 
 const user = UserSchema.parse(Astro.locals.pb.authStore.record!)
 const isNewUser = !Astro.locals.pb.authStore.record!.roles.includes('user');
