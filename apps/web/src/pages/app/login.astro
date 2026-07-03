@@ -82,14 +82,14 @@ const data
           />
         )
       }
-      <div class="flex gap-4 items-center animate-slide-in animate-delay-300">
+      <div class="flex flex-wrap gap-4 items-center animate-slide-in animate-delay-300">
         <Button
           label={t('login.button')}
           variant="primary"
           class="self-start"
         />
-        <Button label={t('login.signup')} href="/app/signup" class="self-start" />
-        <Link href="/app/password-reset" class="ml-auto">
+        <Button label={t('login.signup')} href="/app/signup" class="self-start mr-auto" />
+        <Link href="/app/password-reset" class="">
           {t('login.forgot-password')}
         </Link>
       </div>
