@@ -242,12 +242,12 @@ export const ui = {
     'forms.team': 'Welchem Betrieb / welcher Organisation gehörst du an?',
     'forms.team-type': 'Art des Betriebs / der Organisation',
     'forms.team-city': 'Stadt des Betriebs / der Organisation',
-    'forms.email': 'Deine Mail-Adresse',
+    'forms.email': 'Deine E-Mail-Adresse',
     'forms.password': 'Passwort',
     'forms.images': 'Bilder',
-    'forms.images.no-images': 'Keine Bilder vorhanden',
-    'forms.errors.required': 'Dieses Feld ist erforderlich',
-    'forms.errors.postalcode': 'Das ist keine gültige Postleitzahl',
+    'forms.images.no-images': 'Keine Bilder vorhanden.',
+    'forms.errors.required': 'Dieses Feld ist erforderlich.',
+    'forms.errors.postalcode': 'Das ist keine gültige Postleitzahl.',
     'forms.errors.unknown': 'Ein unbekannter Fehler ist aufgetreten.',
     // Listing
     'listing.status.aria_label': 'Status',
@@ -257,7 +257,7 @@ export const ui = {
     'listing.status.short.success': 'Vermittelt',
     'listing.status.short.failure': 'Abgeschlossen',
     'listing.status.long.new': 'In Prüfung',
-    'listing.status.long.open': 'Offen für anfrage',
+    'listing.status.long.open': 'Offen für Anfrage',
     'listing.status.long.reserved': 'Reserviert',
     'listing.status.long.success': 'Vermittelt',
     'listing.status.long.failure': 'Abgeschlossen/Zurückgezogen',
@@ -285,27 +285,27 @@ export const ui = {
     'login.signup': 'Konto anlegen',
     'login.forgot-password': 'Passwort vergessen?',
     'login.errors.unauthorized':
-      'Falsche E-Mail oder Passwort, versuch es bitte nochmal.',
+      'Falsche E-Mail oder Passwort, bitte versuche es erneut.',
     'login.errors.unknown':
-      'Beim Einloggen ist ein unbekannter Fehler aufgetreten, probier es bitte nochmal.',
+      'Beim Einloggen ist ein unbekannter Fehler aufgetreten, bitte versuche es erneut.',
     // Password reset page
     'password-reset.title': 'Passwort zurücksetzen',
-    'password-reset.description': 'Gib deine E-Mail-Adresse ein und wir senden dir einen Link zum Zurücksetzen deines Passworts.',
+    'password-reset.description': 'Bitte gib deine E-Mail-Adresse ein und wir senden dir einen Link zum Zurücksetzen deines Passworts.',
     'password-reset.button': 'Reset-Link senden',
     'password-reset.login': 'Einloggen',
-    'password-reset.success': 'Passwort-Reset-E-Mail gesendet! Überprüfe dein Postfach.',
+    'password-reset.success': 'Passwort-Reset-E-Mail gesendet! Bitte überprüfe dein Postfach.',
     'password-reset.errors.password_reset_error': 'Fehler beim Senden der Passwort-Reset-E-Mail. Bitte versuche es erneut.',
     'password-reset.errors.unknown_error': 'Ein unbekannter Fehler ist aufgetreten. Bitte versuche es erneut.',
     'password-reset.errors.invalid_token': 'Ungültiger oder abgelaufener Passwort-Reset-Token. Bitte fordere einen neuen Passwort-Reset an.',
     // Password reset confirmation page
     'password-reset-confirm.title': 'Neues Passwort festlegen',
-    'password-reset-confirm.description': 'Gib dein neues Passwort unten ein.',
+    'password-reset-confirm.description': 'Bitte gib dein neues Passwort unten ein.',
     'password-reset-confirm.password': 'Neues Passwort',
     'password-reset-confirm.password-confirm': 'Passwort bestätigen',
     'password-reset-confirm.button': 'Passwort zurücksetzen',
     'password-reset-confirm.success': 'Passwort wurde erfolgreich zurückgesetzt! Du kannst dich jetzt mit deinem neuen Passwort einloggen.',
     'password-reset-confirm.errors.password_mismatch': 'Passwörter stimmen nicht überein.',
-    'password-reset-confirm.errors.password_too_short': 'Passwort sollte mindestens 8 Zeichen lang sein.',
+    'password-reset-confirm.errors.password_too_short': 'Das Passwort muss mindestens 8 Zeichen lang sein.',
     'password-reset-confirm.errors.invalid_token': 'Ungültiger oder abgelaufener Passwort-Reset-Token.',
     'password-reset-confirm.errors.unknown_error': 'Beim Zurücksetzen des Passworts ist ein unbekannter Fehler aufgetreten.',
     // Profile page
@@ -325,23 +325,23 @@ export const ui = {
     'profile.notifications.save': 'Speichern',
     'profile.success.profile': 'Profil erfolgreich aktualisiert.',
     'profile.success.remove': 'Materialangebot erfolgreich entfernt.',
-    'profile.error.remove': 'Beim entfernen des Materialangebots ist ein Fehler aufgetreten. Bitte versuche es erneut.',
+    'profile.error.remove': 'Beim Entfernen des Materialangebots ist ein Fehler aufgetreten. Bitte versuche es erneut.',
     // E-mail confirmation page
     'email-confirmation.title': 'E-Mail-Bestätigung',
     'email-confirmation.loading': 'E-Mail-Adresse wird bestätigt...',
     'email-confirmation.missing-token': 'Token fehlt',
     'email-confirmation.error':
-      'Beim bestätigen dine E-Mail-Adresse ist eine Fehler augetreten. Bitte versuche es erneut.',
-    'email-confirmation.success': 'E-Mail Adresse ist bestätigt!',
-    'email-confirmation.button': 'Zum Dashboard',
+      'Beim Bestätigen deiner E-Mail-Adresse ist ein Fehler aufgetreten. Bitte versuche es erneut.',
+    'email-confirmation.success': 'E-Mail-Adresse ist bestätigt!',
+    'email-confirmation.button': 'Zum Materialangebote',
     // Dashboard page
     'dashboard.title': 'Materialangebote',
     'dashboard.new-listing': 'Angebot anlegen',
     'dashboard.user-approval.title': 'Willkommen',
     'dashboard.user-approval.text':
       'Willkommen. Dein Konto wird derzeit geprüft. Sobald es freigeschaltet wird, erhältst du von uns eine E-Mail.',
-    'dashboard.no-listing.title': 'Keine aktive Materialangebote',
-    'dashboard.no-listing.text': 'Hier findest du Materialangebote, die von Instituten auf der Plattform angeboten werden. Aktuell gibt es keine aktive Materialangebote. Du erhältst eine E-Mail, sobald ein neues Materialangebot hinzugefügt wurde.',
+    'dashboard.no-listing.title': 'Keine aktiven Materialangebote',
+    'dashboard.no-listing.text': 'Hier findest du Materialangebote, die von Betrieben/Organisationen auf der Plattform angeboten werden. Aktuell gibt es keine aktiven Materialangebote. Du erhältst eine E-Mail, sobald ein neues Materialangebot hinzugefügt wurde.',
     'confirm-email.warning.text':
       'Vielen Dank für deine Anmeldung. Bitte bestätige diese mit dem Bestätigungslink, den wir dir per E-Mail zugeschickt haben. Link nicht erhalten?',
     'confirm-email.warning.button': 'Erneut senden',
@@ -353,14 +353,14 @@ export const ui = {
     'create-listing.create-team.text':
       'Bitte gib Informationen zu deinem Institut, deiner Organisation oder deinem Verein an.',
     'create-listing.title': 'Angebot anlegen',
-    'create-listing.text': `<p>Du hast Material abzugeben? Toll! Hier kannst du ein neues Angebot anlegen. Bitte fülle die folgenden Felder aus, um so viele Informationen wie möglich weiterzugeben.</p>
-      <p>Deine Organisation musst du zu diesem Zeitpunkt noch nicht nennen. Je genauer die Informationen sind, desto leichter können wir eine Abnahme vermitteln. Bei Fragen dazu schreib uns gerne eine E-Mail (<a href="mailto:info@ressourcenrevolution.org">info@ressourcenrevolution.org</a>)</p>
+    'create-listing.text': `<p>Du hast Material abzugeben? Toll! Hier kannst du ein neues Angebot anlegen. Bitte fülle die folgenden Felder aus, um so viele Informationen wie möglich weiterzugeben.</p>
+      <p>Deine Organisation musst du zu diesem Zeitpunkt noch nicht nennen. Je genauer die Informationen sind, desto leichter können wir eine Abnahme vermitteln. Bei Fragen dazu schreib uns gerne eine E-Mail (<a href="mailto:info@ressourcenrevolution.org">info@ressourcenrevolution.org</a>)</p>
       <p>Wichtig: Nur Organisationen mit geprüftem Konto können dein Materialangebot und deine Angaben dazu sehen! Bei Interesse füllen sie das Kontaktformular aus, das wir per E-Mail an dich weiterleiten. Dann entscheidest du, ob du dich zurückmelden möchtest.</p>`,
     'create-listing.button': 'Anlegen',
     'create-listing.errors.forbidden':
       'Du bist nicht berechtigt, neue Angebote zu erstellen',
     'create-listing.errors.image-file-size-limit':
-      'Eine der ausgewählten Bilder überschreitet die maximal zulässige Dateigröße von 5 MB.',
+      'Eins der ausgewählten Bilder überschreitet die maximal zulässige Dateigröße von 5 MB.',
     'create-listing.errors.unknown':
       'Ein unbekannter Fehler ist beim Erstellen des Angebots aufgetreten.',
     // Update listing
@@ -383,7 +383,7 @@ export const ui = {
     'listing-form.general.text':
       'Bitte mach hier ausführliche Angaben zu dem Material, das du abzugeben hast. Genaues Wissen zu Maßen, Gewicht, Zustand etc. erleichtert Interessierten die Entscheidung und schließlich auch die Abholung. Lade auch geeignetes Bildmaterial hoch, das das Material im aktuellen Zustand und in verschiedenen Ansichten zeigt.',
     'listing-form.pickup.title': 'Informationen zur Abholung',
-    'listing-form.pickup.text': '<p>Bitte trage hier genaue Informationen zur Abholung ein.</p><p>Gibt es etwas bei der Anfahrt zu beachten? Wie sind die örtlichen Gegebenheiten (z.B. Treppen, Aufzug, enger Flur)? Kann vor Ort beim Einladen geholfen werden? Sind Werkzeuge/Strom zum Auseinandernehmen vorhanden?</p>',
+    'listing-form.pickup.text': '<p>Bitte trage hier genaue Informationen zur Abholung ein.</p><p>Gibt es etwas bei der Anfahrt zu beachten? Wie sind die örtlichen Gegebenheiten (z.B. Treppen, Aufzug, enger Flur)? Kann vor Ort beim Einladen geholfen werden? Sind Werkzeuge/Strom zum Auseinandernehmen vorhanden?</p>',
     'listing-form.status.label': 'Status',
     'listing-form.title.label': 'Angebotstitel',
     'listing-form.description.label': 'Beschreibung',
@@ -391,8 +391,8 @@ export const ui = {
     'listing-form.measurements.label': 'Maße und Gewicht',
     'listing-form.condition.label': 'Zustand (z.B. wie neu, zusammengebaut)',
     'listing-form.address.label': 'Straße und Hausnummer des Abholungsorts (optional)',
-    'listing-form.postalcode.label': 'PLZ des Abholungsortes',
-    'listing-form.city.label': 'Stadt des Abholungsortes',
+    'listing-form.postalcode.label': 'PLZ des Abholungsorts',
+    'listing-form.city.label': 'Stadt des Abholungsorts',
     'listing-form.pickup_description.label':
       'Wichtige Infos zur Abholung (optional)',
     'listing-form.start_date.label': 'Verfügbar ab',
@@ -400,10 +400,10 @@ export const ui = {
     'listing-form.create.images.label': 'Bilder',
     'listing-form.update.images.label': 'Bilder hinzufügen',
     'listing-form.accounting.title': 'Bilanzierung',
-    'listing-form.accounting.text': 'Du möchtest wissen, wie viel CO₂ durch die Wiederverwendung des Materials eingespart werden konnte? Um eine Bilanzierung zu erhalten, trage bitte zusätzliche Daten zu deiner Material-Abgabe in diese Excel-Tabelle ein und lade die Datei danach wieder hoch. Nach erfolgreicher Vermittlung können wir anhand der Daten eine CO₂-Bilanzierung erstellen, die du für deine Nachhaltigkeitsberichterstattung und Firmenkommunikation verwenden kannst. (Die Berechnungsmethodik wird im Report dargestellt.)',
-    'listing-form.accounting.completed': 'Die Bilanzierung des Inserats wurde erfolgreich abgeschlossen. Es ist nicht mehr möglich, eine neue Bilanzierungsdatei hochzuladen.',
+    'listing-form.accounting.text': 'Du möchtest wissen, wie viel CO₂ durch die Wiederverwendung des Materials eingespart werden konnte? Um eine Bilanzierung zu erhalten, trage bitte zusätzliche Daten des Materials in diese Excel-Tabelle ein und lade die Datei danach wieder hoch. Nach erfolgreicher Vermittlung können wir anhand der Daten eine CO₂-Bilanzierung erstellen, die du für deine Nachhaltigkeitsberichterstattung und Firmenkommunikation verwenden kannst. (Die Berechnungsmethodik wird im Report dargestellt.)',
+    'listing-form.accounting.completed': 'Die Bilanzierung des Angebots wurde erfolgreich abgeschlossen. Es ist nicht mehr möglich, eine neue Bilanzierungs-Datei hochzuladen.',
     'listing-form.accounting.existing': 'Aktuelle Datei',
-    'listing-form.accounting.existing_completed': 'Bilanzierung-Datei',
+    'listing-form.accounting.existing_completed': 'Bilanzierungs-Datei',
     'listing-form.accounting_file.label': 'Bilanzierungs-Excel-Datei (optional)',
     'listing-form.create.submit': 'Angebot anlegen',
     'listing-form.update.submit': 'Änderung speichern',
@@ -424,12 +424,12 @@ export const ui = {
     'listing-page.contact.text': '<p>Du hast Interesse an diesem Angebot? Über dieses Formular kannst du Kontakt zur abgebenden Organisation aufnehmen. Wichtig: Deine Daten werden an diese weitergegeben – dabei handelt es sich selbstverständlich nur um Organisationen mit geprüftem Konto. Sie können dann auf deine Anfrage per E-Mail oder Anruf (optional) reagieren. Bitte geh sensibel mit den dann erhaltenen Kontaktdaten um. Der weitere Austausch erfolgt nur noch unter euch und auf eure Verantwortung. Bei Fragen oder Problemen sind wir selbstverständlich per E-Mail erreichbar: <a href="mailto:info@ressourcenrevolution.org">info@ressourcenrevolution.org</a>.</p><p>Tipp: Schreib gerne ein paar Worte zu deiner Organisation. Interessant könnte z.B. auch sein, wie du das Material wiederverwenden möchtest.</p>',
     // Contact form
     'contact-form.name.label': 'Dein Name',
-    'contact-form.email.label': 'Deine Mail-Adresse',
+    'contact-form.email.label': 'Deine E-Mail-Adresse',
     'contact-form.phonenumber.label': 'Deine Telefonnummer (optional)',
     'contact-form.team_type.label': 'Art des Betriebs / der Organisation',
     'contact-form.message.label': 'Deine Nachricht',
     'contact-form.submit': 'Absenden',
-    'contact-form.deactivated': 'Aktuell ist es nicht möglich, zu diesem Materialangebot Kontakt aufzunehmen, da es bereits reserviert.',
+    'contact-form.deactivated': 'Aktuell ist es nicht möglich, zu diesem Materialangebot Kontakt aufzunehmen, da es gerade reserviert ist.',
     // Listing user status
     'listing-user-status.new': 'Dieses Materialangebot wird derzeit geprüft. Du erhältst eine Nachricht, sobald es freigeschaltet ist.',
     'listing-user-status.open': 'Dieses Materialangebot ist gerade aktiv.',
