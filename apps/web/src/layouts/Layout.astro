@@ -6,7 +6,13 @@ import { defaultLang } from '~/i18n/ui'
 import { fetchLayout } from '~/keystone'
 import Footer from '~/components/Footer.astro'
 
+interface Props {
+  title?: string
+}
+
 const { mainNavigation, metaNavigation, footer } = await fetchLayout()
+
+const { title } = Astro.props;
 ---
 
 <!doctype html>
@@ -16,7 +22,7 @@ const { mainNavigation, metaNavigation, footer } = await fetchLayout()
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
-    <title>{APP_NAME}</title>
+    <title>{title || APP_NAME}</title>
   </head>
   <body class="h-auto! min-h-full grid grid-rows-[auto_1fr_auto] bg-background">
     <Header mainNavigation={mainNavigation} metaNavigation={metaNavigation} class="max-w-[1600px] mx-auto" />
