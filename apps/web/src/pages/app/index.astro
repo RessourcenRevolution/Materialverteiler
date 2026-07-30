@@ -19,7 +19,7 @@ const listings = ListingSchema.array().parse(items) as Listing[]
 const isNewUser = !Astro.locals.pb.authStore.record!.roles.includes('user');
 ---
 
-<Layout>
+<Layout title={t('dashboard.title')}>
   <Container size="xl" class="relative">
     {
       !isNewUser && listings.length > 0

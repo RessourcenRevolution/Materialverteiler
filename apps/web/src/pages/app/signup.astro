@@ -41,7 +41,7 @@ const data
   = Astro.request.method === 'POST' ? await Astro.request.formData() : null;
 ---
 
-<Layout>
+<Layout title={t('signup.title')}>
   <div class="mx-auto max-w-lg relative">
     <BackgroundRect variant="page" class="animate-delay-400" />
     <Heading tag="h1" size="xl" class="mb-6 animate-slide-in">

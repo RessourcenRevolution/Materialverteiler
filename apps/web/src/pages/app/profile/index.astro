@@ -49,7 +49,7 @@ const pastListings = ListingSchema.array().parse(past) as Listing[]
 const success = Astro.url.searchParams.get('success')
 ---
 
-<Layout>
+<Layout title={t('profile.title')}>
   <Container size="xl">
     {success && success === 'profile'
       && <Alert variant="success" class="mb-12">
@@ -69,7 +69,7 @@ const success = Astro.url.searchParams.get('success')
     <div class="flex gap-6 items-center mb-4">
       <Heading tag="h1" size="xl" class="">
         {t('profile.title')}
-        {user.roles.includes('manager') && <span> (Manager)</span>}
+        {user.roles.includes('manager') && <span> (manager)</span>}
       </Heading>
       {user.roles.includes('manager') && <Button size="sm" href="/app/manage" label={t('profile.management_settings')} icon={Lock} />}
     </div>

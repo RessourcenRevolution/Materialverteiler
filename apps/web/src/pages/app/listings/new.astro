@@ -23,7 +23,7 @@ if (!listingAction?.error && listingAction?.data) {
 }
 ---
 
-<Layout>
+<Layout title={!user.team ? t('create-listing.create-team.title') : t('create-listing.title')}>
   <div class="mx-auto max-w-lg">
     {
       !user.team

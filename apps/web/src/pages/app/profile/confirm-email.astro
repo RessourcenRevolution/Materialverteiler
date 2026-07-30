@@ -9,7 +9,7 @@ export const prerender = false
 const t = useTranslations();
 ---
 
-<Layout>
+<Layout title={t('email-confirmation.title')}>
   <Container size="xl">
     <astro-pocketbase pocketbase-url={process.env.PUBLIC_API_URL}>
       <h1 class="text-2xl font-bold mb-6">
