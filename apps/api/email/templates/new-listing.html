@@ -11,6 +11,10 @@
   {{ if .ListingCondition }}Zustand: {{.ListingCondition}}<br />{{ end }}
 </p>
 
+<p>
+  <strong>Beschreibung</strong>
+</p>
+
 {{ template "message" (dict "message" .ListingDescription) }}
 
 <p>
