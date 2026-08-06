@@ -12,19 +12,25 @@ import type { defaultLang } from '~/i18n/ui'
 export const prerender = false
 
 interface Props {
+  name: string
+  email: string
   listing: Listing
   userTeam: Team
   class?: string
 }
 
-const { listing, userTeam, class: className } = Astro.props
+const { listing, name: defaultName, email: defaultEmail, userTeam, class: className } = Astro.props
+const { method } = Astro.request
 
 const t = useTranslations()
 
 const result = Astro.getActionResult(actions.contactListing)
 
 const data
-  = Astro.request.method === 'POST' ? await Astro.request.formData() : null
+  = method === 'POST' ? await Astro.request.formData() : null
+
+const name = method === 'POST' ? (data?.get('name') as string) : defaultName
+const email = method === 'POST' ? (data?.get('email') as string) : defaultEmail;
 ---
 
 <div id="contact-form" class={className}>
@@ -66,7 +72,7 @@ const data
                 type="text"
                 name="name"
                 label={t('contact-form.name.label')}
-                value={data?.get('name') as string}
+                value={name}
                 error={fieldError('name', result?.error)}
                 required
               />
@@ -75,7 +81,7 @@ const data
                 type="email"
                 name="email"
                 label={t('contact-form.email.label')}
-                value={data?.get('email') as string}
+                value={email}
                 error={fieldError('email', result?.error)}
                 required
               />

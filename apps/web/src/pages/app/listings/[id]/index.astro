@@ -123,7 +123,7 @@ if (!listing) {
 
       <!-- Contact form -->
       {(listing.status === 'open' || listing.status === 'reserved')
-        && <ContactForm userTeam={team} listing={listing} class="mt-12" />
+        && <ContactForm name={`${user.firstname} ${user.lastname}`} email={user.email} userTeam={team} listing={listing} class="mt-12" />
       }
     </div>
 
