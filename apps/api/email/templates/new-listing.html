@@ -17,11 +17,13 @@
 
 {{ template "message" (dict "message" .ListingDescription) }}
 
-<p>
-  <strong>Infos zur Abholung</strong>
-</p>
+{{ if .ListingPickupInfo }}
+  <p>
+    <strong>Infos zur Abholung</strong>
+  </p>
 
-{{ template "message" (dict "message" .ListingPickupInfo) }}
+  {{ template "message" (dict "message" .ListingPickupInfo) }}
+{{ end }}
 
 <p>
   {{ template "button" (dict "text" "Materialangebot anzeigen" "href" (print
