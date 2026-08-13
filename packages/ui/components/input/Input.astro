@@ -11,7 +11,7 @@ export interface Props {
   error?: string
   class?: string
 }
-const { id, name, label, value, type, required, disabled, readonly, error, class: className } = Astro.props;
+const { id, name, label, value, type, required, disabled, readonly, error, class: className, ...props } = Astro.props;
 ---
 
 <div class:list={['relative', className]}>
@@ -51,6 +51,7 @@ const { id, name, label, value, type, required, disabled, readonly, error, class
       'read-only:text-body/75 read-only:border-body/75',
       error && 'border-red-800!',
     ]}
+    {...props}
   />
   {
     error && (
