@@ -1,6 +1,7 @@
 import '@rr/image-gallery'
 import './confirm-form-submit'
 import './autofocus.ts'
+import './custom-elements/mv-search.ts'
 
 /*
  * Open ImageGallery when clicking on an image with a data-image-gallery attribute

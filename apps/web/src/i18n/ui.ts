@@ -129,6 +129,7 @@ export const ui = {
       'Your account is currently under review and will be approved soon. We’ll notify you by email once it’s ready.',
     'dashboard.no-listing.title': 'No active listings',
     'dashboard.no-listing.text': 'Here you will find materials that are offered by institutes on the platform. Currently there are no active listings. You will receive an e-mail when a new listing has been added.',
+    'dashboard.no-results': 'Too bad, no results were found for your search.',
     'confirm-email.warning.text':
       'Your email address is not yet confirmed. Check your inbox for the confirmation link.',
     'confirm-email.warning.button': 'Resend e-mail',
@@ -342,6 +343,7 @@ export const ui = {
       'Willkommen. Dein Konto wird derzeit geprüft. Sobald es freigeschaltet wird, erhältst du von uns eine E-Mail.',
     'dashboard.no-listing.title': 'Keine aktiven Materialangebote',
     'dashboard.no-listing.text': 'Hier findest du Materialangebote, die von Betrieben/Organisationen auf der Plattform angeboten werden. Aktuell gibt es keine aktiven Materialangebote. Du erhältst eine E-Mail, sobald ein neues Materialangebot hinzugefügt wurde.',
+    'dashboard.no-results': 'Schade, für deine Suche wurde nichts gefunden.',
     'confirm-email.warning.text':
       'Vielen Dank für deine Anmeldung. Bitte bestätige diese mit dem Bestätigungslink, den wir dir per E-Mail zugeschickt haben. Link nicht erhalten?',
     'confirm-email.warning.button': 'Erneut senden',

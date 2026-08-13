@@ -1,24 +1,21 @@
 ---
 import Layout from '~/layouts/Layout.astro'
-import { type Listing, ListingSchema } from '~/schemas/listing'
 import { Button, Container, Heading, Alert } from '@rr/ui/components'
 import EmailVerificationWarning from '~/components/EmailVerificationWarning/EmailVerificationWarning.astro'
 import { useTranslations } from '~/i18n/ui'
 import ListingList from '~/components/ListingList.astro'
 import BackgroundRect from '~/components/BackgroundRect.astro'
 import { UserSchema } from '~/schemas/user'
+import Input from '../../../../../../packages/ui/components/input/Input.astro'
+import { getFutureActiveListings, getPastActiveListings } from '~/lib/listing'
 
 export const prerender = false
 
 const t = useTranslations()
 
-const future = await Astro.locals.pb
-  .collection('listings')
-  .getFullList({ expand: 'user,team', filter: 'start_date > @yesterday && (status = "open" || status = "reserved")', sort: 'start_date' })
-const past = await Astro.locals.pb
-  .collection('listings')
-  .getFullList({ expand: 'user,team', filter: 'start_date < @yesterday && (status = "open" || status = "reserved")', sort: '-start_date' })
-const listings = ListingSchema.array().parse([...future, ...past]) as Listing[]
+const future = await getFutureActiveListings(Astro.locals.pb)
+const past = await getPastActiveListings(Astro.locals.pb)
+const listings = [...future, ...past]
 
 const user = UserSchema.parse(Astro.locals.pb.authStore.record!)
 const isNewUser = !Astro.locals.pb.authStore.record!.roles.includes('user');
@@ -28,7 +25,7 @@ const isNewUser = !Astro.locals.pb.authStore.record!.roles.includes('user');
   <Container size="xl" class="relative">
     {
       !isNewUser && listings.length > 0
-      && <BackgroundRect variant="page" color="purple" class="h-[55%]! animate-delay-300" />
+      && <BackgroundRect variant="page" color="purple" class="h-[700px]! animate-delay-300" />
     }
     <EmailVerificationWarning class="animate-slide-in" />
     {!isNewUser
@@ -51,7 +48,14 @@ const isNewUser = !Astro.locals.pb.authStore.record!.roles.includes('user');
               </div>
             )
           : listings && listings.length > 0
-            ? <ListingList listings={listings} class="animate-slide-in animate-delay-150" />
+            ? (
+                <mv-search target="listing-list" url="/app/listings/search">
+                  <Input id="listings-search-input" name="query" label="Was suchst du?" class="focus-within:bg-white mb-12" data-mv-search="input" />
+                  <div id="listing-list" class="[mv-search[loading]_&]:opacity-50">
+                    <ListingList listings={listings} class="animate-slide-in animate-delay-150" />
+                  </div>
+                </mv-search>
+              )
             : <Alert variant="neutral" spacing="md">
                 <Heading tag="h2" size="md" class="mb-4">
                   {t('dashboard.no-listing.title')}

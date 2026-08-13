@@ -1,0 +1,21 @@
+---
+import ListingList from '~/components/ListingList.astro'
+import { useTranslations } from '~/i18n/ui'
+import { getFutureActiveListings, getPastActiveListings } from '~/lib/listing'
+
+export const prerender = false
+export const partial = true
+
+const t = useTranslations()
+
+const url = new URL(Astro.request.url)
+const query = url.searchParams.get('query') || ''
+
+const future = await getFutureActiveListings(Astro.locals.pb, query)
+const past = await getPastActiveListings(Astro.locals.pb, query)
+const listings = [...future, ...past]
+---
+{ listings && listings.length > 0
+  ? <ListingList listings={listings} />
+  : <p class="text-lg font-bold text-center">{t('dashboard.no-results')}</p>
+}
