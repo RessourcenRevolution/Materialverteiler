@@ -23,7 +23,7 @@ const { listings, edit = false, class: className } = Astro.props;
 <div
   class:list={[
     '[--image-max-w:250px]',
-    'grid grid-cols-1 md:grid-cols-1 gap-12 md:gap-6',
+    'grid grid-cols-1 md:grid-cols-1 gap-12',
     '-mx-(--body-inline-padding) md:mx-0',
     className,
   ]}
@@ -37,9 +37,9 @@ const { listings, edit = false, class: className } = Astro.props;
             : undefined
         }
         imageAlt={listing.title}
-        class="relative md:flex-row md:gap-4"
-        imageClass="rounded-none! md:rounded-xs! md:max-w-(--image-max-w) shrink-0"
-        contentClass="md:px-0"
+        class="relative md:flex-row md:gap-6"
+        imageClass="rounded-none! md:rounded-xs! md:max-w-(--image-max-w) shrink-0 self-start"
+        contentClass="md:px-0 pt-4"
       >
         { edit
           ? <div class="flex flex-wrap gap-3 items-center">
@@ -48,8 +48,8 @@ const { listings, edit = false, class: className } = Astro.props;
             </div>
           : <h3 class:list={['text-xl text-heading font-bold']}>{listing.title}</h3>
         }
-        <div class="flex gap-6">
-          <LocationText text={listing.postalcode + ' ' + listing.city} ariaLabel={t('location')} />
+        <div class="flex gap-x-6 gap-y-1 flex-wrap">
+          <LocationText text={listing.postalcode + ' ' + listing.city} ariaLabel={t('location')} class="min-w-40 md:min-w-50" />
           <DateText
             text={t('available_from')}
             from={listing.start_date}
@@ -58,7 +58,7 @@ const { listings, edit = false, class: className } = Astro.props;
         <p class="text-base text-body font-light whitespace-pre-line line-clamp-2">
           {listing.description}
         </p>
-        <div class="flex gap-2 flex-wrap mt-1">
+        <div class="flex gap-2 flex-wrap mt-4 md:mt-auto mb-5">
           {/* View listing */}
           <Button
             href={`/app/listings/${listing.id}`}
