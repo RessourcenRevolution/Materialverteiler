@@ -9,6 +9,7 @@ import { actions } from 'astro:actions'
 import ListingStatusBadge from './ListingStatusBadge.astro'
 
 interface Props {
+  id?: string
   listings: Listing[]
   edit?: boolean
   class?: string
@@ -16,11 +17,12 @@ interface Props {
 
 const t = useTranslations()
 
-const { listings, edit = false, class: className } = Astro.props;
+const { id, listings, edit = false, class: className } = Astro.props;
 
 ---
 
 <div
+  id={id}
   class:list={[
     '[--image-max-w:250px]',
     'grid grid-cols-1 md:grid-cols-1 gap-12',
