@@ -20,7 +20,7 @@ export default defineConfig({
   integrations: [
     astrobook({
       subpath: "/",
-      directory: path.resolve("../../packages/ui"),
+      directory: path.resolve("../../packages/ui/components"),
       css: ["./src/styles/global.css"],
     }),
   ],

@@ -13,7 +13,7 @@
     "@astrojs/node": "^9.5.5",
     "@tailwindcss/vite": "^4.3.3",
     "astro": "^5.18.2",
-    "astrobook": "^0.9.1",
+    "astrobook": "^0.13.2",
     "tailwindcss": "^4.3.3"
   }
 }
