@@ -25,7 +25,7 @@ class MvSearch extends HTMLElement {
 
   connectedCallback() {
     setTimeout(() => {
-      const els = this.querySelectorAll('[data-mv-search=input]') as NodeListOf<HTMLElement>
+      const els = this.querySelectorAll('[data-mv-search=input]') as NodeListOf<HTMLInputElement | HTMLSelectElement>
       this.addEventListener('input', async () => {
         // Set URL params
         this.url?.searchParams.entries().forEach(([key]) => this.url?.searchParams.delete(key))

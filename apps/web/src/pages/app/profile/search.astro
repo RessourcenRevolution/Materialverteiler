@@ -1,0 +1,28 @@
+---
+import { Button } from '@rr/ui/components'
+import ListingList from '~/components/ListingList.astro'
+import { useTranslations } from '~/i18n/ui'
+import { ListingSchema, type Listing } from '~/schemas/listing'
+
+export const prerender = false
+export const partial = true
+
+const t = useTranslations()
+
+const url = new URL(Astro.request.url)
+const query = url.searchParams.get('query')
+const status = url.searchParams.get('status')
+
+const results = await Astro.locals.pb.collection('listings').getFullList({
+  filter: Astro.locals.pb.filter(`user = {:user}${query ? ' && (title ~ {:query} || description ~ {:query} || material ~ {:query})' : ''}${status ? ' && status = {:status}' : ''}`, { user: Astro.locals.pb.authStore.record?.id, query, status }),
+  sort: '-start_date',
+  expand: 'user,team',
+})
+const listings = ListingSchema.array().parse(results) as Listing[]
+---
+{ listings && listings.length > 0
+  ? <ListingList listings={listings} edit={true} />
+  : <p class="text-lg font-bold text-body mb-4">
+      {query ? t('profile.your-listings.no-query-results') : t('profile.your-listings.no-results')}
+    </p>
+}

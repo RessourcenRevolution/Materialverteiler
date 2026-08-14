@@ -1,5 +1,5 @@
 ---
-import { Alert, Button, Checkbox, Container, Heading } from '@rr/ui/components'
+import { Alert, Button, Checkbox, Container, Heading, Input, Select } from '@rr/ui/components'
 import { actions } from 'astro:actions'
 import ListingList from '~/components/ListingList.astro'
 import { defaultLang, ui, useTranslations } from '~/i18n/ui'
@@ -32,19 +32,12 @@ const record = await Astro.locals.pb
   .getOne(Astro.locals.pb.authStore.record?.id, { expand: 'team' })
 const user = UserSchema.parse(record) as User
 
-const active = await Astro.locals.pb.collection('listings').getFullList({
-  filter: Astro.locals.pb.filter('user = {:user} && (status = "new" || status = "open" || status = "reserved")', { user: user.id }),
-  sort: 'start_date',
+const results = await Astro.locals.pb.collection('listings').getFullList({
+  filter: Astro.locals.pb.filter('user = {:user}', { user: user.id }),
+  sort: '-start_date',
   expand: 'user,team',
 })
-const activeListings = ListingSchema.array().parse(active) as Listing[]
-
-const past = await Astro.locals.pb.collection('listings').getFullList({
-  filter: Astro.locals.pb.filter('user = {:user} && (status = "success" || status = "failure")', { user: user.id }),
-  sort: 'start_date',
-  expand: 'user,team',
-})
-const pastListings = ListingSchema.array().parse(past) as Listing[]
+const listings = ListingSchema.array().parse(results) as Listing[]
 
 const success = Astro.url.searchParams.get('success')
 ---
@@ -116,23 +109,30 @@ const success = Astro.url.searchParams.get('success')
       </form>
     </div>
 
-    <Heading tag="h2" size="lg" class="mb-4">
-      {t('profile.active-listings')}
-    </Heading>
-    {
-      activeListings && activeListings.length > 0
-        ? <ListingList listings={activeListings} edit={true} class="mb-18" />
-        : <p class="text-body italic mb-18">{t('profile.active-listings.none')}</p>
-    }
-
-    <Heading tag="h2" size="lg" class="mb-4">
-      {t('profile.past-listings')}
-    </Heading>
-    {
-      pastListings && pastListings.length > 0
-        ? <ListingList listings={pastListings} edit={true} class="mb-12" />
-        : <p class="text-body mb-12 italic">{t('profile.past-listings.none')}</p>
-    }
+    <mv-search target="listing-list" url="/app/profile/search">
+      <div class="flex justify-between items-center gap-y-4 flex-wrap mb-8">
+        <Heading tag="h2" size="lg">
+          {t('profile.your-listings')}
+        </Heading>
+        <div class="flex gap-4 items-center">
+          <Input id="listing-list-search" name="query" label={t('profile.your-listings.search')} data-mv-search="input" />
+          <Select id="listing-list-status" name="status" data-mv-search="input" options={[
+            { label: t('profile.your-listings.status.all'), value: '' },
+            { label: t('profile.your-listings.status.new'), value: 'new' },
+            { label: t('profile.your-listings.status.open'), value: 'open' },
+            { label: t('profile.your-listings.status.reserved'), value: 'reserved' },
+            { label: t('profile.your-listings.status.success'), value: 'success' },
+            { label: t('profile.your-listings.status.failure'), value: 'failure' },
+          ]}>
+          </Select>
+        </div>
+      </div>
+      {
+        listings && listings.length > 0
+          ? <div id="listing-list"><ListingList listings={listings} edit={true} /></div>
+          : <p class="text-body text-lg italic mb-18">{t('profile.your-listings.none')}</p>
+      }
+    </mv-search>
 
   </Container>
 </Layout>
