@@ -334,7 +334,7 @@ export const ui = {
     'email-confirmation.error':
       'Beim Bestätigen deiner E-Mail-Adresse ist ein Fehler aufgetreten. Bitte versuche es erneut.',
     'email-confirmation.success': 'E-Mail-Adresse ist bestätigt!',
-    'email-confirmation.button': 'Zum Materialangebote',
+    'email-confirmation.button': 'Zu den Materialangeboten',
     // Dashboard page
     'dashboard.title': 'Materialangebote',
     'dashboard.new-listing': 'Angebot anlegen',
