@@ -329,7 +329,7 @@ export const ui = {
     'profile.your-listings.status.open': 'Offene Angebote',
     'profile.your-listings.status.reserved': 'Reservierte Angebote',
     'profile.your-listings.status.success': 'Vermittelte Angebote',
-    'profile.your-listings.status.failure': 'Abgeschlossen Angebote',
+    'profile.your-listings.status.failure': 'Abgeschlossene Angebote',
     'profile.your-listings': 'Deine Angebote',
     'profile.your-listings.none': 'Du hast noch keine Angebote.',
     'profile.your-listings.no-results': 'Du hast keine Angebote mit diese Status.',
