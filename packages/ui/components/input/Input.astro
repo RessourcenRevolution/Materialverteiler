@@ -1,4 +1,6 @@
 ---
+import type { AstroComponentFactory } from 'astro/runtime/server/index.js'
+
 export interface Props {
   id: string
   name: string
@@ -10,19 +12,28 @@ export interface Props {
   readonly?: boolean
   error?: string
   class?: string
+  prefix?: AstroComponentFactory
 }
-const { id, name, label, value, type, required, disabled, readonly, error, class: className, ...props } = Astro.props;
+const { id, name, label, value, type, required, disabled, readonly, error, prefix: Prefix, class: className, ...props } = Astro.props;
 ---
 
 <div class:list={['relative', className]}>
+  {(Astro.slots.has('prefix') || Prefix)
+    && <div class="absolute w-6 h-6 [&_svg]:w-6 [&_svg]:h-6 left-[1em] top-1/2 -translate-y-1/2 pointer-events-none">
+      <slot name="prefix">
+        { Prefix && <Prefix />}
+      </slot>
+    </div>
+  }
   {
     label && (
       <label
         for={id}
         class:list={[
           'absolute font-bold text-body text-base leading-none start-[0.9em] pr-1',
-          'transform scale-75 top-[0.85em] -translate-y-[0.5em] z-10 origin-left duration-200',
+          'transform scale-75 top-[0.85em] translate-y-[-0.5em] z-10 origin-left duration-200',
           'line-clamp-1',
+          (Astro.slots.has('prefix') || Prefix) && 'start-[3.2em]!',
           'has-[+input:focus]:scale-75! has-[+input:focus]:top-[0.85em]!',
           'has-[+input:placeholder-shown]:scale-100 has-[+input:placeholder-shown]:top-[1.65em]',
           'has-[+input:placeholder-shown]:pointer-events-none',
@@ -49,6 +60,7 @@ const { id, name, label, value, type, required, disabled, readonly, error, class
       'w-full text-body border-(length:--border) text-base border-body rounded-xs px-[0.75em] pb-[0.5em] pt-[1em]',
       'disabled:text-body/75 disabled:border-body/75',
       'read-only:text-body/75 read-only:border-body/75',
+      (Astro.slots.has('prefix') || Prefix) && 'pl-[3em]',
       error && 'border-red-800!',
     ]}
     {...props}
