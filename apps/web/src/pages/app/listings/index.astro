@@ -28,7 +28,7 @@ const isNewUser = !Astro.locals.pb.authStore.record!.roles.includes('user');
       && <BackgroundRect variant="page" color="purple" class="h-[700px]! animate-delay-300" />
     }
     <EmailVerificationWarning class="animate-slide-in" />
-    {!isNewUser
+    {user.verified && !isNewUser
       && <div class="flex justify-between items-center flex-wrap gap-4 mb-12 animate-slide-in">
         <Heading tag="h1" size="xl">
           {t('dashboard.title')}
@@ -40,12 +40,14 @@ const isNewUser = !Astro.locals.pb.authStore.record!.roles.includes('user');
       user.verified && (
         isNewUser
           ? (
-              <div class="animate-slide-in animate-delay-150">
-                <h2 class="text-xl font-bold mb-3">
-                  {t('dashboard.user-approval.title')}
-                </h2>
-                <p>{t('dashboard.user-approval.text')}</p>
-              </div>
+              <Container size="md">
+                <Alert variant="neutral" class="animate-slide-in animate-delay-150">
+                  <h2 class="text-xl font-bold mb-3">
+                    {t('dashboard.user-approval.title')}
+                  </h2>
+                  <p>{t('dashboard.user-approval.text')}</p>
+                </Alert>
+              </Container>
             )
           : listings && listings.length > 0
             ? (
