@@ -52,9 +52,9 @@ const isNewUser = !Astro.locals.pb.authStore.record!.roles.includes('user');
           : listings && listings.length > 0
             ? (
                 <mv-search target="listing-list" url="/app/listings/search">
-                  <Input id="listings-search-input" name="query" label="Was suchst du?" class="focus-within:bg-white mb-12" data-mv-search="input" />
+                  <Input id="listings-search-input" name="query" label="Was suchst du?" class="focus-within:bg-white mb-12 animate-slide-in animate-delay-150" data-mv-search="input" />
                   <div id="listing-list" class="[mv-search[loading]_&]:opacity-50">
-                    <ListingList listings={listings} class="animate-slide-in animate-delay-150" />
+                    <ListingList listings={listings} class="animate-slide-in animate-delay-300" />
                   </div>
                 </mv-search>
               )
