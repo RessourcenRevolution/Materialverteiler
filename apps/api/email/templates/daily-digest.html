@@ -1,0 +1,43 @@
+{{define "body"}}
+<p>Hallo {{.Firstname}},</p>
+
+<p>es gibt neue Materialangebote bei <a href="{{ $.AppURL }}">RessourcenRevolution</a>.</p>
+
+<ul style="margin: 0; padding: 0;">
+{{range .Listings}}
+<li style="list-style: none; padding: 8px; margin-bottom: 8px; background-color: #ebebeb; border-radius: 3px">
+  <table border="0" cellpadding="0" cellspacing="0" width="100%" style = "border-collapse: collapse;">
+    <tbody>
+      <tr>
+        <td width="80">
+          <a href="{{$.AppURL}}/app/listings/{{.Id}}">
+            {{ if .Image }}
+              <img src="{{ $.ApiURL }}/api/files/listings/{{ .Id }}/{{ .Image }}?thumb=128x128f" width="80" height="60" style="border-radius: 2px" />
+            {{ else }}
+              <span style="width: 40px; height: 30px; background-color: #ccc; border-radius: 2px"></span>
+            {{ end }}
+          </a>
+        </td>
+        <td style="vertical-align: top;">
+          <p style="margin: 0 0 0 8px;">
+            <strong><a href="{{$.AppURL}}/app/listings/{{.Id}}">{{.Title}}</a></strong><br />
+            {{if .Description}}{{ printf "%.200s" .Description }}...{{end}}
+          </p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</li>
+{{end}}
+</ul>
+
+<p>
+  {{ template "button" (dict "text" "Alle Materialangebote anzeigen" "href" (print .AppURL "/app/listings") )}}
+</p>
+
+<p>
+  <a href="{{.AppURL}}/app/profile">
+    Klicke hier, um deine E-Mail-Einstellungen zu verwalten.
+  </a>
+</p>
+{{end}}

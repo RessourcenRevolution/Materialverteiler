@@ -4,6 +4,7 @@ import (
 	"api/email"
 	"log"
 	"net/mail"
+	"time"
 
 	validation "github.com/go-ozzo/ozzo-validation/v4"
 	"github.com/pocketbase/dbx"
@@ -76,6 +77,9 @@ func AfterListingUpdate(e *core.RecordEvent) error {
 	if original.GetString("status") == "new" && listing.GetString("status") == "open" {
 		log.Printf("Listing (%s) got approved\n", listing.GetString("title"))
 
+		// Set open_since timestamp
+		listing.Set("open_since", time.Now())
+
 		// Send email to listing owner
 		data := email.ListingApprovedData{
 			DefaultFields: email.GetDefaultFields(e.App),
@@ -85,12 +89,12 @@ func AfterListingUpdate(e *core.RecordEvent) error {
 		}
 		email.SendEmail(e.App, mail.Address{Address: user.Email()}, data, nil)
 
-		// Notify other users of new listing
-		users, err := e.App.FindRecordsByFilter("users", "verified = true && roles ~ 'user' && notifications ~ 'new-listing' && id != '"+user.Id+"'", "", 100, 0, dbx.Params{})
+		// Notify other users with immediate notifications (new-listing = immediate)
+		immediateUsers, err := e.App.FindRecordsByFilter("users", "verified = true && roles ~ 'user' && notifications ~ 'new-listing' && id != '"+user.Id+"'", "", 100, 0, dbx.Params{})
 		if err != nil {
-			e.App.Logger().Error("Error fetching users")
+			e.App.Logger().Error("Error fetching immediate notification users")
 		}
-		for _, other := range users {
+		for _, other := range immediateUsers {
 			data := email.NewListingData{
 				DefaultFields:       email.GetDefaultFields(e.App),
 				Firstname:           other.GetString("firstname"),

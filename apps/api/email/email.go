@@ -44,6 +44,64 @@ var listingContactTemplate string
 //go:embed "templates/listing-contact-confirmation.html"
 var listingContactConfirmationTemplate string
 
+//go:embed "templates/daily-digest.html"
+var dailyDigestTemplate string
+
+// TemplateType identifies email templates by string key
+type TemplateType string
+
+const (
+	TemplateEmailVerified              TemplateType = "emailVerified"
+	TemplateNotifyUserSignup           TemplateType = "notifyUserSignup"
+	TemplateUserApproved               TemplateType = "userApproved"
+	TemplateNotifyNewListing           TemplateType = "notifyNewListing"
+	TemplateListingApproved            TemplateType = "listingApproved"
+	TemplateNewListing                 TemplateType = "newListing"
+	TemplateListingContact             TemplateType = "listingContact"
+	TemplateListingContactConfirmation TemplateType = "listingContactConfirmation"
+	TemplateDailyDigest                TemplateType = "dailyDigest"
+)
+
+// emailTemplates maps template type strings to their templates and subjects
+var emailTemplates = map[TemplateType]EmailTemplate{
+	TemplateEmailVerified: {
+		Subject:  "Danke für deine Registrierung",
+		Template: emailVerifiedTemplate,
+	},
+	TemplateNotifyUserSignup: {
+		Subject:  "Neue Anfrage zum Beitritt zum Materialverteiler: {{.UserFirstname}} von {{.TeamName}}",
+		Template: notifyUserSignupTemplate,
+	},
+	TemplateUserApproved: {
+		Subject:  "Willkommen in der Community",
+		Template: userApprovedTemplate,
+	},
+	TemplateNotifyNewListing: {
+		Subject:  "Neues Angebot wartet auf Freigabe: {{.ListingTitle}}",
+		Template: notifyNewListingTemplate,
+	},
+	TemplateListingApproved: {
+		Subject:  "Dein Angebot wurde freigeschaltet",
+		Template: listingApprovedTemplate,
+	},
+	TemplateNewListing: {
+		Subject:  "Neues Materialangebot: {{.ListingTitle}}",
+		Template: newListingTemplate,
+	},
+	TemplateListingContact: {
+		Subject:  "Neue Anfrage zu deinem Materialangebot: {{.ListingTitle}}",
+		Template: listingContactTemplate,
+	},
+	TemplateListingContactConfirmation: {
+		Subject:  "Bestätigung deiner Anfrage: {{.ListingTitle}}",
+		Template: listingContactConfirmationTemplate,
+	},
+	TemplateDailyDigest: {
+		Subject:  "Neue Materialangebote",
+		Template: dailyDigestTemplate,
+	},
+}
+
 // DefaultFields contains fields that are common to all email types
 type DefaultFields struct {
 	AppName string
@@ -128,9 +186,24 @@ type ListingContactConfirmationData struct {
 	Message      htmlTemplate.HTML
 }
 
+// Daily digest data structures
+type ListingSummary struct {
+	Id          string
+	UserId      string
+	Image       string
+	Title       string
+	Description string
+}
+
+type DailyDigestData struct {
+	DefaultFields
+	Firstname string
+	Listings  []ListingSummary
+}
+
 // EmailData interface that all email data structs must implement
 type EmailData interface {
-	EmailVerifiedData | NotifyUserSignupData | UserApprovedData | NotifyNewListingData | ListingApprovedData | NewListingData | ListingContactData | ListingContactConfirmationData
+	EmailVerifiedData | NotifyUserSignupData | UserApprovedData | NotifyNewListingData | ListingApprovedData | NewListingData | ListingContactData | ListingContactConfirmationData | DailyDigestData
 }
 
 // EmailTemplate holds the template and subject for an email type
@@ -139,47 +212,31 @@ type EmailTemplate struct {
 	Subject  string
 }
 
-// emailTemplates maps email data types to their templates and subjects
-var emailTemplates = map[any]EmailTemplate{
-	EmailVerifiedData{}: {
-		Subject:  "Danke für deine Registrierung",
-		Template: emailVerifiedTemplate,
-	},
-	NotifyUserSignupData{}: {
-		Subject:  "Neue Anfrage zum Beitritt zum Materialverteiler: {{.UserFirstname}} von {{.TeamName}}",
-		Template: notifyUserSignupTemplate,
-	},
-	UserApprovedData{}: {
-		Subject:  "Willkommen in der Community",
-		Template: userApprovedTemplate,
-	},
-	NotifyNewListingData{}: {
-		Subject:  "Neues Angebot wartet auf Freigabe: {{.ListingTitle}}",
-		Template: notifyNewListingTemplate,
-	},
-	ListingApprovedData{}: {
-		Subject:  "Dein Angebot wurde freigeschaltet",
-		Template: listingApprovedTemplate,
-	},
-	NewListingData{}: {
-		Subject:  "Neues Materialangebot: {{.ListingTitle}}",
-		Template: newListingTemplate,
-	},
-	ListingContactData{}: {
-		Subject:  "Neue Anfrage zu deinem Materialangebot: {{.ListingTitle}}",
-		Template: listingContactTemplate,
-	},
-	ListingContactConfirmationData{}: {
-		Subject:  "Bestätigung deiner Anfrage: {{.ListingTitle}}",
-		Template: listingContactConfirmationTemplate,
-	},
-}
-
 // getEmailTemplate returns the template and subject for a given data type
 func getEmailTemplate[T EmailData](data T) EmailTemplate {
-	// Create a zero value of the type to use as map key
-	var zero T
-	return emailTemplates[zero]
+	// Use type switch to determine template type
+	switch any(data).(type) {
+	case EmailVerifiedData:
+		return emailTemplates[TemplateEmailVerified]
+	case NotifyUserSignupData:
+		return emailTemplates[TemplateNotifyUserSignup]
+	case UserApprovedData:
+		return emailTemplates[TemplateUserApproved]
+	case NotifyNewListingData:
+		return emailTemplates[TemplateNotifyNewListing]
+	case ListingApprovedData:
+		return emailTemplates[TemplateListingApproved]
+	case NewListingData:
+		return emailTemplates[TemplateNewListing]
+	case ListingContactData:
+		return emailTemplates[TemplateListingContact]
+	case ListingContactConfirmationData:
+		return emailTemplates[TemplateListingContactConfirmation]
+	case DailyDigestData:
+		return emailTemplates[TemplateDailyDigest]
+	default:
+		return EmailTemplate{}
+	}
 }
 
 // Email configuration for custom sender

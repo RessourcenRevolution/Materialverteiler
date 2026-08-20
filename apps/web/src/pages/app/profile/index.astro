@@ -103,6 +103,7 @@ const success = Astro.url.searchParams.get('success')
     <div class="mb-18">
       <p class="text-body mb-4">{t('profile.notifications.text')}</p>
       <form class="flex flex-col gap-4" method="post" action={actions.user}>
+        <Checkbox id="notifications-new-listing-digest" name="notifications" label={t('profile.notifications.new-listing-digest')} value="new-listing-digest" checked={user.notifications.includes('new-listing-digest')} />
         <Checkbox id="notifications-new-listing" name="notifications" label={t('profile.notifications.new-listing')} value="new-listing" checked={user.notifications.includes('new-listing')} />
         <!-- <Checkbox id="notifications-newsletter" name="notifications" label="Newsletter" value="newsletter" checked={user.notifications.includes('newsletter')} /> -->
         <Button type="submit" size="sm" label={t('profile.notifications.save')} class="self-start" />

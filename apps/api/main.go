@@ -38,9 +38,14 @@ func main() {
 		cron.ProcessEmailQueue(app)
 	})
 
+	// Daily digest at 12:00
+	app.Cron().MustAdd("daily digest", "0 12 * * *", func() {
+		cron.SendDailyDigest(app)
+	})
+
 	app.OnRecordCreate("users").BindFunc(func(e *core.RecordEvent) error {
 		// Set default notifications value
-		e.Record.Set("notifications+", "new-listing")
+		e.Record.Set("notifications+", "new-listing-digest")
 		return e.Next()
 	})
 
