@@ -2,7 +2,7 @@
 import Header from '~/components/Header/Header.astro'
 import '~/styles/global.css'
 import { APP_NAME } from 'astro:env/client'
-import { defaultLang } from '~/i18n/ui'
+import { defaultLang, useTranslations } from '~/i18n/ui'
 import { fetchLayout } from '~/keystone'
 import Footer from '~/components/Footer.astro'
 
@@ -12,7 +12,9 @@ interface Props {
 
 const { mainNavigation, metaNavigation, footer } = await fetchLayout()
 
-const { title } = Astro.props;
+const { title } = Astro.props
+
+const t = useTranslations()
 ---
 
 <!doctype html>
@@ -23,10 +25,16 @@ const { title } = Astro.props;
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <title>{ !title || title === APP_NAME ? APP_NAME : `${title} | ${APP_NAME}`} </title>
+    {import.meta.env.TEST_MODE && <meta name="robots" content="noindex, nofollow" />}
   </head>
-  <body class="h-auto! min-h-full grid grid-rows-[auto_1fr_auto] bg-background">
-    <Header mainNavigation={mainNavigation} metaNavigation={metaNavigation} class="max-w-[1600px] mx-auto" />
+  <body class:list={['h-auto! min-h-full grid grid-rows-[auto_1fr_auto] bg-background', import.meta.env.TEST_MODE && 'pt-6']}>
+    <Header mainNavigation={mainNavigation} metaNavigation={metaNavigation} class:list={['max-w-[1600px] mx-auto', import.meta.env.TEST_MODE && 'top-6']} />
     <main class="w-full mx-auto px-(--body-inline-padding)">
+      {
+        import.meta.env.TEST_MODE && <div class="fixed top-0 w-full left-0 bg-orange-300 z-500 text-center h-6 font-bold text-sm text-body flex items-center justify-center uppercase">
+          {t('test_environment')}
+        </div>
+      }
       <slot />
     </main>
     <Footer footer={footer} class="max-w-6xl mx-auto" />

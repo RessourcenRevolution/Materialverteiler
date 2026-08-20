@@ -16,6 +16,7 @@ export const ui = {
     'select_images': 'Select Images',
     'location': 'location',
     'available_from': 'Available from',
+    'test_environment': 'Test Environment',
     // Header
     'header.home': 'Home',
     'header.dashboard': 'Listings',
@@ -238,6 +239,7 @@ export const ui = {
     'select_images': 'Bilder auswählen',
     'location': 'Standort',
     'available_from': 'Verfügbar ab',
+    'test_environment': 'Test Umgebung',
     // Header
     'header.home': 'Startseite',
     'header.dashboard': 'Materialangebote',

@@ -261,6 +261,14 @@ func ConvertLinebreaksToHtml(text string) htmlTemplate.HTML {
 	return htmlTemplate.HTML(strings.Replace(text, "\n", "<br>", -1))
 }
 
+// GetSubjectPrefix returns "[TEST] " if TEST_MODE is enabled, otherwise empty string
+func GetSubjectPrefix() string {
+	if os.Getenv("TEST_MODE") == "true" {
+		return "[TEST] "
+	}
+	return ""
+}
+
 // Generic sendEmail function with type constraint
 func renderEmail[T EmailData](app core.App, to mail.Address, data T) (string, string, error) {
 	// Get template and subject from the map
@@ -277,6 +285,9 @@ func renderEmail[T EmailData](app core.App, to mail.Address, data T) (string, st
 	if err != nil {
 		return "", "", err
 	}
+
+	// Add test mode prefix if enabled
+	subject = GetSubjectPrefix() + subject
 
 	return html, subject, nil
 }

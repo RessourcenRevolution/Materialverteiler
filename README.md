@@ -12,18 +12,21 @@ instead of discarding them. Built using [Pocketbase](https://pocketbase.io/),
 - **👤 User Management**: Sign up, login, email verification and password reset
 - **🔒 Sign up approval**: Grant access to users/institutions only after admin
   approval
-- **📩 Admin email workflow**: Automated email notifications for new sign ups and
-  listing activities
+- **📩 Admin email workflow**: Automated email notifications for new sign ups
+  and listing activities
 - **🔧 Keystone integration**: CMS for content management
 
 ## Screenshots
 
-<img width="24%" alt="Screenshot of Materialverteiler overview page" src="./screenshots/overview.png" /> <img width="24%" alt="Screenshot of Materialverteiler new listing page" src="./screenshots/new-listing.png" /> <img width="24%" alt="Screenshot of Materialverteiler listing detail page" src="./screenshots/listing-detail.png" /> <img width="24%" alt="Screenshot of Materialverteiler profile page" src="./screenshots/profile.png" />
+<img width="24%" alt="Screenshot of Materialverteiler overview page" src="./screenshots/overview.png" />
+<img width="24%" alt="Screenshot of Materialverteiler new listing page" src="./screenshots/new-listing.png" />
+<img width="24%" alt="Screenshot of Materialverteiler listing detail page" src="./screenshots/listing-detail.png" />
+<img width="24%" alt="Screenshot of Materialverteiler profile page" src="./screenshots/profile.png" />
 
 ## Architecture
 
-This project is a mono repo containing several applications that work together to
-form the platform.
+This project is a mono repo containing several applications that work together
+to form the platform.
 
 ### Pocketbase (API Backend)
 
@@ -92,8 +95,8 @@ documentation and development. It provides:
 
 Materialverteiler is best deployed using [Docker](https://www.docker.com/). This
 repository contains a [docker-compose.yaml](./docker-compose.yml) which, when
-provided with the correct [environment variables](#environment-variables)
-as described below, leads to a successful deployment.
+provided with the correct [environment variables](#environment-variables) as
+described below, leads to a successful deployment.
 
 ## Environment Variables
 
@@ -140,6 +143,9 @@ WEB_APP_BASE_URL=https://<astro_app_public_url>
 KEYSTONE_API_USER_EMAIL=your_email@example.com
 KEYSTONE_API_USER_PASSWORD=your_password
 KEYSTONE_GRAPHQL_ENDPOINT=https://<keystone_public_url>/api/graphql
+
+# Test mode (optional)
+TEST_MODE=false # Set to "true" to enable test mode (prevents indexing, adds [TEST] prefix to emails)
 ```
 
 ## Development
@@ -220,7 +226,8 @@ mise run //...:typecheck
 
 ## Contribution Guidelines
 
-We welcome contributions to the Materialverteiler project! Here's how you can help:
+We welcome contributions to the Materialverteiler project! Here's how you can
+help:
 
 ### Reporting Issues
 
@@ -249,5 +256,6 @@ We welcome contributions to the Materialverteiler project! Here's how you can he
 
 ## License
 
-This project is licensed under the terms specified in the [LICENSE](LICENSE) file.
-Please review the license before using, modifying, or distributing this software.
+This project is licensed under the terms specified in the [LICENSE](LICENSE)
+file. Please review the license before using, modifying, or distributing this
+software.

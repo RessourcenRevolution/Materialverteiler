@@ -34,6 +34,11 @@ export default defineConfig({
         access: 'public',
         optional: false,
       }),
+      TEST_MODE: envField.boolean({
+        context: 'server',
+        access: 'public',
+        optional: true,
+      }),
     },
   },
 
