@@ -14,6 +14,7 @@ RUN NODE_ENV=development npm ci --workspace=apps/web
 ARG APP_NAME
 ARG APP_LANGUAGE
 ARG KEYSTONE_GRAPHQL_ENDPOINT
+ARG TEST_MODE
 RUN npm run build --workspace=apps/web
 
 # start astro

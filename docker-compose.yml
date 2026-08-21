@@ -26,6 +26,7 @@ services:
         APP_PORT: ${APP_PORT:-3000}
         APP_HOST: ${APP_HOST:-localhost}
         KEYSTONE_GRAPHQL_ENDPOINT: ${PUBLIC_KEYSTONE_GRAPHQL_ENDPOINT:-http://keystone:3002/api/graphql}
+        TEST_MODE: "${TEST_MODE:-false}"
     # ports:
     #   - "3000:3000"
     environment:
