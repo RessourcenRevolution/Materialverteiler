@@ -90,7 +90,10 @@ func SendDailyDigest(app core.App) {
 				ListingDescription:  l.GetString("description"),
 				ListingPickupInfo:   l.GetString("pickup_description"),
 			}
-			email.QueueEmail(app, mail.Address{Address: user.Email()}, data, nil)
+			err := email.QueueEmail(app, mail.Address{Address: user.Email()}, data, nil)
+			if err != nil {
+				app.Logger().Error("Error queueing email,", err)
+			}
 		} else {
 			// Multiple listings: use digest template
 			data := email.DailyDigestData{
@@ -98,7 +101,10 @@ func SendDailyDigest(app core.App) {
 				Firstname:     user.GetString("firstname"),
 				Listings:      userSummaries,
 			}
-			email.QueueEmail(app, mail.Address{Address: user.Email()}, data, nil)
+			err := email.QueueEmail(app, mail.Address{Address: user.Email()}, data, nil)
+			if err != nil {
+				app.Logger().Error("Error queueing email,", err)
+			}
 		}
 	}
 }
