@@ -60,6 +60,21 @@ func AfterListingCreate(e *core.RecordEvent) error {
 	return e.Next()
 }
 
+func ListingUpdate(e *core.RecordEvent) error {
+	original := e.Record.Original()
+	listing := e.Record
+
+	// Listing got approved
+	if original.GetString("status") == "new" && listing.GetString("status") == "open" {
+		log.Printf("Listing Before Update: (%s) got approved\n", listing.GetString("title"))
+
+		// Set 'open_since' timestamp
+		listing.Set("open_since", types.NowDateTime())
+	}
+
+	return e.Next()
+}
+
 func AfterListingUpdate(e *core.RecordEvent) error {
 	original := e.Record.Original()
 	listing := e.Record
@@ -75,16 +90,7 @@ func AfterListingUpdate(e *core.RecordEvent) error {
 
 	// Listing got approved
 	if original.GetString("status") == "new" && listing.GetString("status") == "open" {
-		log.Printf("Listing (%s) got approved\n", listing.GetString("title"))
-
-		// Set 'open_since' timestamp, when not set already
-		if listing.GetDateTime("open_since").IsZero() {
-			listing.Set("open_since", types.NowDateTime())
-			saveErr := e.App.Save(listing)
-			if saveErr != nil {
-				return saveErr
-			}
-		}
+		log.Printf("Listing AfterUpdateSuccess (%s) got approved\n", listing.GetString("title"))
 
 		// Send email to listing owner
 		data := email.ListingApprovedData{

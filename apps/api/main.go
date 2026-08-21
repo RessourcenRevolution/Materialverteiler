@@ -83,6 +83,7 @@ func main() {
 	app.OnRecordAfterCreateSuccess("listings").BindFunc(hooks.AfterListingCreate)
 
 	// On listing update
+	app.OnRecordUpdate("listings").BindFunc(hooks.ListingUpdate)
 	app.OnRecordAfterUpdateSuccess("listings").BindFunc(hooks.AfterListingUpdate)
 
 	app.OnServe().BindFunc(func(se *core.ServeEvent) error {
