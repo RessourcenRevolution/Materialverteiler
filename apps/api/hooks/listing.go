@@ -4,12 +4,12 @@ import (
 	"api/email"
 	"log"
 	"net/mail"
-	"time"
 
 	validation "github.com/go-ozzo/ozzo-validation/v4"
 	"github.com/pocketbase/dbx"
 	"github.com/pocketbase/pocketbase/apis"
 	"github.com/pocketbase/pocketbase/core"
+	"github.com/pocketbase/pocketbase/tools/types"
 )
 
 func ListingValidate(e *core.RecordEvent) error {
@@ -77,8 +77,14 @@ func AfterListingUpdate(e *core.RecordEvent) error {
 	if original.GetString("status") == "new" && listing.GetString("status") == "open" {
 		log.Printf("Listing (%s) got approved\n", listing.GetString("title"))
 
-		// Set open_since timestamp
-		listing.Set("open_since", time.Now())
+		// Set 'open_since' timestamp, when not set already
+		if listing.GetDateTime("open_since").IsZero() {
+			listing.Set("open_since", types.NowDateTime())
+			saveErr := e.App.Save(listing)
+			if saveErr != nil {
+				return saveErr
+			}
+		}
 
 		// Send email to listing owner
 		data := email.ListingApprovedData{
