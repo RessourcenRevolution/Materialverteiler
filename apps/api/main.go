@@ -38,8 +38,8 @@ func main() {
 		cron.ProcessEmailQueue(app)
 	})
 
-	// Daily digest at 12:00
-	app.Cron().MustAdd("daily digest", "0 12 * * *", func() {
+	// Daily digest at 10:00 UTC, 12:00 Berlin Time (UTC+2) (server runs at UTC)
+	app.Cron().MustAdd("daily digest", "0 10 * * *", func() {
 		cron.SendDailyDigest(app)
 	})
 
