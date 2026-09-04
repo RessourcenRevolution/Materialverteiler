@@ -47,7 +47,10 @@ const data
     <Heading tag="h1" size="xl" class="mb-6 animate-slide-in">
       {t('signup.title')}
     </Heading>
-    <div class="prose font-bold animate-slide-in animate-delay-100" set:html={t('signup.text')} />
+    <Heading tag="h2" size="md" class="mb-6 animate-slide-in">
+      {t('signup.subtitle')}
+    </Heading>
+    <div class="prose animate-slide-in animate-delay-100" set:html={t('signup.text')} />
     <form id="signup-form" class="flex flex-col gap-6 animate-slide-in animate-delay-200" method="post" action={actions.signup}>
       <Input
         id="firstname"

@@ -54,9 +54,7 @@ export const ui = {
     'team-type.non-profit': 'Non-profit',
     'team-type.commercial': 'Commercial',
     // Signup page
-    'signup.title': 'Be part of our Materials Community!',
-    'signup.text': `<p>By submitting the form, you create an account in our community. This automatically enrolls you in our Materials Distributor. Through this, we regularly send out material offers from the region.</p>
-      <p>Full access to our entire platform is granted to members who want to donate materials themselves or have already reliably completed a pickup.</p>`,
+    'signup.title': 'Create an account', 'signup.subtitle': 'Be part of our material distribution community!', 'signup.text': `<p><strong>Do you want to give away materials? Are you looking for materials for your next project?</strong><br />Then fill out the form and create an account in our community. Afterwards, you can create material offers, browse current material offers, and get in touch with those offering them. You will also be kept up to date via email about new material offers.<br />Please indicate whether your business/organization is public, non-profit, or commercial. At the moment, it is not yet possible to use the platform as a private individual.</p> <p><a href="/materialverteiler">Read more about the material distributor.</a></p> <p><strong>Important:</strong> This website is a prototype and is still in the testing phase. All functions are available (except for CO₂ accounting), but things might still get stuck somewhere. Please bear with us. We welcome reports of errors and any other suggestions.</p>`,
     'signup.fields.message': 'Your message to us',
     'signup.fields.terms': 'I agree to the processing of my data in accordance with the <a href="#">Privacy Policy</a>.',
     'signup.button': 'Signup',
@@ -277,11 +275,13 @@ export const ui = {
     'team-type.non-profit': 'Gemeinnützig',
     'team-type.commercial': 'Gewerblich',
     // Signup page
-    'signup.title': 'Sei Teil unserer Material-Community! ',
-    'signup.text': `<p>Mit dem Absenden des Formulars erstellst Du einen Account in unserer Community. Dadurch trittst du automatisch unserem Materialverteiler bei. In diesen senden wir regelmäßig Materialangebote aus der Region.</p>
-      <p>Zugriff auf unsere gesamte Plattform erhalten Mitglieder, die selbst Materialien abgeben wollen oder schonmal verlässlich eine Abholung durchgeführt haben.</p>`,
+    'signup.title': 'Konto anlegen',
+    'signup.subtitle': 'Sei Teil unserer Materialverteiler-Community!',
+    'signup.text': `<p><strong>Du möchtest Materialien abgeben? Du bist auf der Suche nach Materialien für dein nächstes Projekt?</strong><br />Dann füll das Formular aus und erstelle ein Konto in unserer Community. Danach kannst du Materialangebote anlegen, die aktuellen Materialangebote durchsuchen und Kontakt zu den Abgebenden aufnehmen. Außerdem wirst du laufend per E-Mail über neue Materialangebote informiert.<br />Bitte gib an, ob dein Betrieb/deine Organisation öffentlich, gemeinnützig oder gewerblich ist. Momentan ist es noch nicht möglich, die Plattform als Privatperson zu nutzen.</p>
+      <p><a href="/materialverteiler">Lies mehr über den Materialverteiler.</a></p>
+      <p><strong>Wichtig:</strong> Diese Webseite ist ein Prototyp und befindet sich noch in der Testphase. Alle Funktionen sind möglich (bis auf die CO₂-Bilanzierung), trotzdem kann es immer noch irgendwo haken. Bitte sieh uns dies nach. Wir freuen uns über Hinweise auf Fehler und jegliche anderen Anregungen.</p>`,
     'signup.fields.message': 'Deine Nachricht an uns',
-    'signup.fields.terms': 'Ich erkläre mich mit der Verarbeitung meiner Daten im Rahmen der <a href="#">Datenschutzvereinbarung</a> einverstanden.',
+    'signup.fields.terms': 'Ich erkläre mich mit der Verarbeitung meiner Daten im Rahmen der <a href="/datenschutz">Datenschutzvereinbarung</a> einverstanden.',
     'signup.button': 'Absenden',
     'signup.errors.email_in_use':
       'Es gibt bereits ein Konto mit dieser E-Mail-Adresse.',
