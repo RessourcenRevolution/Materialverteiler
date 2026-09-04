@@ -46,7 +46,7 @@ func SendDailyDigest(app core.App) {
 
 	// Get all users with digest notifications
 	users, err := app.FindRecordsByFilter("users",
-		"verified = true && roles ~ 'user' && notifications ~ 'new-listing-digest'",
+		"verified = true && roles ~ 'user' && notifications:each ?= 'new-listing-digest'",
 		"", -1, 0, dbx.Params{})
 	if err != nil {
 		app.Logger().Error("Error fetching users for daily digest", err)
