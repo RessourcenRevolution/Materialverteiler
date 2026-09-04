@@ -377,7 +377,7 @@ export const ui = {
     'create-listing.title': 'Angebot anlegen',
     'create-listing.text': `<p>Du hast Material abzugeben? Toll! Hier kannst du ein neues Angebot anlegen. Bitte fülle die folgenden Felder aus, um so viele Informationen wie möglich weiterzugeben.</p>
       <p>Deine Organisation musst du zu diesem Zeitpunkt noch nicht nennen. Je genauer die Informationen sind, desto leichter können wir eine Abnahme vermitteln. Bei Fragen dazu schreib uns gerne eine E-Mail (<a href="mailto:info@ressourcenrevolution.org">info@ressourcenrevolution.org</a>)</p>
-      <p>Wichtig: Nur Organisationen mit geprüftem Konto können dein Materialangebot und deine Angaben dazu sehen! Bei Interesse füllen sie das Kontaktformular aus, das wir per E-Mail an dich weiterleiten. Dann entscheidest du, ob du dich zurückmelden möchtest.</p>`,
+      <p>Wichtig: Nur Organisationen mit geprüftem Konto können dein Materialangebot und deine Angaben dazu sehen! Bei Interesse füllen sie das Kontaktformular aus, das wir per E-Mail an dich weiterleiten. Dann entscheidest du, ob du dich zurückmelden möchtest. Der weitere Austausch erfolgt nur noch unter euch und auf eure Verantwortung.</p>`,
     'create-listing.button': 'Anlegen',
     'create-listing.errors.forbidden':
       'Du bist nicht berechtigt, neue Angebote zu erstellen',
@@ -422,7 +422,7 @@ export const ui = {
     'listing-form.create.images.label': 'Bilder',
     'listing-form.update.images.label': 'Bilder hinzufügen',
     'listing-form.accounting.title': 'Bilanzierung',
-    'listing-form.accounting.text': 'Du möchtest wissen, wie viel CO₂ durch die Wiederverwendung des Materials eingespart werden konnte? Um eine Bilanzierung zu erhalten, trage bitte zusätzliche Daten des Materials in diese Excel-Tabelle ein und lade die Datei danach wieder hoch. Nach erfolgreicher Vermittlung können wir anhand der Daten eine CO₂-Bilanzierung erstellen, die du für deine Nachhaltigkeitsberichterstattung und Firmenkommunikation verwenden kannst. (Die Berechnungsmethodik wird im Report dargestellt.)',
+    'listing-form.accounting.text': 'Du möchtest wissen, wie viel CO₂ durch die Wiederverwendung des Materials eingespart werden konnte? Um eine Bilanzierung zu erhalten, trage bitte zusätzliche Daten des Materials in diese Excel-Tabelle ein und lade die Datei danach wieder hoch. Nach erfolgreicher Vermittlung können wir anhand der Daten eine CO₂-Bilanzierung erstellen, die du für deine Nachhaltigkeitsberichterstattung und Firmenkommunikation verwenden kannst. (Die Berechnungsmethodik wird im Report dargestellt.)<br /><br /><i>In der Testphase leider nicht möglich.</i>',
     'listing-form.accounting.completed': 'Die Bilanzierung des Angebots wurde erfolgreich abgeschlossen. Es ist nicht mehr möglich, eine neue Bilanzierungs-Datei hochzuladen.',
     'listing-form.accounting.existing': 'Aktuelle Datei',
     'listing-form.accounting.existing_completed': 'Bilanzierungs-Datei',
