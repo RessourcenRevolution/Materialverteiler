@@ -9,9 +9,10 @@ interface Props {
   collection: string
   id: string
   images?: string[]
+  objectFit?: 'cover' | 'contain'
 }
 
-const { collection, id, images } = Astro.props;
+const { collection, id, images, objectFit = 'cover' } = Astro.props;
 ---
 
 {
@@ -36,7 +37,7 @@ const { collection, id, images } = Astro.props;
             class="w-full shrink-0 flex cursor-pointer"
           >
             <img
-              class="aspect-4/3 object-cover snap-start"
+              class={`aspect-4/3 snap-start bg-body ${objectFit === 'contain' ? 'object-contain' : 'object-cover'}`}
               src={`${process.env.PUBLIC_API_URL}/api/files/${collection}/${id}/${image}?thumb=1024x1024f`}
             />
           </button>

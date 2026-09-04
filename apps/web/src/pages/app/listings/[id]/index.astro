@@ -48,7 +48,7 @@ if (!listing) {
       {listing.user === user?.id && <ListingUserStatus listing={listing} />}
 
       <!-- Image Gallery -->
-      <ImageGallery collection="listings" id={listing.id} images={listing.images} />
+      <ImageGallery collection="listings" id={listing.id} images={listing.images} objectFit='contain' />
 
       <!-- Listing content -->
       <Heading tag="h1" size="md" class="mb-3">
