@@ -428,7 +428,7 @@ export const ui = {
     'listing-form.accounting.existing_completed': 'Bilanzierungs-Datei',
     'listing-form.accounting_file.label': 'Bilanzierungs-Excel-Datei (optional)',
     'listing-form.create.submit': 'Angebot anlegen',
-    'listing-form.update.submit': 'Änderung speichern',
+    'listing-form.update.submit': 'Änderungen speichern',
     'listing-form.create.success': 'Angebot erfolgreich angelegt!',
     'listing-form.update.success': 'Angebot erfolgreich aktualisiert!',
     // Listing card
