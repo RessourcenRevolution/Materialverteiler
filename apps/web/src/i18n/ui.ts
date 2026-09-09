@@ -282,7 +282,7 @@ export const ui = {
       <p><a href="/materialverteiler">Lies mehr über den Materialverteiler.</a></p>
       <p><strong>Wichtig:</strong> Diese Webseite ist ein Prototyp und befindet sich noch in der Testphase. Alle Funktionen sind möglich (bis auf die CO₂-Bilanzierung), trotzdem kann es immer noch irgendwo haken. Bitte sieh uns dies nach. Wir freuen uns über Hinweise auf Fehler und jegliche anderen Anregungen.</p>`,
     'signup.fields.message': 'Deine Nachricht an uns',
-    'signup.fields.terms': 'Ich erkläre mich mit der Verarbeitung meiner Daten im Rahmen der <a href="/datenschutz">Datenschutzvereinbarung</a> einverstanden.',
+    'signup.fields.terms': 'Ich habe die Informationen zum <a href="/datenschutz">Datenschutz und zu den Nutzungskriterien</a> zur Kenntnis genommen.',
     'signup.button': 'Absenden',
     'signup.errors.email_in_use':
       'Es gibt bereits ein Konto mit dieser E-Mail-Adresse.',
