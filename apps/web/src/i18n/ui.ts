@@ -109,7 +109,7 @@ export const ui = {
     'profile.your-listings.status.success': 'Matched listings',
     'profile.your-listings.status.failure': 'Closed/withdrawn listings',
     'profile.your-listings': 'Your listings',
-    'profile.your-listings.text': 'Please update the status of your listings yourself.',
+    'profile.your-listings.text': '<p>Please update the status of your listings yourself.</p>',
     'profile.your-listings.none': 'Your don\'t have any listings yet.',
     'profile.your-listings.no-results': 'You don\'t have any listings with this status.',
     'profile.your-listings.no-query-results': 'No results were found for your search.',
@@ -335,7 +335,7 @@ export const ui = {
     'profile.your-listings.status.success': 'Vermittelte Angebote',
     'profile.your-listings.status.failure': 'Abgeschlossene Angebote',
     'profile.your-listings': 'Deine Angebote',
-    'profile.your-listings.text': 'Bitte aktualisiere den Status deiner Angebote selbständig.',
+    'profile.your-listings.text': '<p>Bitte aktualisiere den Status deiner Angebote selbständig. Du kannst auch alle anderen Angaben bearbeiten.</p><p>Reservierte Angebote werden noch in der Liste angezeigt, können aber nicht kontaktiert werden.</p><p>Vermittelte Angebote werden automatisch auf der Startseite unter „zuletzt verteilt“ angezeigt, mit Bild und Angebotstitel. Nicht mehr anklickbar, aber für alle einsehbar, auch ohne Konto.</p>',
     'profile.your-listings.none': 'Du hast noch keine Angebote.',
     'profile.your-listings.no-results': 'Du hast keine Angebote mit diesem Status.',
     'profile.your-listings.no-query-results': 'Für deine Suche wurde nichts gefunden.',
@@ -377,7 +377,7 @@ export const ui = {
     'create-listing.title': 'Angebot anlegen',
     'create-listing.text': `<p>Du hast Material abzugeben? Toll! Hier kannst du ein neues Angebot anlegen. Bitte fülle die folgenden Felder aus, um so viele Informationen wie möglich weiterzugeben.</p>
       <p>Deine Organisation musst du zu diesem Zeitpunkt noch nicht nennen. Je genauer die Informationen sind, desto leichter können wir eine Abnahme vermitteln. Bei Fragen dazu schreib uns gerne eine E-Mail (<a href="mailto:info@ressourcenrevolution.org">info@ressourcenrevolution.org</a>)</p>
-      <p>Wichtig: Nur Organisationen mit geprüftem Konto können dein Materialangebot und deine Angaben dazu sehen! Bei Interesse füllen sie das Kontaktformular aus, das wir per E-Mail an dich weiterleiten. Dann entscheidest du, ob du dich zurückmelden möchtest. Der weitere Austausch erfolgt nur noch unter euch und auf eure Verantwortung.</p>`,
+      <p>Wichtig: Nur Organisationen mit geprüftem Konto können dein Materialangebot und deine Angaben dazu sehen! Bei Interesse füllen sie das Kontaktformular aus, das wir per E-Mail an dich weiterleiten. Dann entscheidest du, ob du dich zurückmelden möchtest (per E-Mail oder ggf. Anruf). Der weitere Austausch erfolgt nur noch unter euch und auf eure Verantwortung.</p>`,
     'create-listing.button': 'Anlegen',
     'create-listing.errors.forbidden':
       'Du bist nicht berechtigt, neue Angebote zu erstellen',

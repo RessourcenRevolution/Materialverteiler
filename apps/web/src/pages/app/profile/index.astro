@@ -127,7 +127,7 @@ const success = Astro.url.searchParams.get('success')
           ]}>
           </Select>
         </div>
-        <p class="text-body">{t('profile.your-listings.text')}</p>
+        <div class="prose text-body max-w-[80ch]" set:html={t('profile.your-listings.text')}></div>
       </div>
       {
         listings && listings.length > 0
