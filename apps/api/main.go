@@ -39,7 +39,7 @@ func main() {
 	})
 
 	// Daily digest at 10:00 UTC, 12:00 Berlin Time (UTC+2) (server runs at UTC)
-	app.Cron().MustAdd("daily digest", "0 10 * * *", func() {
+	app.Cron().MustAdd("daily digest", "0 11 * * *", func() {
 		cron.SendDailyDigest(app)
 	})
 
