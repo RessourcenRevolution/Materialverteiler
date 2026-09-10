@@ -8,15 +8,17 @@ import (
 
 	"github.com/pocketbase/dbx"
 	"github.com/pocketbase/pocketbase/core"
+	"github.com/pocketbase/pocketbase/tools/types"
 )
 
 func SendDailyDigest(app core.App) {
-	now := time.Now()
+	now := types.NowDateTime()
 	twentyFourHoursAgo := now.Add(-24 * time.Hour)
 
 	// Get all listings approved in last 24 hours
+	log.Println("status = 'open' && open_since >= '" + twentyFourHoursAgo.String() + "'")
 	listings, err := app.FindRecordsByFilter("listings",
-		"status = 'open' && open_since >= '"+twentyFourHoursAgo.Format(time.RFC3339)+"'",
+		"status = 'open' && open_since >= '"+twentyFourHoursAgo.String()+"'",
 		"-open_since", -1, 0, dbx.Params{})
 	if err != nil {
 		app.Logger().Error("Error fetching approved listings for daily digest", err)
