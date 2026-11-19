@@ -223,9 +223,9 @@ screenshots are stored in the `screenshots` folder.
 Test files in `src/pages` must start with an underscore, so Astro doesn't treat
 them as routes.
 
-Playwright starts its own test stack on separate ports (web on 3100, Keystone on
-3102), next to the dev stack. Keystone starts with a fresh database, seeded with
-the fixtures in `apps/keystone/seed/fixtures.ts`.
+Playwright starts its own test stack on separate ports. Keystone and Pocketbase
+start with a fresh database, seeded with the fixtures in
+`apps/keystone/seed/fixtures.ts` and `apps/api/seed/fixtures.json`.
 
 ```bash
 # Install the browser for local tests (once)

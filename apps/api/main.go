@@ -27,6 +27,8 @@ type RecentListingData struct {
 func main() {
 	app := pocketbase.New()
 
+	registerTestSeed(app)
+
 	migratecmd.MustRegister(app, app.RootCmd, migratecmd.Config{
 		// enable auto creation of migration files when making collection changes in the Dashboard
 		// (the isGoRun check is to enable it only during development)
