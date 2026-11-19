@@ -10,5 +10,8 @@
     "packages/image-gallery",
     "packages/image-uploader",
     "packages/ui"
-  ]
+  ],
+  "devDependencies": {
+    "@playwright/test": "1.65.0"
+  }
 }

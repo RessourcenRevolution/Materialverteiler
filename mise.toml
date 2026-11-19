@@ -5,10 +5,7 @@ go = "1.25.3"
 node = "22.21.0"
 
 [monorepo]
-config_roots = [
-    "apps/*",
-    "packages/*"
-]
+config_roots = ["apps/*", "packages/*"]
 
 [tasks.setup]
 description = "Setup"
@@ -19,3 +16,22 @@ file = "https://raw.githubusercontent.com/axllent/mailpit/develop/install.sh"
 [tasks.dev]
 description = "Run mailpit"
 run = "./bin/mailpit --enable-chaos"
+
+[tasks.test]
+description = "Run all e2e and screenshot tests"
+env = { VISUAL = "true" }
+run = "npx playwright test"
+
+[tasks."test:e2e"]
+description = "Run e2e tests"
+run = "npx playwright test --project=e2e"
+
+[tasks."test:visual"]
+description = "Run screenshot tests, with the browser in a Docker container"
+env = { VISUAL = "true" }
+run = "npx playwright test --project='visual-*'"
+
+[tasks."test:visual:update"]
+description = "Update screenshots, with the browser in a Docker container"
+env = { VISUAL = "true" }
+run = "npx playwright test --project='visual-*' --update-snapshots"

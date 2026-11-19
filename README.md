@@ -216,8 +216,35 @@ The following services will be available:
 
 ### Testing
 
-Currently only typechecking is implemented as testing strategy, this can be run
-for the whole project using:
+Tests use [Playwright](https://playwright.dev) and live in `*.e2e.ts` files next
+to the code they test. Screenshot tests are tagged with `@visual`, and their
+screenshots are stored in the `screenshots` folder.
+
+Test files in `src/pages` must start with an underscore, so Astro doesn't treat
+them as routes.
+
+Playwright starts its own test stack on separate ports (web on 3100, Keystone on
+3102), next to the dev stack. Keystone starts with a fresh database, seeded with
+the fixtures in `apps/keystone/seed/fixtures.ts`.
+
+```bash
+# Install the browser for local tests (once)
+$ npx playwright install chromium
+
+# All tests
+$ mise run //:test
+
+# Functionality/interaction tests only
+$ mise run //:test:e2e
+
+# Screenshot tests; the browser runs in Docker, so screenshots match on every OS
+$ mise run //:test:visual
+$ mise run //:test:visual:update
+```
+
+#### Typecheck
+
+Typechecking can be run for the whole project using:
 
 ```bash
 # Run typechecking in the different apps and packages

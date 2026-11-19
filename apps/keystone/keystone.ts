@@ -13,18 +13,24 @@ import { lists } from "./schema";
 // authentication is configured separately here too, but you might move this elsewhere
 // when you write your list-level access control functions, as they typically rely on session data
 import { withAuth, session } from "./auth";
+import { seedTestData } from "./seed";
 
 export default withAuth(
   config({
     server: {
-      port: 3002,
+      port: Number(process.env.PORT) || 3002,
     },
     db: {
       // we're using sqlite for the fastest startup experience
       //   for more information on what database might be appropriate for you
       //   see https://keystonejs.com/docs/guides/choosing-a-database#title
       provider: "sqlite",
-      url: "file:./data/keystone.db",
+      url: process.env.DATABASE_URL || "file:./data/keystone.db",
+      onConnect: async (context) => {
+        if (process.env.SEED_TEST_DATA === "true") {
+          await seedTestData(context);
+        }
+      },
     },
     lists,
     session,
