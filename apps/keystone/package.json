@@ -8,7 +8,7 @@
     "build": "keystone build",
     "migrate": "keystone prisma migrate deploy",
     "migrate:dev": "keystone prisma migrate dev",
-    "test:server": "rm -f data/keystone.test.db && keystone build --no-ui && keystone start --no-ui --with-migrations"
+    "test:server": "rm -rf data/test && mkdir -p data/test/images && keystone build --no-ui && keystone start --no-ui --with-migrations"
   },
   "dependencies": {
     "@keystone-6/auth": "^8.1.0",

@@ -11,7 +11,9 @@ export const KEYSTONE_GRAPHQL_ENDPOINT = `${KEYSTONE_URL}/api/graphql`
 
 export const keystoneEnv = {
   PORT: String(KEYSTONE_PORT),
-  DATABASE_URL: 'file:./data/keystone.test.db',
+  // Everything in data/test is removed on each start of the test server
+  DATABASE_URL: 'file:./data/test/keystone.db',
+  IMAGES_PATH: 'data/test/images',
   SEED_TEST_DATA: 'true',
   SESSION_SECRET: 'test-session-secret-at-least-32-characters-long',
   KEYSTONE_BASE_URL: KEYSTONE_URL,

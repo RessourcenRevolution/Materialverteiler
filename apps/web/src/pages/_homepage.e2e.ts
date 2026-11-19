@@ -6,7 +6,7 @@ test('renders the homepage from Keystone', async ({ page }) => {
 
   expect(response?.status()).toBe(200)
   await expect(page).toHaveTitle(`${homepage.title} | Materialverteiler`)
-  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Give materials a second life')
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('Materialverteiler')
 })
 
 test.describe('with a main navigation', () => {
